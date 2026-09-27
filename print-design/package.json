@@ -4,10 +4,15 @@
   "version": "1.0.0",
   "description": "اقلام چاپی صندوق پژوهش و فناوری توسعه و آینده",
   "scripts": {
-    "build": "node tools/build.mjs"
+    "build": "node tools/build.mjs",
+    "word": "node tools/word.mjs",
+    "logo": "node tools/logo-export.mjs",
+    "print": "node tools/print.mjs",
+    "package": "python3 tools/package.py"
   },
   "devDependencies": {
     "@fontsource/inter": "5.3.0",
+    "docx": "^9.7.2",
     "playwright": "^1.56.1",
     "vazirmatn": "33.0.3"
   }

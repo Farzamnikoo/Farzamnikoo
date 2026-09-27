@@ -2,15 +2,18 @@
 // اجرا: npm run build                   همه اقلام
 //       node tools/build.mjs catalog    مرحله ۲: صفحه‌های نمونه و برگه سیستم
 //       node tools/build.mjs catalog16  مرحله ۳: کاتالوگ کامل ۱۶ صفحه
+//       node tools/build.mjs brochure   مرحله ۴: بروشور سه‌لت
+//       node tools/build.mjs lh-final   سربرگ‌های نهایی LH-01 تا LH-04 (گزینه الف)
 
 import fs from 'node:fs';
 import path from 'node:path';
 import { fileURLToPath, pathToFileURL } from 'node:url';
 import { createRequire } from 'node:module';
-import { letterhead, page, OPTIONS } from '../src/letterhead.mjs';
+import { letterhead, letterheadFinal, FINAL, page, OPTIONS } from '../src/letterhead.mjs';
 import { compareSheet } from '../src/compare.mjs';
 import { samplePages, allPages } from '../src/catalog.mjs';
 import { systemSheet } from '../src/catalog-system.mjs';
+import { brochureSheets } from '../src/brochure.mjs';
 
 const require = createRequire(import.meta.url);
 const { chromium } = require('playwright');
@@ -141,6 +144,43 @@ if (want('catalog16')) {
   await s2.p.pdf({ path: path.join(OUT, 'catalog_spreads_A3.pdf'), width: '420mm', height: '297mm', printBackground: true });
   await s2.ctx.close();
   console.log('✓ کاتالوگ ۱۶ صفحه →', path.relative(ROOT, OUT));
+}
+
+// ═══ سربرگ‌های نهایی ═══
+if (want('lh-final')) {
+  const OUT = outDir('05-letterhead');
+  for (const code of Object.keys(FINAL)) {
+    const url = write(`${code}.html`, page(letterheadFinal(code), { title: `${code} ${FINAL[code]}`, css: ['../src/letterhead.css'] }));
+    const { p, ctx } = await open(url, { scale: 2 });
+    await p.pdf({ path: path.join(OUT, `${code}_RGB.pdf`), preferCSSPageSize: true, printBackground: true });
+    await p.locator('.sheet').screenshot({ path: path.join(OUT, 'png', `${code}.png`) });
+    await ctx.close();
+    // PNG شفاف ۳۰۰ نقطه در اینچ برای نامه‌های دیجیتال
+    const t = await open(url, { scale: 300 / 96 });
+    await t.p.evaluate(() => document.body.classList.add('transparent'));
+    await t.p.locator('.sheet').screenshot({ path: path.join(OUT, 'png', `${code}_transparent_300dpi.png`), omitBackground: true });
+    await t.ctx.close();
+  }
+  console.log('✓ سربرگ‌های نهایی →', path.relative(ROOT, OUT));
+}
+
+// ═══ مرحله ۴: بروشور سه‌لت ═══
+if (want('brochure')) {
+  const OUT = outDir('04-brochure');
+  const url = write('brochure.html', page(brochureSheets().join('\n'), {
+    title: 'بروشور صندوق پژوهش و فناوری توسعه و آینده',
+    css: ['../src/brochure.css'],
+  }));
+  const { p, ctx } = await open(url, { width: 297, height: 210, scale: 2 });
+  await p.pdf({ path: path.join(OUT, 'brochure_trifold.pdf'), width: '297mm', height: '210mm', printBackground: true });
+  const sheets = p.locator('.bs');
+  await sheets.nth(0).screenshot({ path: path.join(OUT, 'png', 'outside.png') });
+  await sheets.nth(1).screenshot({ path: path.join(OUT, 'png', 'inside.png') });
+  await p.evaluate(() => document.body.classList.add('show-folds'));
+  await sheets.nth(0).screenshot({ path: path.join(OUT, 'png', 'outside-folds.png') });
+  await sheets.nth(1).screenshot({ path: path.join(OUT, 'png', 'inside-folds.png') });
+  await ctx.close();
+  console.log('✓ بروشور →', path.relative(ROOT, OUT));
 }
 
 await browser.close();

@@ -85,6 +85,74 @@ export function letterhead(opt, d = master) {
   </div>`;
 }
 
+// ═══ نسخه‌های نهایی بر پایه گزینه الف (انتخاب کارفرما) ═══
+export const FINAL = {
+  'LH-01': 'سربرگ عمومی',
+  'LH-02': 'سربرگ مدیرعامل',
+  'LH-03': 'سربرگ صفحه دوم',
+  'LH-04': 'سربرگ دوزبانه',
+};
+
+function footerBilingual(d) {
+  const fa1 = `<span class="fi">نشانی: ${val(d.address)}</span>`;
+  const fa2 = [`<span class="fi">تلفن: ${val(d.tel)}</span>`, `<span class="fi">${web(d)}</span>`].join(sep);
+  const fa3 = [`<span class="fi">شماره ثبت: ${val(d.regNo)}</span>`, `<span class="fi">شناسه ملی: ${val(d.nationalId)}</span>`].join(sep);
+  const en = (label, v) => `<span class="fi">${label}: ${v == null ? '[TODO]' : v}</span>`;
+  const en1 = en('Address', d.addressEn);
+  const en2 = [en('Tel', d.tel), `<span class="fi">${d.web}</span>`].join(sep);
+  const en3 = [en('Reg. No', d.regNo), en('National ID', d.nationalId)].join(sep);
+  return `
+    <div class="fcol fa-col"><div>${fa1}</div><div>${fa2}</div><div>${fa3}</div></div>
+    <div class="fcol en-col" dir="ltr" lang="en"><div>${en1}</div><div>${en2}</div><div>${en3}</div></div>`;
+}
+
+export function letterheadFinal(code, d = master) {
+  if (code === 'LH-03') {
+    return `
+  <div class="sheet lh opt-a final lh03">
+    <div class="trim">
+      <header class="head">
+        <img class="mark small" src="../brand/logo/logo-mark.svg" alt="">
+        <div class="pageno">صفحه <span class="dots"></span> از <span class="dots"></span></div>
+      </header>
+      <div class="safe" aria-hidden="true"></div>
+      <footer class="foot one">${d.nameFa} — ${web(d)}</footer>
+    </div>
+  </div>`;
+  }
+  if (code === 'LH-04') {
+    return `
+  <div class="sheet lh opt-a final lh04">
+    <div class="trim">
+      <header class="head">
+        ${lockup(d)}
+        <div class="en-name" dir="ltr" lang="en"><div class="e1">${d.nameEn}</div><div class="e2">${d.legalEn}</div></div>
+      </header>
+      <div class="fields-row">
+        ${[['شماره', 'No.'], ['تاریخ', 'Date'], ['پیوست', 'Encl.']].map(([f, e]) => `<div class="field"><span class="fl">${f} / <span class="lat">${e}</span></span><span class="dots"></span></div>`).join('')}
+      </div>
+      <div class="rule"></div>
+      <div class="safe" aria-hidden="true"></div>
+      <footer class="foot bi">${footerBilingual(d)}</footer>
+    </div>
+  </div>`;
+  }
+  const extra = code === 'LH-02' ? 'دفتر مدیرعامل' : null;
+  const dd = code === 'LH-02' && d.ceoTel ? { ...d, tel: d.ceoTel } : d;
+  return `
+  <div class="sheet lh opt-a final">
+    <div class="trim">
+      <header class="head">
+        ${lockup(d, { extraLine: extra })}
+        ${fields()}
+      </header>
+      <div class="rule"></div>
+      <div class="safe" aria-hidden="true"></div>
+      <footer class="foot">${footerLines(dd)}</footer>
+    </div>
+  </div>`;
+}
+
 export function page(body, { title = '', css = [], bodyClass = '' } = {}) {
   return `<!doctype html>
 <html lang="fa" dir="rtl">

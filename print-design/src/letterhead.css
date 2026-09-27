@@ -135,3 +135,30 @@
 }
 .opt-c .foot { bottom: 5.2mm; color: #FFFFFF; }
 .opt-c .sep { background: var(--gold-light); }
+
+/* ============ نسخه‌های نهایی (گزینه الف) ============ */
+.transparent .lh { background: transparent; }
+
+/* LH-03: صفحه دوم — فقط نشان کوچک، شماره صفحه و فوتر یک‌سطری */
+.lh03 .head { top: 13mm; align-items: center; }
+.lh03 .mark.small { width: 15mm; }
+.lh03 .pageno { font-size: 9pt; font-weight: 500; color: var(--navy); display: flex; align-items: baseline; gap: 2mm; }
+.lh03 .pageno .dots { display: inline-block; width: 12mm; border-bottom: 0.7pt dotted var(--navy-55); }
+.lh03 .foot.one { bottom: 9.5mm; padding-top: 2.5mm; border-top: 0.5pt solid var(--gold); font-size: 7.3pt; }
+
+/* LH-04: دوزبانه — هدر و فوتر آینه‌ای */
+.lh04 .head { top: 13mm; align-items: center; }
+.lh04 .en-name { text-align: left; font-family: var(--en); color: var(--navy); }
+.lh04 .e1 { font-size: 9.5pt; font-weight: 700; line-height: 1.45; max-width: 62mm; }
+.lh04 .e2 { font-size: 7.5pt; line-height: 1.5; color: var(--navy-70); }
+.lh04 .fields-row { position: absolute; top: 29mm; right: var(--side); left: var(--side); display: flex; justify-content: flex-end; gap: 6mm; }
+.lh04 .field { display: flex; align-items: baseline; gap: 2mm; font-size: 8.5pt; line-height: 1.6; }
+.lh04 .fl { font-weight: 500; color: var(--navy); white-space: nowrap; }
+.lh04 .fl .lat { font-size: 0.92em; }
+.lh04 .dots { width: 20mm; border-bottom: 0.7pt dotted var(--navy-55); transform: translateY(0.4mm); }
+.lh04 .foot.bi { bottom: 8.5mm; padding-top: 2.5mm; border-top: 0.5pt solid var(--gold); display: flex; justify-content: space-between; gap: 8mm; font-size: 7pt; line-height: 1.7; text-align: right; }
+.lh04 .fcol { flex: 1; min-width: 0; }
+.lh04 .fa-col { flex: 0 0 104mm; }
+.lh04 .en-col { text-align: left; font-family: var(--en); font-size: 6.8pt; }
+.lh04 .en-col .fi { white-space: nowrap; }
+.lh04 .sep { margin: 0 1.8mm; height: 2.2mm; }

@@ -178,12 +178,41 @@ details.done > summary .st { font-weight: 500; font-size: 13px; color: var(--mut
 details.done[open] > summary { margin-bottom: 18px; }
 .todo-list { margin: 0; padding-inline-start: 20px; font-size: 14px; color: var(--muted); columns: 2; column-gap: 28px; }
 .todo-list li { break-inside: avoid; margin-bottom: 4px; }
+/* ——— دانلود ——— */
+.dl-wrap { display: grid; gap: 22px; }
+.dl-list { list-style: none; margin: 0; padding: 0; display: grid; gap: 0; background: var(--surface); border: 1px solid var(--line); border-radius: 12px; }
+.dl { display: flex; align-items: center; gap: 12px 18px; padding: 12px 16px; border-top: 1px solid var(--line); }
+.dl:first-child { border-top: 0; }
+.dl-txt { flex: 1; min-width: 0; display: grid; gap: 1px; }
+.dl-txt b { font-size: 14.5px; font-weight: 500; }
+.dl-txt > span { font-size: 13px; color: var(--muted); line-height: 1.7; }
+.dl-txt .sz { white-space: nowrap; }
+.dl-main { border-color: var(--gold); }
+.dl.big { padding-block: 16px; }
+.dl.big b { font-size: 16px; font-weight: 700; }
+.dl-group { display: grid; gap: 8px; }
+.dl-group h3 { font-size: 14px; font-weight: 700; color: var(--muted); }
+.dl-btn { flex: none; border: 1px solid var(--navy); background: transparent; color: var(--navy); border-radius: 7px; padding: 5px 16px; cursor: pointer; font-weight: 500; font-size: 14px; min-width: 96px; }
+.dl.big .dl-btn { background: var(--navy); color: var(--navy-ink); font-weight: 700; }
+.dl-btn:disabled { opacity: .55; cursor: progress; }
+.dl-btn.ok { border-color: var(--ok); color: var(--ok); background: transparent; }
+.dl-note { font-size: 14px; color: var(--muted); min-height: 1em; }
+.dl-note.err { color: var(--warn); }
+.dl-note:empty { display: none; }
+.pages4 { display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 22px; }
+.pages4 .cap b { font-family: "Segoe UI", system-ui, sans-serif; font-weight: 600; color: var(--ink); margin-inline-end: 4px; }
+
 .foot { color: var(--muted); font-size: 13px; border-top: 1px solid var(--line); padding-top: 16px; display: grid; gap: 4px; }
 
 @media (max-width: 900px) {
   .options, .pages3 { grid-template-columns: 1fr; max-width: 520px; }
+  .pages4 { grid-template-columns: repeat(2, minmax(0, 1fr)); }
   .todo-list { columns: 1; }
   .grid2 { grid-template-columns: 1fr; }
+}
+@media (max-width: 560px) {
+  .dl { flex-wrap: wrap; }
+  .dl-btn { width: 100%; }
 }
 @media (prefers-reduced-motion: reduce) { * { transition: none !important; } }
 </style>
@@ -192,23 +221,101 @@ details.done[open] > summary { margin-bottom: 18px; }
 
   <header class="top">
     <div class="brandline"><img src="img/logo-mark-framed.svg" alt=""><span>صندوق پژوهش و فناوری توسعه و آینده</span></div>
-    <h1>اقلام چاپی: مرور و تصمیم</h1>
-    <p class="lede">سربرگ، کاتالوگ و بروشور صندوق، مرحله به مرحله. هر مرحله اینجا برای بررسی قرار می‌گیرد و تصمیم‌ها در فرم پایین صفحه ثبت می‌شوند. نشان همه اقلام گزینهٔ ۳ «زنجیرهٔ پیوند» است.</p>
+    <h1>اقلام چاپی: فایل‌های نهایی</h1>
+    <p class="lede">سربرگ، کاتالوگ و بروشور صندوق آماده‌اند. همه فایل‌ها از همین صفحه دانلود می‌شوند: فایل چاپ افست (PDF/X-1a)، نسخه دیجیتال، قالب Word، نشان و قلم‌ها. موارد [TODO] هنوز در طرح‌ها قابل رؤیت‌اند و با تکمیل فرم پایین صفحه، همه اقلام یکجا دوباره ساخته می‌شوند.</p>
     <ol class="steps" aria-label="مراحل گردش کار">
       <li>سربرگ <span class="st">(گزینه الف)</span></li>
       <li>شبکه و صفحه‌بندی کاتالوگ <span class="st">(تأیید شد)</span></li>
-      <li class="now" aria-current="step">کاتالوگ ۱۶ صفحه</li>
-      <li>بروشور سه‌لت</li>
-      <li>بازبینی نهایی</li>
+      <li>کاتالوگ ۱۶ صفحه <span class="st">(آماده)</span></li>
+      <li>بروشور سه‌لت <span class="st">(آماده)</span></li>
+      <li class="now" aria-current="step">فایل‌های نهایی و بازبینی</li>
     </ol>
   </header>
+
+  <!-- ═══ مرحله ۵: دانلود ═══ -->
+  <section class="stage" aria-labelledby="s5h" id="downloads">
+    <div class="stage-head">
+      <div class="kicker">مرحله ۵ <span class="status">آماده دانلود</span></div>
+      <h2 id="s5h">دانلود فایل‌ها</h2>
+      <p>بسته کامل همه چیز را دارد. فایل‌های تکی برای وقتی است که فقط یک قلم را می‌خواهید؛ مثلاً فرستادن کاتالوگ چاپی به چاپخانه. پیش از هر ذخیره، یک پنجره تأیید نشان داده می‌شود.</p>
+    </div>
+    <div class="dl-wrap" id="dl-wrap">
+<ul class="dl-list dl-main">
+        <li class="dl big"><div class="dl-txt"><b>بسته کامل همه فایل‌ها</b><span>چاپی، دیجیتال، قالب‌های <bdi dir="ltr">Word</bdi> (<bdi dir="ltr">.dotx</bdi>)، نشان، قلم‌ها، پروفایل رنگ و فایل منبع · <span class="sz">۵٫۶ مگابایت</span></span></div><button type="button" class="dl-btn" data-file="TaFund_Print_Package_1405-07.zip" data-b64>دانلود</button></li>
+        <li class="dl big"><div class="dl-txt"><b>قالب‌های <bdi dir="ltr">Word</bdi> به همراه قلم‌ها</b><span>سه قالب <bdi dir="ltr">.dotx</bdi> برای <bdi dir="ltr">LH-01</bdi>، <bdi dir="ltr">LH-02</bdi> و <bdi dir="ltr">LH-04</bdi>، به همراه وزیرمتن، <bdi dir="ltr">Inter</bdi> و راهنما · <span class="sz">۵۴۴ کیلوبایت</span></span></div><button type="button" class="dl-btn" data-file="TaFund_Word_Templates.zip" data-b64>دانلود</button></li>
+      </ul>
+      <div class="dl-group"><h3>کاتالوگ ۱۶ صفحه</h3><ul class="dl-list">
+        <li class="dl"><div class="dl-txt"><b>کاتالوگ ۱۶ صفحه — چاپی</b><span><bdi dir="ltr">PDF/X-1a</bdi>، <bdi dir="ltr">CMYK</bdi>، نشت و علائم برش · <span class="sz">۲۹۳ کیلوبایت</span></span></div><button type="button" class="dl-btn" data-file="catalog_16p_print_PDFX1a.pdf">دانلود</button></li>
+        <li class="dl"><div class="dl-txt"><b>کاتالوگ ۱۶ صفحه — دیجیتال</b><span><bdi dir="ltr">PDF</bdi> برای ایمیل و وب · <span class="sz">۲۰۷ کیلوبایت</span></span></div><button type="button" class="dl-btn" data-file="catalog_16p_RGB.pdf">دانلود</button></li>
+        <li class="dl"><div class="dl-txt"><b>کاتالوگ — دوصفحه‌ای‌ها</b><span><bdi dir="ltr">A3</bdi>، به ترتیب باز شدن · <span class="sz">۱۹۸ کیلوبایت</span></span></div><button type="button" class="dl-btn" data-file="catalog_spreads_A3_RGB.pdf">دانلود</button></li>
+      </ul></div>
+      <div class="dl-group"><h3>بروشور سه‌لت</h3><ul class="dl-list">
+        <li class="dl"><div class="dl-txt"><b>بروشور سه‌لت — چاپی</b><span><bdi dir="ltr">PDF/X-1a</bdi>، <bdi dir="ltr">CMYK</bdi>، علائم برش و تا · <span class="sz">۱۶۹ کیلوبایت</span></span></div><button type="button" class="dl-btn" data-file="brochure_trifold_print_PDFX1a.pdf">دانلود</button></li>
+        <li class="dl"><div class="dl-txt"><b>بروشور سه‌لت — دیجیتال</b><span><bdi dir="ltr">PDF</bdi> رو و داخل · <span class="sz">۷۸ کیلوبایت</span></span></div><button type="button" class="dl-btn" data-file="brochure_trifold_RGB.pdf">دانلود</button></li>
+      </ul></div>
+      <div class="dl-group"><h3>سربرگ: فایل چاپ افست</h3><ul class="dl-list">
+        <li class="dl"><div class="dl-txt"><b>سربرگ عمومی (<bdi dir="ltr">LH-01</bdi>) — چاپی</b><span><bdi dir="ltr">PDF/X-1a</bdi>، <bdi dir="ltr">CMYK</bdi> · <span class="sz">۱۲۵ کیلوبایت</span></span></div><button type="button" class="dl-btn" data-file="LH-01_print_PDFX1a.pdf">دانلود</button></li>
+        <li class="dl"><div class="dl-txt"><b>سربرگ مدیرعامل (<bdi dir="ltr">LH-02</bdi>) — چاپی</b><span><bdi dir="ltr">PDF/X-1a</bdi>، <bdi dir="ltr">CMYK</bdi> · <span class="sz">۱۲۶ کیلوبایت</span></span></div><button type="button" class="dl-btn" data-file="LH-02_print_PDFX1a.pdf">دانلود</button></li>
+        <li class="dl"><div class="dl-txt"><b>سربرگ صفحه دوم (<bdi dir="ltr">LH-03</bdi>) — چاپی</b><span><bdi dir="ltr">PDF/X-1a</bdi>، <bdi dir="ltr">CMYK</bdi> · <span class="sz">۱۱۳ کیلوبایت</span></span></div><button type="button" class="dl-btn" data-file="LH-03_print_PDFX1a.pdf">دانلود</button></li>
+        <li class="dl"><div class="dl-txt"><b>سربرگ دوزبانه (<bdi dir="ltr">LH-04</bdi>) — چاپی</b><span><bdi dir="ltr">PDF/X-1a</bdi>، <bdi dir="ltr">CMYK</bdi> · <span class="sz">۱۳۴ کیلوبایت</span></span></div><button type="button" class="dl-btn" data-file="LH-04_print_PDFX1a.pdf">دانلود</button></li>
+      </ul></div>
+      <div class="dl-group"><h3>سربرگ: سند <bdi dir="ltr">Word</bdi></h3><ul class="dl-list">
+        <li class="dl"><div class="dl-txt"><b>سند <bdi dir="ltr">Word</bdi> سربرگ عمومی (<bdi dir="ltr">LH-01</bdi>)</b><span><bdi dir="ltr">docx</bdi>؛ قالب <bdi dir="ltr">.dotx</bdi> در بسته قالب‌های <bdi dir="ltr">Word</bdi> · <span class="sz">۸۱ کیلوبایت</span></span></div><button type="button" class="dl-btn" data-file="LH-01.docx" data-b64>دانلود</button></li>
+        <li class="dl"><div class="dl-txt"><b>سند <bdi dir="ltr">Word</bdi> سربرگ مدیرعامل (<bdi dir="ltr">LH-02</bdi>)</b><span><bdi dir="ltr">docx</bdi>؛ قالب <bdi dir="ltr">.dotx</bdi> در بسته قالب‌های <bdi dir="ltr">Word</bdi> · <span class="sz">۸۱ کیلوبایت</span></span></div><button type="button" class="dl-btn" data-file="LH-02.docx" data-b64>دانلود</button></li>
+        <li class="dl"><div class="dl-txt"><b>سند <bdi dir="ltr">Word</bdi> سربرگ دوزبانه (<bdi dir="ltr">LH-04</bdi>)</b><span><bdi dir="ltr">docx</bdi>؛ قالب <bdi dir="ltr">.dotx</bdi> در بسته قالب‌های <bdi dir="ltr">Word</bdi> · <span class="sz">۸۱ کیلوبایت</span></span></div><button type="button" class="dl-btn" data-file="LH-04.docx" data-b64>دانلود</button></li>
+      </ul></div>
+    </div>
+    <p class="dl-note" id="dl-note" role="status" aria-live="polite"></p>
+    <div class="facts">
+      <div class="fact"><b>چاپ افست</b><span>فایل‌های «چاپی» <bdi dir="ltr">CMYK</bdi> با پروفایل <bdi dir="ltr">FOGRA39</bdi>، نشت ۳ میلی‌متر و علائم برش دارند. پیش از چاپ، فایل را به <bdi dir="ltr">preflight</bdi> چاپخانه بدهید.</span></div>
+      <div class="fact"><b>قالب <bdi dir="ltr">Word</bdi></b><span>اول قلم‌های وزیرمتن و <bdi dir="ltr">Inter</bdi> را نصب کنید؛ بدون آن‌ها <bdi dir="ltr">Word</bdi> قلم دیگری جایگزین می‌کند. فایل <bdi dir="ltr">.dotx</bdi> با دوبار کلیک یک نامه تازه باز می‌کند.</span></div>
+      <div class="fact"><b>سربرگ دو رنگ</b><span>سربرگ برای چاپ دو رنگ طراحی شده است. تبدیل سرمه‌ای و طلایی به دو رنگ اختصاصی (<bdi dir="ltr">Pantone</bdi>) را چاپخانه انجام می‌دهد.</span></div>
+      <div class="fact"><b>فایل منبع</b><span>طرح‌ها با <bdi dir="ltr">HTML/CSS</bdi> ساخته شده‌اند، نه <bdi dir="ltr">Illustrator</bdi> یا <bdi dir="ltr">InDesign</bdi>. PDFها برداری‌اند و در <bdi dir="ltr">Illustrator</bdi> باز می‌شوند. منبع کامل در پوشه <bdi dir="ltr">08_Source</bdi> بسته است.</span></div>
+    </div>
+  </section>
+
+  <!-- ═══ سربرگ‌های نهایی ═══ -->
+  <section class="stage" aria-labelledby="lhh">
+    <div class="stage-head">
+      <div class="kicker">مرحله ۵ <span class="status">ساخته شد</span></div>
+      <h2 id="lhh">سربرگ‌های نهایی بر پایه گزینه الف</h2>
+      <p>چهار سربرگ با نشانی و کدپستی ثبت‌شده. در <bdi dir="ltr">Word</bdi>، صفحه اول سربرگ کامل دارد و صفحه‌های بعد خودکار سربرگ صفحه دوم می‌گیرند. «بسمه تعالی» طبق تصمیم شما فقط در قالب <bdi dir="ltr">Word</bdi> و به‌صورت متن آمده است.</p>
+    </div>
+    <div class="pages4">
+      <figure><div class="paper"><img src="img/lh-LH-01.png" alt="سربرگ عمومی LH-01" loading="lazy"></div><figcaption class="cap"><b><bdi dir="ltr">LH-01</bdi></b> عمومی</figcaption></figure>
+      <figure><div class="paper"><img src="img/lh-LH-02.png" alt="سربرگ دفتر مدیرعامل LH-02" loading="lazy"></div><figcaption class="cap"><b><bdi dir="ltr">LH-02</bdi></b> دفتر مدیرعامل</figcaption></figure>
+      <figure><div class="paper"><img src="img/lh-LH-03.png" alt="سربرگ صفحه دوم LH-03" loading="lazy"></div><figcaption class="cap"><b><bdi dir="ltr">LH-03</bdi></b> صفحه دوم به بعد</figcaption></figure>
+      <figure><div class="paper"><img src="img/lh-LH-04.png" alt="سربرگ دوزبانه LH-04" loading="lazy"></div><figcaption class="cap"><b><bdi dir="ltr">LH-04</bdi></b> دوزبانه</figcaption></figure>
+    </div>
+  </section>
+
+  <!-- ═══ مرحله ۴ ═══ -->
+  <section class="stage" aria-labelledby="s4h">
+    <div class="stage-head">
+      <div class="kicker">مرحله ۴ <span class="status">در انتظار بازبینی شما</span></div>
+      <h2 id="s4h">بروشور سه‌لت <bdi dir="ltr">A4</bdi></h2>
+      <p>تای غلتان راست‌به‌چپ: لت کوچک‌تر (۹۷ میلی‌متر) به داخل تا می‌شود. متن‌ها عیناً از سند محتوا هستند. سند برای جای پنل‌ها دو توصیف ناسازگار داشت؛ جای پنل‌ها طبق تای واقعی کاغذ و نقش هر پنل (جلد، پشت جلد، لت تاشونده) چیده شده است.</p>
+    </div>
+    <div class="toolbar">
+      <label class="chk" for="folds"><input type="checkbox" id="folds"> نمایش خطوط تا</label>
+    </div>
+    <div class="spreads">
+      <figure class="sheet-fig"><div class="frame"><img data-bro="outside" src="img/brochure-outside.png" alt="بروشور، روی بیرونی: لت تاشونده، پشت جلد و جلد" loading="lazy"></div><figcaption class="cap">روی بیرونی، از راست به چپ: لت تاشونده «ما چه مشکلی را حل می‌کنیم» (۹۷)، پشت جلد «شروع کنید» (۱۰۰)، جلد (۱۰۰)</figcaption></figure>
+      <figure class="sheet-fig"><div class="frame"><img data-bro="inside" src="img/brochure-inside.png" alt="بروشور، روی داخلی: سه ابزار و نوار فرآیند" loading="lazy"></div><figcaption class="cap">روی داخلی: سه ابزار در سه پنل و نوار چهارگامی فرآیند در پایین، با پیکان‌های راست‌به‌چپ</figcaption></figure>
+    </div>
+    <div class="facts">
+      <div class="fact"><b>ترتیب خواندن</b><span>جلد ← با باز کردن جلد، لت «ما چه مشکلی را حل می‌کنیم» ← با باز کردن کامل، سه ابزار کنار هم.</span></div>
+      <div class="fact"><b><bdi dir="ltr">QR</bdi></b><span>کد <bdi dir="ltr">QR</bdi> به <bdi dir="ltr">tafund.ir</bdi>، برداری و سرمه‌ای، ۳۴ میلی‌متر با حاشیه سفید؛ پیش از چاپ با گوشی آزمایش شود.</span></div>
+      <div class="fact"><b>هنوز [<bdi dir="ltr">TODO</bdi>]</b><span>تلفن و رایانامه در پشت جلد. پس از تکمیل فرم، بروشور هم با بقیه اقلام دوباره ساخته می‌شود.</span></div>
+    </div>
+  </section>
 
   <!-- ═══ مرحله ۳ ═══ -->
   <section class="stage" aria-labelledby="s3h">
     <div class="stage-head">
-      <div class="kicker">مرحله ۳ <span class="status">در انتظار بازبینی شما</span></div>
+      <div class="kicker">مرحله ۳ <span class="status">آماده</span></div>
       <h2 id="s3h">کاتالوگ کامل ۱۶ صفحه</h2>
-      <p>همه ۱۶ صفحه با سیستم تأییدشده، به همان ترتیبی که کاتالوگ باز می‌شود: صفحه زوج سمت راست و فرد سمت چپ. متن‌ها عیناً از سند محتوا هستند. نشانی و کدپستی از فرم اعمال شده و بقیه موارد به‌صورت [TODO] مانده‌اند.</p>
+      <p>همه ۱۶ صفحه با سیستم تأییدشده، به همان ترتیبی که کاتالوگ باز می‌شود: صفحه زوج سمت راست و فرد سمت چپ. متن‌ها عیناً از سند محتوا هستند. نشانی و کدپستی از فرم اعمال شده و بقیه موارد به‌صورت [TODO] مانده‌اند. فایل‌ها در بخش دانلود بالای صفحه است.</p>
     </div>
     <div class="spreads">
       <figure class="spread"><div class="pair"><img src="img/cat16-p16.png" alt="صفحه ۱۶" loading="lazy"><img src="img/cat16-p01.png" alt="صفحه ۱" loading="lazy"></div><figcaption class="cap">جلد باز از بیرون: جلد رو (چپ) و پشت جلد (راست)</figcaption></figure>
@@ -265,11 +372,12 @@ details.done[open] > summary { margin-bottom: 18px; }
   </details>
 
   <!-- ═══ مرحله ۱ ═══ -->
+  <details class="done">
+  <summary>مرحله ۱: سه گزینه چیدمان سربرگ <span class="st">انتخاب شد: گزینه الف</span></summary>
   <section class="stage" aria-labelledby="s1h">
     <div class="stage-head">
-      <div class="kicker">مرحله ۱ <span class="status">انتخاب شد: گزینه الف</span></div>
       <h2 id="s1h">سربرگ رسمی: انتخاب چیدمان</h2>
-      <p>گزینه الف انتخاب شده است. سربرگ مدیرعامل، صفحه دوم، دوزبانه و قالب Word در مرحله نهایی بر پایه همین گزینه ساخته می‌شوند. با نشانی واقعی، سطر اول فوتر تقریباً پر شده؛ وقتی تلفن و نمابر اضافه شوند، اقلام فوتر بین دو سطر متعادل می‌شوند.</p>
+      <p>گزینه الف انتخاب شد و سربرگ‌های نهایی بالای صفحه بر پایه آن ساخته شده‌اند. با نشانی واقعی، سطر اول فوتر تقریباً پر شده؛ وقتی تلفن و نمابر اضافه شوند، اقلام فوتر بین دو سطر متعادل می‌شوند.</p>
     </div>
     <div class="toolbar">
       <div class="seg" role="group" aria-label="حالت نمایش رنگ">
@@ -280,7 +388,7 @@ details.done[open] > summary { margin-bottom: 18px; }
     </div>
     <div class="options">
       <article class="opt" data-opt="a">
-        <div class="paper"><img data-base="a" src="img/option-a.png" alt="گزینه الف، نمای کامل سربرگ A4"></div>
+        <div class="paper"><img data-base="a" loading="lazy" src="img/option-a.png" alt="گزینه الف، نمای کامل سربرگ A4"></div>
         <div class="opt-body">
           <div class="opt-title"><h3>گزینه الف: خطی</h3><span class="rec">پیشنهاد طراح</span></div>
           <p>بدون سطح رنگی. نشان و نام در راست، فیلدهای اداری در چپ، یک خط طلایی زیر هدر و فوتر وسط‌چین.</p>
@@ -293,7 +401,7 @@ details.done[open] > summary { margin-bottom: 18px; }
         </div>
       </article>
       <article class="opt" data-opt="b">
-        <div class="paper"><img data-base="b" src="img/option-b.png" alt="گزینه ب، نمای کامل سربرگ A4"></div>
+        <div class="paper"><img data-base="b" loading="lazy" src="img/option-b.png" alt="گزینه ب، نمای کامل سربرگ A4"></div>
         <div class="opt-body">
           <div class="opt-title"><h3>گزینه ب: ستون سرمه‌ای</h3></div>
           <p>نوار باریک سرمه‌ای در لبه راست که خط طلایی هدر به آن وصل می‌شود. فوتر راست‌چین با برچسب‌های پررنگ.</p>
@@ -306,7 +414,7 @@ details.done[open] > summary { margin-bottom: 18px; }
         </div>
       </article>
       <article class="opt" data-opt="c">
-        <div class="paper"><img data-base="c" src="img/option-c.png" alt="گزینه ج، نمای کامل سربرگ A4"></div>
+        <div class="paper"><img data-base="c" loading="lazy" src="img/option-c.png" alt="گزینه ج، نمای کامل سربرگ A4"></div>
         <div class="opt-body">
           <div class="opt-title"><h3>گزینه ج: نوار پایه</h3></div>
           <p>نوار باریک سرمه‌ای در لبه بالا و نوار پهن سرمه‌ای در پایین که فوتر روی آن سفید چاپ می‌شود.</p>
@@ -333,25 +441,34 @@ details.done[open] > summary { margin-bottom: 18px; }
       <figure class="crop"><div class="frame"><img id="d-foot" src="img/option-a-foot.png" alt="فوتر گزینه انتخاب‌شده"></div><figcaption>فوتر: ۳۱ میلی‌متر پایین صفحه</figcaption></figure>
     </div>
   </section>
+  </details>
 
   <!-- ═══ فرم ═══ -->
   <section class="brief stage" aria-labelledby="bh">
     <div class="stage-head">
       <h2 id="bh">تصمیم‌ها و داده‌های باقی‌مانده</h2>
-      <p>تصمیم‌های در انتظار و فهرست [TODO] سند محتوا. هر چه اینجا ذخیره شود، Claude در مرحله بعد مستقیم در همه اقلام به کار می‌برد. خانه‌های خالی در طرح به‌صورت [TODO] باقی می‌مانند.</p>
+      <p>بازبینی بروشور و فهرست [TODO] سند محتوا. هر چه اینجا ذخیره شود، Claude مستقیم در همه اقلام به کار می‌برد و فایل‌ها را دوباره می‌سازد. خانه‌های خالی در طرح به‌صورت [TODO] باقی می‌مانند.</p>
     </div>
 
     <form id="brief" novalidate>
       <fieldset>
-        <legend>کاتالوگ (مرحله ۳)</legend>
+        <legend>بازبینی نهایی</legend>
+        <div class="q">
+          <span class="ql" id="q-bro">بروشور سه‌لت</span>
+          <div class="choices" role="radiogroup" aria-labelledby="q-bro">
+            <label><input type="radio" name="brochure" id="bro-ok" value="approve"> تأیید</label>
+            <label><input type="radio" name="brochure" id="bro-change" value="changes"> نیاز به تغییر (در یادداشت بنویسید، با نام پنل)</label>
+          </div>
+        </div>
+        <div class="f"><label for="brochureNotes">یادداشت درباره بروشور</label><textarea id="brochureNotes" name="brochureNotes" rows="3"></textarea></div>
         <div class="q">
           <span class="ql" id="q-cat">کاتالوگ کامل ۱۶ صفحه</span>
           <div class="choices" role="radiogroup" aria-labelledby="q-cat">
-            <label><input type="radio" name="catalogFull" id="cat-ok" value="approve"> تأیید؛ برو سراغ بروشور</label>
+            <label><input type="radio" name="catalogFull" id="cat-ok" value="approve"> تأیید</label>
             <label><input type="radio" name="catalogFull" id="cat-change" value="changes"> نیاز به تغییر (در یادداشت بنویسید، با شماره صفحه)</label>
           </div>
         </div>
-        <div class="f"><label for="catalogNotes">یادداشت درباره کاتالوگ</label><textarea id="catalogNotes" name="catalogNotes" rows="3"></textarea></div>
+        <div class="f"><label for="catalogNotes">یادداشت درباره کاتالوگ یا سربرگ</label><textarea id="catalogNotes" name="catalogNotes" rows="3"></textarea></div>
         <div class="q">
           <span class="ql" id="q-paper">زمینه صفحه‌های داخلی</span>
           <div class="choices" role="radiogroup" aria-labelledby="q-paper">
@@ -474,11 +591,64 @@ details.done[open] > summary { margin-bottom: 18px; }
   const app = $('#app');
   const form = $('#brief');
   const statusEl = $('#status');
-  const TEXT_FIELDS = ['catalogNotes', 'latinName', 'latinAbbr', 'regNo', 'nationalId', 'address', 'postcode', 'emailUser', 'tel', 'fax',
+  const TEXT_FIELDS = ['brochureNotes', 'catalogNotes', 'latinName', 'latinAbbr', 'regNo', 'nationalId', 'address', 'postcode', 'emailUser', 'tel', 'fax',
     'licenseNo', 'licenseDate', 'economicCode', 'ceoTel', 'ceoName', 'hours', 'addressEn', 'social', 'board'];
-  const RADIOS = ['catalogFull', 'paperTone', 'letterhead', 'bismillah', 'watermark', 'logoVariation', 'tagline', 'latin'];
+  const RADIOS = ['brochure', 'catalogFull', 'paperTone', 'letterhead', 'bismillah', 'watermark', 'logoVariation', 'tagline', 'latin'];
+
+  /* ——— دانلود ——— */
+  const dlNote = $('#dl-note');
+  const dlReady = window.claude && window.claude.use ? window.claude.use('downloads') : Promise.resolve(null);
+  function dlUnavailable() {
+    $$('.dl-btn').forEach((b) => { b.hidden = true; });
+    dlNote.className = 'dl-note err';
+    dlNote.textContent = 'دانلود در این نما در دسترس نیست. بسته کامل در گفتگو با Claude هم فرستاده شده است؛ صفحه را از claude.ai باز کنید یا از Claude بخواهید فایل را دوباره بفرستد.';
+  }
+  dlReady.then((dl) => { if (!dl) dlUnavailable(); });
+  $$('.dl-btn').forEach((btn) => btn.addEventListener('click', async () => {
+    const name = btn.dataset.file;
+    const label = btn.textContent;
+    btn.disabled = true;
+    btn.textContent = 'آماده‌سازی…';
+    dlNote.textContent = '';
+    dlNote.className = 'dl-note';
+    try {
+      const dl = await dlReady;
+      if (!dl) { dlUnavailable(); return; }
+      // zip و docx به‌صورت base64 منتشر شده‌اند (صفحه آن‌ها را مستقیم سرو نمی‌کند) و اینجا به بایت برگردانده می‌شوند
+      const b64 = btn.hasAttribute('data-b64');
+      const res = await fetch('files/' + encodeURIComponent(name) + (b64 ? '.b64.txt' : ''));
+      if (!res.ok) throw { code: 'fetch_failed' };
+      let data;
+      if (b64) {
+        const bin = atob((await res.text()).trim());
+        data = new Uint8Array(bin.length);
+        for (let i = 0; i < bin.length; i++) data[i] = bin.charCodeAt(i);
+      } else {
+        data = await res.blob();
+      }
+      await dl.save({ filename: name, data });
+      btn.classList.add('ok');
+      btn.textContent = 'ذخیره شد';
+      setTimeout(() => { btn.classList.remove('ok'); btn.textContent = label; }, 4000);
+      return;
+    } catch (e) {
+      const code = e && e.code;
+      if (code === 'declined') { /* بیننده نخواست */ }
+      else if (code === 'rate_limited') { dlNote.textContent = 'یک پنجره ذخیره هنوز باز است. آن را ببندید و چند لحظه بعد دوباره بزنید.'; }
+      else if (code === 'rejected_extension' || code === 'extension_not_enabled') { dlNote.className = 'dl-note err'; dlNote.textContent = 'این نوع فایل در این نما دانلود نمی‌شود. همین فایل در «بسته کامل» هست.'; }
+      else if (code === 'too_large') { dlNote.className = 'dl-note err'; dlNote.textContent = 'این فایل برای این نما بزرگ است. فایل‌های تکی را جدا دانلود کنید.'; }
+      else if (code === 'fetch_failed' || code === 'bad_request' || code === 'transform_error' || !code) { dlNote.className = 'dl-note err'; dlNote.textContent = 'فایل آماده نشد. صفحه را دوباره باز کنید و دوباره امتحان کنید.'; }
+      else { dlUnavailable(); return; }
+    } finally {
+      if (!btn.classList.contains('ok')) btn.textContent = label;
+      btn.disabled = false;
+    }
+  }));
 
   /* ——— نمایش ——— */
+  $('#folds').addEventListener('change', (e) => {
+    $$('[data-bro]').forEach((img) => { img.src = 'img/brochure-' + img.dataset.bro + (e.target.checked ? '-folds' : '') + '.png'; });
+  });
   $('#catgrid').addEventListener('change', (e) => {
     $$('[data-cat]').forEach((img) => { img.src = 'img/cat-' + img.dataset.cat + (e.target.checked ? '-grid' : '') + '.png'; });
   });
