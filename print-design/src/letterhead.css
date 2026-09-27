@@ -32,8 +32,9 @@
   justify-content: space-between;
   align-items: flex-start;
 }
-.lh .lockup { display: flex; align-items: center; gap: 4mm; }
-.lh .mark { width: 16mm; height: 16mm; display: block; }
+.lh .lockup { display: flex; align-items: center; gap: 3.2mm; }
+.lh .mark { width: 22mm; height: auto; display: block; }
+.lh .vrule { width: 0.75pt; align-self: stretch; margin: 0.6mm 0; background: var(--gold); }
 .lh .names { display: flex; flex-direction: column; gap: 0.6mm; }
 .lh .n1 { font-weight: 700; font-size: 12.5pt; line-height: 1.35; color: var(--navy); letter-spacing: -0.1pt; }
 .lh .n2 { font-weight: 400; font-size: 8.5pt; line-height: 1.4; color: var(--navy-70); }
@@ -101,7 +102,7 @@
   width: calc(7mm + var(--bleed));
   background: var(--navy);
 }
-.opt-b .mark { width: 18mm; height: 18mm; }
+.opt-b .mark { width: 24mm; }
 .opt-b .rule { right: 7mm; }                 /* خط طلایی به نوار متصل می‌شود */
 .opt-b .foot { text-align: right; bottom: 10mm; }
 .opt-b .foot::before {
@@ -130,7 +131,7 @@
   bottom: calc(-1 * var(--bleed));
   height: calc(18mm + var(--bleed));
   background: var(--navy);
-  border-top: 1pt solid var(--gold-bright);
+  border-top: 1pt solid var(--gold-light);
 }
 .opt-c .foot { bottom: 5.2mm; color: #FFFFFF; }
-.opt-c .sep { background: var(--gold-bright); }
+.opt-c .sep { background: var(--gold-light); }

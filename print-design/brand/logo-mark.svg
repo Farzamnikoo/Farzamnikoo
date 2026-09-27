@@ -1,7 +1,0 @@
-<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100">
-  <!-- نشان موقت (Placeholder): سه طاق تو در تو — تا دریافت فایل نشان مصوب -->
-  <rect width="100" height="100" rx="4" fill="#13294B"/>
-  <path d="M24 80V50A38 38 0 0 1 50 16A38 38 0 0 1 76 50V80" fill="none" stroke="#FFFFFF" stroke-width="3.2"/>
-  <path d="M36 80V56A24 24 0 0 1 50 34.5A24 24 0 0 1 64 56V80" fill="none" stroke="#C9A227" stroke-width="3.2"/>
-  <path d="M46 80V64A10 10 0 0 1 50 56.6A10 10 0 0 1 54 64V80Z" fill="#C9A227"/>
-</svg>

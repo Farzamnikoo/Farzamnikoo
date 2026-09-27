@@ -1,0 +1,145 @@
+/*
+ * کاتالوگ شرکتی — سیستم صفحه‌بندی
+ *
+ * قطع A4 (۲۱۰ × ۲۹۷)، صحافی منگنه وسط، راست‌به‌چپ: عطف در لبه راستِ صفحه‌های فرد.
+ * ستون متن ۱۷۵ میلی‌متر = ۱۲ ستون ۱۰ میلی‌متری + ۱۱ ناودان ۵ میلی‌متری.
+ * خط پایه ۶ میلی‌متر (۱۷ پوینت)؛ همه فاصله‌های عمودی مضربی از آن هستند.
+ */
+
+@page { size: 210mm 297mm; margin: 0; }
+
+.cp {
+  --bleed: 0mm;
+  --m-top: 18mm;
+  --m-bottom: 21mm;
+  --m-side: 17.5mm;
+  --bl: 6mm;                 /* خط پایه */
+  --col: 10mm;
+  --gut: 5mm;
+  --page-bg: var(--cream);
+  width: calc(210mm + 2 * var(--bleed));
+  height: calc(297mm + 2 * var(--bleed));
+  position: relative;
+  overflow: hidden;
+  background: var(--page-bg);
+  color: var(--ink);
+  break-after: page;
+}
+.cp .trim { position: absolute; inset: var(--bleed); width: 210mm; height: 297mm; }
+.cp .frame {
+  position: absolute;
+  top: var(--m-top);
+  bottom: var(--m-bottom);
+  left: var(--m-side);
+  right: var(--m-side);
+  display: flex;
+  flex-direction: column;
+}
+
+/* ——— پنج سطح تایپوگرافی ——— */
+.t-display { font-size: 34pt; line-height: calc(3 * var(--bl)); font-weight: 700; }
+.t-section { font-size: 21pt; line-height: calc(2 * var(--bl)); font-weight: 700; color: var(--navy); letter-spacing: -0.2pt; }
+.t-sub     { font-size: 11.5pt; line-height: var(--bl); font-weight: 700; color: var(--navy); }
+.t-body    { font-size: 9.5pt; line-height: var(--bl); font-weight: 400; }
+.t-caption { font-size: 7.8pt; line-height: calc(0.75 * var(--bl)); font-weight: 500; color: var(--navy-70); }
+.cp :where(p, h1, h2, h3, ul, ol) { margin: 0; }
+@media screen { .cp { margin-bottom: 8mm; } }
+
+/* ——— شروع بخش: برچسب، عنوان، خط طلایی ——— */
+.opener { position: relative; height: calc(3 * var(--bl)); display: flex; flex-direction: column; justify-content: flex-end; }
+.opener .eyebrow { position: absolute; top: 0; right: 0; }
+.opener .icon { position: absolute; top: 0.5mm; left: 0; width: 17mm; height: 17mm; }
+.sec-rule { height: 0; border-top: 0.75pt solid var(--gold); margin-top: 1.5mm; margin-bottom: calc(var(--bl) * 1 - 1.5mm); }
+
+/* ——— شماره صفحه: پایین، سمت بیرونی ——— */
+.folio {
+  position: absolute;
+  bottom: 11.5mm;
+  font-size: 8pt;
+  font-weight: 500;
+  color: var(--navy);
+  display: flex;
+  align-items: center;
+  gap: 2.5mm;
+}
+.folio::before { content: ""; width: 5mm; border-top: 0.75pt solid var(--gold); }
+.odd .folio { left: var(--m-side); flex-direction: row-reverse; }   /* صفحه فرد: بیرون = چپ */
+.even .folio { right: var(--m-side); }                              /* صفحه زوج: بیرون = راست */
+
+/* ——— شبکه ۱۲ ستونی (کمکی) ——— */
+.cols-8 { width: calc(8 * var(--col) + 7 * var(--gut)); }
+
+/* ============ جلد ============ */
+.cover { --page-bg: var(--navy); color: #fff; }
+.cover .chain {
+  position: absolute;
+  color: #182F58;            /* هم‌خانوادهٔ سرمه‌ای؛ قابل اجرا با ورنی موضعی UV به‌جای رنگ */
+  width: 262mm;
+  left: -26mm;
+  top: 199mm;
+}
+.cover .edition { color: var(--gold-light); letter-spacing: 0.4pt; }
+.cover .lockup { margin-top: calc(9 * var(--bl)); display: flex; flex-direction: column; align-items: flex-start; }
+.cover .mark { width: 52mm; display: block; margin-bottom: calc(2 * var(--bl)); }
+.cover .n1 { font-size: 20pt; line-height: calc(2 * var(--bl)); font-weight: 500; }
+.cover .n2 { font-size: 34pt; line-height: calc(3 * var(--bl)); font-weight: 700; margin-top: -1mm; }
+.cover .legal { color: var(--navy-30); font-size: 10pt; line-height: var(--bl); }
+.cover .gold-rule { width: 30mm; border-top: 0.75pt solid var(--gold-light); margin: calc(1.5 * var(--bl)) 0 calc(var(--bl) - 0.75pt); }
+.cover .tagline { font-size: 15pt; line-height: calc(1.5 * var(--bl)); color: var(--gold-light); }
+
+/* ============ صفحه آماری ============ */
+.panel {
+  position: relative;
+  background: var(--navy);
+  color: #fff;
+  margin-top: calc(2 * var(--bl));
+  /* نوار سرمه‌ای تا هر دو لبه صفحه؛ کارت‌ها روی همان ۱۲ ستون می‌مانند */
+  margin-inline: calc(-1 * (var(--m-side) + var(--bleed)));
+  padding-inline: calc(var(--m-side) + var(--bleed));
+  padding-block: calc(3 * var(--bl));
+}
+.stats {
+  position: relative;
+  display: grid;
+  grid-template-columns: 1fr 1fr;              /* هر کارت ۶ ستون */
+  grid-auto-rows: calc(6 * var(--bl));
+  column-gap: var(--gut);
+  row-gap: calc(3 * var(--bl));
+}
+.stats::before { content: ""; position: absolute; left: 0; right: 0; top: calc(7.5 * var(--bl)); border-top: 0.5pt solid #2E4570; }
+.stats::after { content: ""; position: absolute; top: 0; bottom: 0; left: 50%; border-left: 0.5pt solid #2E4570; }
+.stat { display: flex; flex-direction: column; padding-inline-end: 6mm; }
+.stat .fig { height: calc(3 * var(--bl)); display: flex; align-items: baseline; gap: 2.5mm; color: var(--gold-light); white-space: nowrap; }
+.stat .num { font-size: 46pt; line-height: calc(3 * var(--bl)); font-weight: 700; }
+.stat .word { font-size: 24pt; line-height: calc(3 * var(--bl)); font-weight: 700; }
+.stat .unit { font-size: 13pt; font-weight: 500; color: #fff; }
+.stat .tick { width: 8mm; border-top: 0.75pt solid var(--gold-light); margin: calc(0.5 * var(--bl)) 0 calc(0.5 * var(--bl) - 0.75pt); }
+.stat .label { font-size: 10pt; line-height: var(--bl); color: var(--navy-12); }
+.glance .glance-text { margin-top: calc(2 * var(--bl)); }
+
+/* ============ صفحه ابزار ============ */
+.instrument .intro { margin-bottom: calc(2 * var(--bl)); }
+.two-col { display: grid; grid-template-columns: calc(8 * var(--col) + 7 * var(--gut)) calc(4 * var(--col) + 3 * var(--gut)); column-gap: var(--gut); align-items: start; }
+.list-head { margin-bottom: var(--bl); }
+.list-head .t-caption { display: block; margin-top: 0.75mm; }
+.items { list-style: none; margin: 0; padding: 0; border-top: 0.5pt solid var(--navy-12); }
+.items li {
+  display: grid;
+  grid-template-columns: 7mm 1fr;
+  padding: calc(0.5 * var(--bl)) 0 calc(0.5 * var(--bl) - 0.5pt);
+  border-bottom: 0.5pt solid var(--navy-12);
+}
+.items .no { font-size: 9.5pt; line-height: var(--bl); font-weight: 700; color: var(--gold); }
+.items .name { font-size: 9.5pt; line-height: var(--bl); font-weight: 700; color: var(--navy); }
+.items .desc { grid-column: 2; }
+.box { background: var(--grey-card); padding: calc(0.75 * var(--bl)) 5mm var(--bl); }
+.box + .box { margin-top: var(--gut); }
+.box h3 { margin-bottom: calc(0.5 * var(--bl)); }
+.box ul { list-style: none; margin: 0; padding: 0; }
+.box li { position: relative; padding-right: 4mm; }
+.box li::before { content: ""; position: absolute; right: 0.4mm; top: 2.55mm; width: 1.3mm; height: 1.3mm; border-radius: 50%; background: var(--gold); }
+.box li + li { margin-top: calc(0.25 * var(--bl)); }
+
+/* ============ روکش شبکه (فقط نسخه بررسی) ============ */
+.grid-overlay { position: absolute; inset: 0; pointer-events: none; display: none; }
+.show-grid .grid-overlay { display: block; }

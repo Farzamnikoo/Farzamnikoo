@@ -26,7 +26,8 @@ const sep = '<i class="sep" aria-hidden="true"></i>';
 function lockup(d, { extraLine } = {}) {
   return `
     <div class="lockup">
-      <img class="mark" src="../brand/logo-mark.svg" alt="">
+      <img class="mark" src="../brand/logo/logo-mark.svg" alt="">
+      <span class="vrule" aria-hidden="true"></span>
       <div class="names">
         <div class="n1">${d.nameFa}</div>
         <div class="n2">${d.legalFa}</div>

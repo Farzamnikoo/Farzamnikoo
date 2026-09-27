@@ -1,4 +1,4 @@
-<title>سربرگ صندوق توسعه و آینده</title>
+<title>اقلام چاپی صندوق توسعه و آینده</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Vazirmatn:wght@400;500;700&display=swap">
@@ -10,13 +10,13 @@
   --ink: #1D2433;
   --muted: #58647A;
   --line: #D6DBE3;
-  --navy: #13294B;
+  --navy: #0F2547;
   --navy-ink: #FFFFFF;
   --gold: #C9A227;
   --focus: #2F6FDB;
   --ok: #1F7A4D;
   --warn: #A1361F;
-  --paper-shadow: 0 1px 2px rgba(19, 41, 75, .10), 0 8px 24px rgba(19, 41, 75, .10);
+  --paper-shadow: 0 1px 2px rgba(15, 37, 71, .10), 0 8px 24px rgba(15, 37, 71, .10);
 }
 @media (prefers-color-scheme: dark) {
   :root:not([data-theme="light"]) {
@@ -27,9 +27,9 @@
     --ink: #E7EBF2;
     --muted: #9CA8BC;
     --line: #283B5F;
-    --navy: #D4AF37;
+    --navy: #DFC069;
     --navy-ink: #0F2547;
-    --gold: #D4AF37;
+    --gold: #DFC069;
     --focus: #8DB4FF;
     --ok: #6FD19E;
     --warn: #FF9C85;
@@ -44,9 +44,9 @@
   --ink: #E7EBF2;
   --muted: #9CA8BC;
   --line: #283B5F;
-  --navy: #D4AF37;
+  --navy: #DFC069;
   --navy-ink: #0F2547;
-  --gold: #D4AF37;
+  --gold: #DFC069;
   --focus: #8DB4FF;
   --ok: #6FD19E;
   --warn: #FF9C85;
@@ -61,9 +61,10 @@ body {
   line-height: 1.85;
   direction: rtl;
 }
-.wrap { max-width: 1180px; margin: 0 auto; padding-inline: 20px; padding-block: 32px 72px; display: grid; gap: 44px; }
+.wrap { max-width: 1180px; margin: 0 auto; padding-inline: 20px; padding-block: 32px 72px; display: grid; gap: 56px; }
 h1, h2, h3 { text-wrap: balance; margin: 0; line-height: 1.4; }
 p { margin: 0; }
+figure { margin: 0; }
 .lat { font-family: "Segoe UI", system-ui, sans-serif; direction: ltr; unicode-bidi: isolate; }
 button, input, textarea { font: inherit; color: inherit; }
 [hidden] { display: none !important; }
@@ -72,17 +73,28 @@ button, input, textarea { font: inherit; color: inherit; }
 /* ——— سرصفحه ——— */
 .top { display: grid; gap: 14px; }
 .brandline { display: flex; align-items: center; gap: 10px; color: var(--muted); font-size: 13.5px; font-weight: 500; }
-.brandline img { width: 26px; height: 26px; border-radius: 3px; }
+.brandline img { width: 28px; height: 28px; }
 .top h1 { font-size: clamp(24px, 3.2vw, 34px); font-weight: 700; }
 .top h1::after { content: ""; display: block; width: 56px; height: 2px; background: var(--gold); margin-top: 14px; }
-.lede { max-width: 70ch; color: var(--muted); font-size: 16px; }
+.lede { max-width: 72ch; color: var(--muted); font-size: 16px; }
 .steps { list-style: none; margin: 6px 0 0; padding: 0; display: flex; flex-wrap: wrap; gap: 8px; counter-reset: s; }
 .steps li { counter-increment: s; display: flex; align-items: center; gap: 8px; font-size: 13px; color: var(--muted); background: var(--surface); border: 1px solid var(--line); border-radius: 999px; padding: 3px 12px 3px 6px; }
 .steps li::before { content: counter(s, persian); width: 22px; height: 22px; border-radius: 50%; display: grid; place-items: center; font-size: 12px; background: var(--surface-2); color: var(--muted); font-weight: 500; }
+.steps li .st { font-size: 11.5px; }
 .steps li.now { color: var(--ink); border-color: var(--navy); font-weight: 500; }
 .steps li.now::before { background: var(--navy); color: var(--navy-ink); }
+.steps li.wait { color: var(--ink); }
+.steps li.wait::before { background: var(--surface); border: 1.5px solid var(--navy); color: var(--navy); }
 
-/* ——— نوار ابزار ——— */
+/* ——— بخش مرحله ——— */
+.stage { display: grid; gap: 22px; }
+.stage-head { display: grid; gap: 6px; }
+.stage-head .kicker { font-size: 13px; font-weight: 500; color: var(--muted); display: flex; gap: 10px; align-items: center; flex-wrap: wrap; }
+.status { font-size: 12px; font-weight: 500; border-radius: 4px; padding: 0 8px; line-height: 22px; border: 1px solid var(--gold); color: var(--navy); }
+.stage-head h2 { font-size: 23px; font-weight: 700; }
+.stage-head p { color: var(--muted); max-width: 74ch; font-size: 15px; }
+
+/* ——— ابزار نمایش ——— */
 .toolbar { display: flex; flex-wrap: wrap; align-items: center; gap: 12px 20px; }
 .seg { display: inline-flex; background: var(--surface); border: 1px solid var(--line); border-radius: 8px; padding: 3px; gap: 2px; }
 .seg button { border: 0; background: transparent; padding: 5px 14px; border-radius: 6px; cursor: pointer; font-size: 14px; color: var(--muted); }
@@ -90,36 +102,40 @@ button, input, textarea { font: inherit; color: inherit; }
 .chk { display: inline-flex; align-items: center; gap: 8px; font-size: 14px; color: var(--muted); cursor: pointer; }
 .chk input { width: 16px; height: 16px; accent-color: var(--navy); }
 
-/* ——— کارت گزینه‌ها ——— */
+.paper { background: #fff; box-shadow: var(--paper-shadow); aspect-ratio: 210 / 297; position: relative; outline: 2px solid transparent; outline-offset: 6px; transition: outline-color .15s; }
+.paper img { display: block; width: 100%; height: 100%; }
+.cap { font-size: 13px; color: var(--muted); margin-top: 10px; }
+.bw .paper img, .bw .crop img { filter: grayscale(1) contrast(1.04); }
+
+/* ——— کاتالوگ ——— */
+.pages3 { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 28px; }
+.sheet-fig .frame { background: #fff; box-shadow: var(--paper-shadow); }
+.sheet-fig img { display: block; width: 100%; height: auto; }
+.facts { display: grid; grid-template-columns: repeat(auto-fit, minmax(240px, 1fr)); gap: 12px; }
+.fact { background: var(--surface); border: 1px solid var(--line); border-radius: 10px; padding: 14px 16px; display: grid; gap: 4px; align-content: start; }
+.fact b { font-size: 14px; }
+.fact span { font-size: 13.5px; color: var(--muted); line-height: 1.75; }
+
+/* ——— سربرگ ——— */
 .options { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 28px; }
 .opt { display: grid; grid-template-rows: auto 1fr; gap: 18px; }
-.paper { margin: 0; background: #fff; box-shadow: var(--paper-shadow); aspect-ratio: 210 / 297; position: relative; outline: 2px solid transparent; outline-offset: 6px; transition: outline-color .15s; }
-.paper img { display: block; width: 100%; height: 100%; }
 .opt.picked .paper { outline-color: var(--navy); }
-.bw .paper img, .bw .crop img { filter: grayscale(1) contrast(1.04); }
 .opt-body { display: grid; gap: 10px; align-content: start; }
 .opt-title { display: flex; align-items: center; flex-wrap: wrap; gap: 8px 10px; }
-.opt-title h2 { font-size: 18px; font-weight: 700; }
+.opt-title h3 { font-size: 18px; font-weight: 700; }
 .rec { font-size: 12px; font-weight: 500; color: var(--navy); border: 1px solid var(--gold); border-radius: 4px; padding: 0 8px; line-height: 22px; }
-.opt p { color: var(--ink); font-size: 14.5px; }
+.opt p { font-size: 14.5px; }
 .opt dl { margin: 2px 0 0; display: grid; gap: 8px; font-size: 13.5px; }
 .opt dl div { display: grid; gap: 1px; padding-top: 8px; border-top: 1px solid var(--line); }
 .opt dt { font-weight: 500; color: var(--muted); font-size: 12.5px; }
 .opt dd { margin: 0; line-height: 1.75; }
 .pick { justify-self: start; margin-top: 6px; border: 1px solid var(--navy); background: transparent; color: var(--navy); border-radius: 7px; padding: 6px 16px; cursor: pointer; font-weight: 500; font-size: 14px; }
 .pick[aria-pressed="true"] { background: var(--navy); color: var(--navy-ink); }
-
 .why { background: var(--surface); border: 1px solid var(--line); border-radius: 10px; padding: 18px 20px; display: grid; gap: 6px; max-width: 80ch; }
 .why h3 { font-size: 15px; font-weight: 700; }
-.why p { font-size: 14.5px; color: var(--ink); }
-
-/* ——— جزئیات ——— */
-.section-head { display: grid; gap: 6px; margin-bottom: 16px; }
-.section-head h2 { font-size: 21px; font-weight: 700; }
-.section-head p { color: var(--muted); max-width: 72ch; font-size: 14.5px; }
-.detail-bar { margin-bottom: 14px; }
+.why p { font-size: 14.5px; }
 .crops { display: grid; gap: 14px; }
-.crop { margin: 0; display: grid; gap: 6px; }
+.crop { display: grid; gap: 6px; }
 .crop .frame { background: #fff; box-shadow: var(--paper-shadow); overflow: hidden; }
 .crop img { display: block; width: 100%; height: auto; }
 .crop figcaption { font-size: 12.5px; color: var(--muted); }
@@ -131,6 +147,7 @@ legend { font-weight: 700; font-size: 16px; padding: 0 6px; }
 .q { display: grid; gap: 6px; }
 .q > .ql { font-weight: 500; font-size: 14px; }
 .choices { display: grid; gap: 6px; }
+.choices.row { grid-template-columns: repeat(auto-fit, minmax(180px, 1fr)); }
 .choices label { display: flex; gap: 10px; align-items: flex-start; font-size: 14.5px; cursor: pointer; line-height: 1.7; }
 .choices input { margin-top: 5px; width: 16px; height: 16px; accent-color: var(--navy); flex: none; }
 .hint { color: var(--muted); font-size: 13px; }
@@ -144,11 +161,6 @@ legend { font-weight: 700; font-size: 16px; padding: 0 6px; }
 .suffix input { border-radius: 7px 0 0 7px; direction: ltr; text-align: left; }
 .suffix span { display: grid; place-items: center; padding: 0 10px; border: 1px solid var(--line); border-left: 0; border-radius: 0 7px 7px 0; background: var(--surface); color: var(--muted); font-size: 14px; }
 .ltr { direction: ltr; text-align: left; }
-.logo-row { display: flex; flex-wrap: wrap; gap: 16px; align-items: center; }
-.logo-prev { width: 88px; height: 88px; border: 1px dashed var(--line); border-radius: 8px; display: grid; place-items: center; background: #fff; overflow: hidden; }
-.logo-prev img { max-width: 80px; max-height: 80px; }
-.file-btn { display: inline-flex; align-items: center; gap: 8px; border: 1px solid var(--navy); color: var(--navy); border-radius: 7px; padding: 6px 14px; cursor: pointer; font-weight: 500; font-size: 14px; }
-.file-btn input { position: absolute; width: 1px; height: 1px; opacity: 0; }
 .savebar { display: flex; flex-wrap: wrap; align-items: center; gap: 12px 18px; position: sticky; bottom: env(safe-area-inset-bottom, 0px); background: var(--bg); padding-block: 12px; border-top: 1px solid var(--line); }
 .save { border: 0; background: var(--navy); color: var(--navy-ink); border-radius: 8px; padding: 9px 22px; font-weight: 700; cursor: pointer; font-size: 15px; }
 .save:disabled { opacity: .5; cursor: not-allowed; }
@@ -159,7 +171,7 @@ legend { font-weight: 700; font-size: 16px; padding: 0 6px; }
 .foot { color: var(--muted); font-size: 13px; border-top: 1px solid var(--line); padding-top: 16px; display: grid; gap: 4px; }
 
 @media (max-width: 900px) {
-  .options { grid-template-columns: 1fr; max-width: 520px; }
+  .options, .pages3 { grid-template-columns: 1fr; max-width: 520px; }
   .grid2 { grid-template-columns: 1fr; }
 }
 @media (prefers-reduced-motion: reduce) { * { transition: none !important; } }
@@ -168,87 +180,103 @@ legend { font-weight: 700; font-size: 16px; padding: 0 6px; }
 <div class="wrap" dir="rtl" lang="fa" id="app">
 
   <header class="top">
-    <div class="brandline"><img src="img/logo-mark.svg" alt=""><span>صندوق پژوهش و فناوری توسعه و آینده · اقلام چاپی</span></div>
-    <h1>سربرگ رسمی: انتخاب چیدمان</h1>
-    <p class="lede">سه چیدمان برای هدر و فوتر سربرگ عمومی (LH-01). بعد از انتخاب شما، سربرگ مدیرعامل، صفحه دوم، سربرگ دوزبانه و قالب Word بر پایه همان گزینه ساخته می‌شوند. همه تصاویر از فایل PDF اصلی در اندازه A4 گرفته شده‌اند.</p>
+    <div class="brandline"><img src="img/logo-mark-framed.svg" alt=""><span>صندوق پژوهش و فناوری توسعه و آینده</span></div>
+    <h1>اقلام چاپی: مرور و تصمیم</h1>
+    <p class="lede">سربرگ، کاتالوگ و بروشور صندوق، مرحله به مرحله. هر مرحله اینجا برای بررسی قرار می‌گیرد و تصمیم‌ها در فرم پایین صفحه ثبت می‌شوند. نشان همه اقلام گزینهٔ ۳ «زنجیرهٔ پیوند» است.</p>
     <ol class="steps" aria-label="مراحل گردش کار">
-      <li class="now" aria-current="step">سربرگ</li>
-      <li>شبکه و صفحه‌بندی کاتالوگ</li>
+      <li class="wait">سربرگ <span class="st">(در انتظار انتخاب)</span></li>
+      <li class="now" aria-current="step">شبکه و صفحه‌بندی کاتالوگ</li>
       <li>کاتالوگ ۱۶ صفحه</li>
       <li>بروشور سه‌لت</li>
       <li>بازبینی نهایی</li>
     </ol>
   </header>
 
-  <section aria-label="گزینه‌ها">
-    <div class="toolbar" style="margin-bottom:20px">
+  <!-- ═══ مرحله ۲ ═══ -->
+  <section class="stage" aria-labelledby="s2h">
+    <div class="stage-head">
+      <div class="kicker">مرحله ۲ <span class="status">در انتظار تأیید</span></div>
+      <h2 id="s2h">کاتالوگ: شبکه و سیستم صفحه‌بندی</h2>
+      <p>سه صفحه نمونه‌ای که پرامپت خواسته بود: جلد، صفحه آماری و صفحه یک ابزار مالی. متن‌ها عیناً از سند محتوا هستند. اگر این سیستم تأیید شود، هر ۱۶ صفحه با همین قواعد تکمیل می‌شود.</p>
+    </div>
+    <div class="toolbar">
+      <label class="chk" for="catgrid"><input type="checkbox" id="catgrid"> نمایش شبکه ۱۲ ستونی و خط پایه</label>
+    </div>
+    <div class="pages3">
+      <figure><div class="paper"><img data-cat="p01-cover" src="img/cat-p01-cover.png" alt="جلد کاتالوگ"></div><figcaption class="cap">جلد</figcaption></figure>
+      <figure><div class="paper"><img data-cat="p03-at-a-glance" src="img/cat-p03-at-a-glance.png" alt="صفحه ۳، صندوق در یک نگاه"></div><figcaption class="cap">صفحه ۳: صندوق در یک نگاه</figcaption></figure>
+      <figure><div class="paper"><img data-cat="p07-guarantee" src="img/cat-p07-guarantee.png" alt="صفحه ۷، صدور ضمانت‌نامه"></div><figcaption class="cap">صفحه ۷: صدور ضمانت‌نامه</figcaption></figure>
+    </div>
+    <div class="facts">
+      <div class="fact"><b>شبکه</b><span>۱۲ ستون ۱۰ میلی‌متری با ناودان ۵ میلی‌متر؛ خط پایه ۶ میلی‌متر. حاشیه بالا ۱۸، پایین ۲۱، طرفین ۱۷٫۵ میلی‌متر.</span></div>
+      <div class="fact"><b>تایپوگرافی</b><span>وزیرمتن در پنج سطح: ۳۴، ۲۱، ۱۱٫۵، ۹٫۵ و ۷٫۸ پوینت. متن بدنه با فاصله خط ۱٫۸ برابر.</span></div>
+      <div class="fact"><b>دو نقطه اوج</b><span>نوار سرمه‌ای تمام‌عرض با اعداد طلایی در صفحه ۳. نمودار فرآیند صفحه ۱۱ هم در مرحله بعد با همین زبان ساخته می‌شود.</span></div>
+      <div class="fact"><b>الگوی زنجیره</b><span>سه حلقهٔ بافته از خانوادهٔ نشان، فقط روی جلد و پشت جلد و هم‌رنگ زمینه. می‌شود آن را با ورنی موضعی چاپ کرد.</span></div>
+    </div>
+    <figure class="sheet-fig"><div class="frame"><img src="img/cat-system.png" alt="برگه سیستم صفحه‌بندی کاتالوگ"></div><figcaption class="cap">برگه سیستم (A3): شبکه، تایپوگرافی، رنگ، آیکون‌ها، نشان و الگو</figcaption></figure>
+  </section>
+
+  <!-- ═══ مرحله ۱ ═══ -->
+  <section class="stage" aria-labelledby="s1h">
+    <div class="stage-head">
+      <div class="kicker">مرحله ۱ <span class="status">در انتظار انتخاب</span></div>
+      <h2 id="s1h">سربرگ رسمی: انتخاب چیدمان</h2>
+      <p>سه چیدمان برای هدر و فوتر سربرگ عمومی (LH-01)، حالا با نشان زنجیره (نسخه بدون قاب، که سند نشان برای سربرگ توصیه کرده). بعد از انتخاب، سربرگ مدیرعامل، صفحه دوم، دوزبانه و قالب Word ساخته می‌شوند.</p>
+    </div>
+    <div class="toolbar">
       <div class="seg" role="group" aria-label="حالت نمایش رنگ">
         <button type="button" id="v-color" aria-pressed="true">رنگی</button>
         <button type="button" id="v-bw" aria-pressed="false">سیاه‌وسفید</button>
       </div>
       <label class="chk" for="guides"><input type="checkbox" id="guides"> نمایش ناحیه امن متن</label>
     </div>
-
     <div class="options">
       <article class="opt" data-opt="a">
-        <figure class="paper"><img data-base="a" src="img/option-a.png" alt="گزینه الف، نمای کامل سربرگ A4"></figure>
+        <div class="paper"><img data-base="a" src="img/option-a.png" alt="گزینه الف، نمای کامل سربرگ A4"></div>
         <div class="opt-body">
-          <div class="opt-title"><h2>گزینه الف: خطی</h2><span class="rec">پیشنهاد طراح</span></div>
-          <p>بدون سطح رنگی. نشان و نام در راست، فیلدهای اداری در چپ، یک خط طلایی زیر هدر و فوتر وسط‌چین زیر خط طلایی نازک.</p>
+          <div class="opt-title"><h3>گزینه الف: خطی</h3><span class="rec">پیشنهاد طراح</span></div>
+          <p>بدون سطح رنگی. نشان و نام در راست، فیلدهای اداری در چپ، یک خط طلایی زیر هدر و فوتر وسط‌چین.</p>
           <dl>
             <div><dt>چاپ از Word روی چاپگر اداری</dt><dd>کامل؛ هیچ عنصری تا لبه کاغذ نمی‌رود.</dd></div>
             <div><dt>چاپ سیاه‌وسفید و فکس</dt><dd>بسیار سبک و خوانا.</dd></div>
             <div><dt>چاپ افست</dt><dd>دو رنگ، بدون نشت؛ کم‌هزینه‌ترین.</dd></div>
-            <div><dt>حضور هویت بصری</dt><dd>آرام و کلاسیک.</dd></div>
           </dl>
           <button type="button" class="pick" data-pick="a" aria-pressed="false">انتخاب گزینه الف</button>
         </div>
       </article>
-
       <article class="opt" data-opt="b">
-        <figure class="paper"><img data-base="b" src="img/option-b.png" alt="گزینه ب، نمای کامل سربرگ A4"></figure>
+        <div class="paper"><img data-base="b" src="img/option-b.png" alt="گزینه ب، نمای کامل سربرگ A4"></div>
         <div class="opt-body">
-          <div class="opt-title"><h2>گزینه ب: ستون سرمه‌ای</h2></div>
+          <div class="opt-title"><h3>گزینه ب: ستون سرمه‌ای</h3></div>
           <p>نوار باریک سرمه‌ای در لبه راست که خط طلایی هدر به آن وصل می‌شود. فوتر راست‌چین با برچسب‌های پررنگ.</p>
           <dl>
-            <div><dt>چاپ از Word روی چاپگر اداری</dt><dd>چاپگر اداری حدود ۴ میلی‌متر از لبه را چاپ نمی‌کند، پس نوار با یک باریکه سفید درمی‌آید. در قالب Word نوار کمی به داخل منتقل می‌شود.</dd></div>
+            <div><dt>چاپ از Word روی چاپگر اداری</dt><dd>چاپگر اداری حدود ۴ میلی‌متر از لبه را چاپ نمی‌کند؛ در قالب Word نوار کمی به داخل منتقل می‌شود.</dd></div>
             <div><dt>چاپ سیاه‌وسفید و فکس</dt><dd>خوانا؛ یک نوار باریک مشکی در لبه.</dd></div>
             <div><dt>چاپ افست</dt><dd>دو رنگ، با نشت ۳ میلی‌متر در لبه راست.</dd></div>
-            <div><dt>حضور هویت بصری</dt><dd>متوسط؛ نوار عمودی در بایگانی و پوشه دیده می‌شود.</dd></div>
           </dl>
           <button type="button" class="pick" data-pick="b" aria-pressed="false">انتخاب گزینه ب</button>
         </div>
       </article>
-
       <article class="opt" data-opt="c">
-        <figure class="paper"><img data-base="c" src="img/option-c.png" alt="گزینه ج، نمای کامل سربرگ A4"></figure>
+        <div class="paper"><img data-base="c" src="img/option-c.png" alt="گزینه ج، نمای کامل سربرگ A4"></div>
         <div class="opt-body">
-          <div class="opt-title"><h2>گزینه ج: نوار پایه</h2></div>
-          <p>نوار باریک سرمه‌ای در لبه بالا و نوار پهن سرمه‌ای در پایین. فوتر روی نوار پایین به رنگ سفید چاپ می‌شود.</p>
+          <div class="opt-title"><h3>گزینه ج: نوار پایه</h3></div>
+          <p>نوار باریک سرمه‌ای در لبه بالا و نوار پهن سرمه‌ای در پایین که فوتر روی آن سفید چاپ می‌شود.</p>
           <dl>
             <div><dt>چاپ از Word روی چاپگر اداری</dt><dd>نوارهای تمام‌لبه فقط روی کاغذ پیش‌چاپ افست درست درمی‌آیند.</dd></div>
-            <div><dt>چاپ سیاه‌وسفید و فکس</dt><dd>نوار پهن مشکی در پایین؛ تونر زیادی مصرف می‌کند و متن سفید در کپی و فکس کم‌رنگ می‌شود.</dd></div>
+            <div><dt>چاپ سیاه‌وسفید و فکس</dt><dd>نوار پهن مشکی؛ تونر زیادی مصرف می‌کند و متن سفید در کپی کم‌رنگ می‌شود.</dd></div>
             <div><dt>چاپ افست</dt><dd>دو رنگ، با نشت در بالا و پایین.</dd></div>
-            <div><dt>حضور هویت بصری</dt><dd>قوی و قاب‌دار.</dd></div>
           </dl>
           <button type="button" class="pick" data-pick="c" aria-pressed="false">انتخاب گزینه ج</button>
         </div>
       </article>
     </div>
-  </section>
-
-  <aside class="why">
-    <h3>چرا گزینه الف پیشنهاد می‌شود</h3>
-    <p>طبق سند، مکاتبات روزانه صندوق در Word نوشته می‌شود. گزینه الف در هر سه مسیر، یعنی کاغذ پیش‌چاپ افست، چاپگر اداری و PDF، یکسان درمی‌آید و در چاپ سیاه‌وسفید هم رسمی می‌ماند. اگر حضور پررنگ‌تر هویت بصری برایتان مهم‌تر است، گزینه ب انتخاب بعدی است.</p>
-  </aside>
-
-  <section aria-labelledby="dh">
-    <div class="section-head">
-      <h2 id="dh">جزئیات هدر و فوتر</h2>
-      <p>بزرگ‌نمایی از همان خروجی. برای سنجیدن اندازه واقعی حروف، صفحه ۲ فایل «compare_LH-01_options_A3.pdf» را بدون «Fit to page» روی A3 چاپ کنید.</p>
-    </div>
-    <div class="seg detail-bar" role="group" aria-label="گزینه برای نمایش جزئیات">
-      <button type="button" data-detail="a" aria-pressed="true">الف</button>
+    <aside class="why">
+      <h3>چرا گزینه الف پیشنهاد می‌شود</h3>
+      <p>طبق سند، مکاتبات روزانه صندوق در Word نوشته می‌شود. گزینه الف روی کاغذ پیش‌چاپ افست، چاپگر اداری و PDF یکسان درمی‌آید و در چاپ سیاه‌وسفید هم رسمی می‌ماند. اگر حضور پررنگ‌تر هویت بصری مهم‌تر است، گزینه ب انتخاب بعدی است.</p>
+    </aside>
+    <div class="seg" role="group" aria-label="گزینه برای نمایش جزئیات">
+      <button type="button" data-detail="a" aria-pressed="true">جزئیات الف</button>
       <button type="button" data-detail="b" aria-pressed="false">ب</button>
       <button type="button" data-detail="c" aria-pressed="false">ج</button>
     </div>
@@ -258,15 +286,37 @@ legend { font-weight: 700; font-size: 16px; padding: 0 6px; }
     </div>
   </section>
 
-  <section class="brief" aria-labelledby="bh">
-    <div class="section-head">
+  <!-- ═══ فرم ═══ -->
+  <section class="brief stage" aria-labelledby="bh">
+    <div class="stage-head">
       <h2 id="bh">تصمیم‌ها و داده‌های باقی‌مانده</h2>
-      <p>این فرم همان فهرست [TODO] و تصمیم‌های در انتظار سند محتواست. هر چه اینجا ذخیره شود، Claude در مرحله بعد مستقیم در همه اقلام به کار می‌برد. خانه‌های خالی در طرح به‌صورت [TODO] باقی می‌مانند.</p>
+      <p>تصمیم‌های در انتظار و فهرست [TODO] سند محتوا. هر چه اینجا ذخیره شود، Claude در مرحله بعد مستقیم در همه اقلام به کار می‌برد. خانه‌های خالی در طرح به‌صورت [TODO] باقی می‌مانند.</p>
     </div>
 
     <form id="brief" novalidate>
       <fieldset>
-        <legend>سربرگ</legend>
+        <legend>کاتالوگ (مرحله ۲)</legend>
+        <div class="q">
+          <span class="ql" id="q-cat">سیستم صفحه‌بندی و سه صفحه نمونه</span>
+          <div class="choices" role="radiogroup" aria-labelledby="q-cat">
+            <label><input type="radio" name="catalogSystem" id="cat-ok" value="approve"> تأیید؛ کل ۱۶ صفحه با همین سیستم ساخته شود</label>
+            <label><input type="radio" name="catalogSystem" id="cat-change" value="changes"> نیاز به تغییر (در یادداشت بنویسید)</label>
+          </div>
+        </div>
+        <div class="f"><label for="catalogNotes">یادداشت درباره کاتالوگ</label><textarea id="catalogNotes" name="catalogNotes" rows="3"></textarea></div>
+        <div class="q">
+          <span class="ql" id="q-paper">زمینه صفحه‌های داخلی</span>
+          <div class="choices" role="radiogroup" aria-labelledby="q-paper">
+            <label><input type="radio" name="paperTone" id="paper-cream" value="cream-stock"> کاغذ کرم (رنگ زمینه چاپ نمی‌شود)</label>
+            <label><input type="radio" name="paperTone" id="paper-white" value="white-matte"> کاغذ سفید مات، بدون زمینه کرم</label>
+            <label><input type="radio" name="paperTone" id="paper-later" value="later"> بعداً همراه با چاپخانه تصمیم می‌گیرم</label>
+          </div>
+          <span class="hint">چاپ رنگ کرم روی تمام صفحه توصیه نمی‌شود؛ یکدست درنمی‌آید و هزینه را بالا می‌برد.</span>
+        </div>
+      </fieldset>
+
+      <fieldset>
+        <legend>سربرگ (مرحله ۱)</legend>
         <div class="q">
           <span class="ql" id="q-lh">چیدمان انتخابی</span>
           <div class="choices" role="radiogroup" aria-labelledby="q-lh">
@@ -286,41 +336,44 @@ legend { font-weight: 700; font-size: 16px; padding: 0 6px; }
           <span class="ql" id="q-wm">واترمارک</span>
           <div class="choices" role="radiogroup" aria-labelledby="q-wm">
             <label><input type="radio" name="watermark" id="wm-none" value="none"> بدون واترمارک</label>
-            <label><input type="radio" name="watermark" id="wm-mono" value="monogram"> مونوگرام بسیار کم‌رنگ (شفافیت زیر ۵٪) در وسط صفحه</label>
+            <label><input type="radio" name="watermark" id="wm-mono" value="monogram"> نشان بسیار کم‌رنگ (شفافیت زیر ۵٪) در وسط صفحه</label>
           </div>
         </div>
       </fieldset>
 
       <fieldset>
-        <legend>شعار و نام لاتین</legend>
+        <legend>نشان، شعار و نام لاتین</legend>
         <div class="q">
-          <span class="ql" id="q-tag">شعار (برای کاتالوگ، بروشور و پوشه؛ در سربرگ درج نمی‌شود)</span>
+          <span class="ql" id="q-var">واریاسیون نهایی نشان زنجیره (برگه رأی سند تصمیم نشان)</span>
+          <div class="choices row" role="radiogroup" aria-labelledby="q-var">
+            <label><input type="radio" name="logoVariation" id="var-a" value="3-alef"> ۳-الف: پایه، با گره واقعی</label>
+            <label><input type="radio" name="logoVariation" id="var-b" value="3-be"> ۳-ب: زنجیرهٔ صعودی</label>
+            <label><input type="radio" name="logoVariation" id="var-p" value="3-pe"> ۳-پ: زنجیرهٔ سه‌حلقه‌ای</label>
+            <label><input type="radio" name="logoVariation" id="var-t" value="3-te"> ۳-ت: نسخهٔ فشرده</label>
+            <label><input type="radio" name="logoVariation" id="var-s" value="3-se"> ۳-ث: قاب دایره‌ای</label>
+            <label><input type="radio" name="logoVariation" id="var-team" value="team"> واگذار به تیم طراحی</label>
+          </div>
+          <span class="hint">تا تصمیم شما، طرح‌ها با نسخهٔ پیشنهادی سند ساخته می‌شوند: ۳-الف با قاب و ۳-ج بدون قاب برای اسناد چاپی.</span>
+        </div>
+        <div class="q">
+          <span class="ql" id="q-tag">شعار (کاتالوگ، بروشور و پوشه؛ در سربرگ درج نمی‌شود)</span>
           <div class="choices" role="radiogroup" aria-labelledby="q-tag">
-            <label><input type="radio" name="tagline" id="tag-1" value="1"> «تأمین مالی مسیر ایده تا بازار» (گزینه پیشنهادی سند)</label>
+            <label><input type="radio" name="tagline" id="tag-1" value="1"> «تأمین مالی مسیر ایده تا بازار» (گزینه پیشنهادی سند؛ در نمونه‌ها به کار رفته)</label>
             <label><input type="radio" name="tagline" id="tag-2" value="2"> «سرمایه، ضمانت، مشارکت — در خدمت فناوری ایرانی»</label>
             <label><input type="radio" name="tagline" id="tag-3" value="3"> «ریسک فناوری را می‌سنجیم، مسیر رشد را تأمین می‌کنیم»</label>
           </div>
         </div>
         <div class="q">
-          <span class="ql" id="q-lat">نام لاتین</span>
+          <span class="ql" id="q-lat">نام لاتین (دو سند دو پیشنهاد متفاوت دارند)</span>
           <div class="choices" role="radiogroup" aria-labelledby="q-lat">
-            <label><input type="radio" name="latin" id="lat-ok" value="approve"> <span>تأیید <span class="lat">Development &amp; Future Research and Technology Fund</span> با اختصار <span class="lat">DFF</span></span></label>
+            <label><input type="radio" name="latin" id="lat-dff" value="dff"> <span><span class="lat">Development &amp; Future Research and Technology Fund</span> با اختصار <span class="lat">DFF</span> (سند محتوا)</span></label>
+            <label><input type="radio" name="latin" id="lat-tosee" value="tosee"> <span><span class="lat">Tosee &amp; Ayandeh Research and Technology Fund</span> (سند تصمیم نشان)</span></label>
             <label><input type="radio" name="latin" id="lat-alt" value="other"> نام دیگر</label>
           </div>
           <div class="grid2">
             <div class="f"><label for="latinName">نام لاتین جایگزین</label><input id="latinName" name="latinName" class="ltr" autocomplete="off"></div>
-            <div class="f"><label for="latinAbbr">اختصار جایگزین</label><input id="latinAbbr" name="latinAbbr" class="ltr" autocomplete="off"></div>
+            <div class="f"><label for="latinAbbr">اختصار</label><input id="latinAbbr" name="latinAbbr" class="ltr" autocomplete="off"></div>
           </div>
-        </div>
-      </fieldset>
-
-      <fieldset>
-        <legend>نشان صندوق</legend>
-        <p class="hint">نشان فعلی در طرح‌ها موقت است. اگر فایل برداری نشان مصوب را دارید، اینجا بارگذاری کنید (SVG یا PDF؛ فایل AI را به یکی از این دو خروجی بگیرید). اگر هنوز آماده نیست، خالی بگذارید.</p>
-        <div class="logo-row">
-          <div class="logo-prev" id="logo-prev" aria-live="polite"><span class="hint">بدون فایل</span></div>
-          <label class="file-btn" id="logo-btn" for="logo">بارگذاری فایل نشان<input type="file" id="logo" accept=".svg,.pdf,.png,image/svg+xml,application/pdf,image/png"></label>
-          <span class="hint" id="logo-note"></span>
         </div>
       </fieldset>
 
@@ -361,7 +414,7 @@ legend { font-weight: 700; font-size: 16px; padding: 0 6px; }
   </section>
 
   <footer class="foot">
-    <p>نشان به‌کاررفته در طرح‌ها موقت است و با فایل نشان مصوب جایگزین می‌شود.</p>
+    <p>نشان: گزینهٔ ۳ «زنجیرهٔ پیوند» از سند تصمیم نشان، بازسازی‌شده به‌صورت برداری برای چاپ.</p>
     <p>«[TODO]»ها طبق سند عمداً در طرح قابل رؤیت مانده‌اند و با داده ساختگی پر نشده‌اند.</p>
   </footer>
 </div>
@@ -373,12 +426,14 @@ legend { font-weight: 700; font-size: 16px; padding: 0 6px; }
   const app = $('#app');
   const form = $('#brief');
   const statusEl = $('#status');
-  const TEXT_FIELDS = ['latinName', 'latinAbbr', 'regNo', 'nationalId', 'address', 'postcode', 'emailUser', 'tel', 'fax',
+  const TEXT_FIELDS = ['catalogNotes', 'latinName', 'latinAbbr', 'regNo', 'nationalId', 'address', 'postcode', 'emailUser', 'tel', 'fax',
     'licenseNo', 'licenseDate', 'economicCode', 'ceoTel', 'ceoName', 'hours', 'addressEn', 'social', 'board'];
-  const RADIOS = ['letterhead', 'bismillah', 'watermark', 'tagline', 'latin'];
+  const RADIOS = ['catalogSystem', 'paperTone', 'letterhead', 'bismillah', 'watermark', 'logoVariation', 'tagline', 'latin'];
 
   /* ——— نمایش ——— */
-  let guides = false;
+  $('#catgrid').addEventListener('change', (e) => {
+    $$('[data-cat]').forEach((img) => { img.src = 'img/cat-' + img.dataset.cat + (e.target.checked ? '-grid' : '') + '.png'; });
+  });
   function setView(bw) {
     app.classList.toggle('bw', bw);
     $('#v-color').setAttribute('aria-pressed', String(!bw));
@@ -387,8 +442,7 @@ legend { font-weight: 700; font-size: 16px; padding: 0 6px; }
   $('#v-color').addEventListener('click', () => setView(false));
   $('#v-bw').addEventListener('click', () => setView(true));
   $('#guides').addEventListener('change', (e) => {
-    guides = e.target.checked;
-    $$('.paper img').forEach((img) => { img.src = 'img/option-' + img.dataset.base + (guides ? '-guides' : '') + '.png'; });
+    $$('[data-base]').forEach((img) => { img.src = 'img/option-' + img.dataset.base + (e.target.checked ? '-guides' : '') + '.png'; });
   });
   $$('[data-detail]').forEach((b) => b.addEventListener('click', () => {
     const k = b.dataset.detail;
@@ -398,16 +452,11 @@ legend { font-weight: 700; font-size: 16px; padding: 0 6px; }
   }));
 
   /* ——— وضعیت فرم ——— */
-  let logoAssetId = null;
-  let logoName = '';
   let dirty = false;
-
   function readForm() {
     const s = {};
     RADIOS.forEach((n) => { const c = form.querySelector('input[name="' + n + '"]:checked'); s[n] = c ? c.value : null; });
     TEXT_FIELDS.forEach((n) => { s[n] = form.elements[n].value.trim(); });
-    s.logoAssetId = logoAssetId;
-    s.logoName = logoName;
     return s;
   }
   function fillForm(d) {
@@ -415,9 +464,6 @@ legend { font-weight: 700; font-size: 16px; padding: 0 6px; }
       $$('input[name="' + n + '"]', form).forEach((r) => { r.checked = d[n] != null && r.value === String(d[n]); });
     });
     TEXT_FIELDS.forEach((n) => { if (typeof d[n] === 'string') form.elements[n].value = d[n]; });
-    logoAssetId = d.logoAssetId || null;
-    logoName = d.logoName || '';
-    showLogo(logoAssetId ? '/_blob/' + logoAssetId : null, logoName);
     syncPicked();
   }
   function syncPicked() {
@@ -430,27 +476,10 @@ legend { font-weight: 700; font-size: 16px; padding: 0 6px; }
       b.textContent = on ? 'انتخاب شما' : 'انتخاب گزینه ' + { a: 'الف', b: 'ب', c: 'ج' }[b.dataset.pick];
     });
   }
-  function showLogo(url, name) {
-    const box = $('#logo-prev');
-    box.textContent = '';
-    if (url && !/\.pdf$/i.test(name || '')) {
-      const img = document.createElement('img');
-      img.alt = 'پیش‌نمایش نشان';
-      img.src = url;
-      box.appendChild(img);
-    } else {
-      const s = document.createElement('span');
-      s.className = 'hint';
-      s.textContent = url ? 'PDF' : 'بدون فایل';
-      box.appendChild(s);
-    }
-    $('#logo-note').textContent = name ? 'فایل: ' + name : '';
-  }
   function setStatus(msg, kind) {
     statusEl.textContent = msg;
     statusEl.className = kind || '';
   }
-
   form.addEventListener('input', () => { dirty = true; syncPicked(); setStatus('تغییرات ذخیره نشده'); });
   form.addEventListener('change', () => { dirty = true; syncPicked(); });
 
@@ -476,19 +505,16 @@ legend { font-weight: 700; font-size: 16px; padding: 0 6px; }
       const t = new Date().toLocaleTimeString('fa-IR', { hour: '2-digit', minute: '2-digit' });
       setStatus('ذخیره شد، ساعت ' + t + '. برای ادامه، در گفتگو به Claude بگویید «ادامه».', 'ok');
     } catch (e) {
-      const code = e && e.code;
-      if (code === 'invalid_argument') setStatus('ذخیره نشد: اجازه ویرایش این صفحه را ندارید. از مالک صفحه بخواهید دسترسی Contributor بدهد.', 'err');
+      if (e && e.code === 'invalid_argument') setStatus('ذخیره نشد: اجازه ویرایش این صفحه را ندارید. از مالک صفحه بخواهید دسترسی Contributor بدهد.', 'err');
       else setStatus('ذخیره نشد. چند لحظه بعد دوباره امتحان کنید.', 'err');
     } finally {
       saving = false;
       saveBtn.disabled = false;
     }
   }
-
   form.addEventListener('submit', (e) => { e.preventDefault(); save(); });
   $$('.pick').forEach((b) => b.addEventListener('click', () => {
-    const r = $('#lh-' + b.dataset.pick);
-    r.checked = true;
+    $('#lh-' + b.dataset.pick).checked = true;
     dirty = true;
     syncPicked();
     save();
@@ -496,14 +522,13 @@ legend { font-weight: 700; font-size: 16px; padding: 0 6px; }
 
   saveBtn.disabled = true;
   setStatus('در حال اتصال…');
-
   (async function initDb() {
     const db = window.claude && window.claude.use ? await window.claude.use('db') : null;
     if (!db) {
       setStatus('ذخیره در این نما در دسترس نیست. همین موارد را می‌توانید در گفتگو برای Claude بنویسید.', 'err');
       return;
     }
-    docRef = db.doc('brief/stage1');
+    docRef = db.doc('brief/current');
     saveBtn.disabled = false;
     setStatus('');
     docRef.onSnapshot((snap) => {
@@ -513,40 +538,6 @@ legend { font-weight: 700; font-size: 16px; padding: 0 6px; }
         if (at) setStatus('آخرین ذخیره: ' + new Date(at).toLocaleString('fa-IR', { dateStyle: 'medium', timeStyle: 'short' }), 'ok');
       }
     }, () => setStatus('اتصال به داده‌های ذخیره‌شده قطع شد؛ صفحه را دوباره باز کنید.', 'err'));
-  })();
-
-  /* ——— بارگذاری نشان ——— */
-  (async function initAssets() {
-    const assets = window.claude && window.claude.use ? await window.claude.use('assets') : null;
-    const input = $('#logo');
-    if (!assets) {
-      $('#logo-btn').hidden = true;
-      $('#logo-note').textContent = 'بارگذاری در این نما ممکن نیست؛ فایل نشان را در گفتگو برای Claude بفرستید.';
-      return;
-    }
-    input.addEventListener('change', async () => {
-      const f = input.files && input.files[0];
-      if (!f) return;
-      const ext = (f.name.split('.').pop() || '').toLowerCase();
-      const type = { svg: 'image/svg+xml', pdf: 'application/pdf', png: 'image/png' }[ext];
-      if (!type) { $('#logo-note').textContent = 'فقط فایل SVG، PDF یا PNG پذیرفته می‌شود.'; return; }
-      $('#logo-note').textContent = 'در حال بارگذاری…';
-      try {
-        const res = await assets.upload(f, { type });
-        logoAssetId = res.id;
-        logoName = f.name;
-        showLogo(res.url, f.name);
-        dirty = true;
-        await save();
-      } catch (e) {
-        const code = e && e.code;
-        $('#logo-note').textContent = code === 'too_large' ? 'فایل بزرگ‌تر از حد مجاز است (SVG تا ۲ مگابایت).'
-          : code === 'unsupported_type' ? 'این نوع فایل پذیرفته نمی‌شود.'
-          : 'بارگذاری انجام نشد. دوباره امتحان کنید.';
-      } finally {
-        input.value = '';
-      }
-    });
   })();
 })();
 </script>
