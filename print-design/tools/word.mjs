@@ -162,7 +162,8 @@ function build(code, title) {
       default: {
         document: {
           run: { font: FONT, size: 22, sizeComplexScript: 22, color: '2B303A', rightToLeft: true, language: { value: 'en-US', bidirectional: 'fa-IR' } },
-          paragraph: { spacing: { line: 360, after: 120 } },
+          // متن نامه تمام‌تراز (Justify)؛ پاراگراف‌های سربرگ و پانویس تراز خودشان را دارند
+          paragraph: { alignment: AlignmentType.JUSTIFIED, spacing: { line: 360, after: 120 } },
         },
       },
     },
@@ -180,7 +181,7 @@ function build(code, title) {
       children: [
         // «بسمه تعالی» طبق تصمیم کارفرما: چاپ نمی‌شود و در قالب Word به‌صورت متن قرار می‌گیرد
         P([fr('بسمه تعالی', { size: 22, bold: true })], { align: AlignmentType.CENTER, after: 360 }),
-        P([fr('', {})]),
+        P([fr('', {})], { align: AlignmentType.JUSTIFIED, line: 360, after: 120 }),
       ],
     }],
   });

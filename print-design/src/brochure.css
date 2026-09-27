@@ -2,6 +2,7 @@
  * بروشور سه‌لت — A4 افقی (۲۹۷ × ۲۱۰)، تای غلتان راست‌به‌چپ.
  * پنل‌ها ۱۰۰ / ۱۰۰ / ۹۷ میلی‌متر؛ لت تاشونده ۳ میلی‌متر باریک‌تر.
  * همان خانواده تایپوگرافی کاتالوگ، یک پله کوچک‌تر؛ خط پایه ۵٫۵ میلی‌متر.
+ * ویرایش ۲: متن تمام‌تراز، عنوان‌های سبک، خط‌های مویی و کادر سفید به‌جای سطح خاکستری.
  */
 
 @page { size: 297mm 210mm; margin: 0; }
@@ -23,16 +24,19 @@
 @media screen { .bs { margin-bottom: 8mm; } }
 .bs .trim { position: absolute; inset: var(--bleed); width: 297mm; height: 210mm; }
 .bs :where(p, h2, h3, ul, dl, dd) { margin: 0; }
+.bs :where(p) { text-align: justify; text-align-last: start; text-justify: inter-word; }
+.bs :where(li, dd) { text-align: start; }
 
 /* پنج سطح */
-.b-section { font-size: 17pt; line-height: calc(1.75 * var(--bl)); font-weight: 700; color: var(--navy); }
-.b-sub { font-size: 11pt; line-height: var(--bl); font-weight: 700; color: var(--navy); }
-.b-body { font-size: 9pt; line-height: var(--bl); }
-.b-caption { font-size: 7.4pt; line-height: 4.2mm; font-weight: 500; }
+.b-section { font-size: 20pt; line-height: calc(2 * var(--bl)); font-weight: 300; color: var(--navy); }
+.b-lead { font-size: 11pt; line-height: 6.8mm; font-weight: 300; color: var(--navy); }
+.b-sub { font-size: 11pt; line-height: var(--bl); font-weight: 600; color: var(--navy); }
+.b-body { font-size: 9.3pt; line-height: var(--bl); }
+.b-caption { font-size: 7.2pt; line-height: 4.2mm; font-weight: 400; }
 
 .panel { position: absolute; top: 0; bottom: 0; }
 .panel .pin { position: absolute; top: var(--pad-top); bottom: var(--pad-bottom); right: var(--pad-side); left: var(--pad-side); display: flex; flex-direction: column; }
-.rule { border-top: 0.75pt solid var(--gold); margin: 1.5mm 0 calc(var(--bl) - 1.5mm); }
+.rule { width: 12mm; border-top: 0.9pt solid var(--gold); margin: 2.5mm 0 calc(1.5 * var(--bl) - 2.5mm); }
 
 /* خط تا — فقط در نسخه بررسی */
 .fold { position: absolute; top: 0; bottom: 0; width: 0; border-left: 0.35pt dashed rgba(224, 69, 123, 0.7); display: none; }
@@ -50,39 +54,42 @@
   width: calc(100mm + var(--bleed)) !important;
 }
 .panel.cover .pin { top: calc(var(--pad-top) + var(--bleed)); bottom: calc(var(--pad-bottom) + var(--bleed)); left: calc(var(--pad-side) + var(--bleed)); }
-.panel.cover .chain { position: absolute; color: #182F58; width: 150mm; left: calc(var(--bleed) - 38mm); top: calc(var(--bleed) + 150mm); }
+.panel.cover .chain { position: absolute; color: #2C4878; width: 190mm; left: calc(var(--bleed) - 52mm); top: calc(var(--bleed) + 152mm); }
 .panel.cover .chain svg { display: block; }
-.cover .mark { width: 38mm; display: block; margin-top: calc(4 * var(--bl)); margin-bottom: calc(2 * var(--bl)); }
-.cover .n1 { font-size: 15pt; line-height: calc(1.5 * var(--bl)); font-weight: 500; }
-.cover .n2 { font-size: 26pt; line-height: calc(2.25 * var(--bl)); font-weight: 700; }
-.cover .gold-rule { width: 22mm; border-top: 0.75pt solid var(--gold-light); margin: var(--bl) 0 calc(var(--bl) - 0.75pt); }
-.cover .tagline { font-size: 12pt; line-height: calc(1.25 * var(--bl)); color: var(--gold-light); }
-.cover .tools { font-size: 9pt; line-height: var(--bl); color: var(--navy-12); margin-top: calc(0.5 * var(--bl)); }
+.cover .mark { width: 26mm; display: block; }
+.cover .lockup { margin-top: auto; margin-bottom: calc(10.5 * var(--bl)); }
+.cover .n1 { font-size: 13.5pt; line-height: calc(1.5 * var(--bl)); font-weight: 300; }
+.cover .n2 { font-size: 30pt; line-height: calc(2.5 * var(--bl)); font-weight: 300; }
+.cover .gold-rule { width: 16mm; border-top: 0.9pt solid var(--gold-light); margin: var(--bl) 0 calc(var(--bl) - 0.9pt); }
+.cover .tagline { font-size: 11.5pt; line-height: calc(1.25 * var(--bl)); color: var(--gold-light); font-weight: 300; }
+.cover .tools { font-size: 8.5pt; line-height: var(--bl); color: var(--navy-30); margin-top: calc(0.25 * var(--bl)); font-weight: 300; }
 
 /* ——— پشت جلد ——— */
 .back .b-body { color: var(--navy); }
-.back .qr { width: 34mm; height: 34mm; background: #fff; padding: 3mm; margin: var(--bl) 0; box-sizing: content-box; }
+.back .qr { width: 32mm; height: 32mm; background: #fff; padding: 3mm; margin: calc(1.5 * var(--bl)) 0; box-sizing: content-box; }
 .back .qr svg { width: 100%; height: 100%; display: block; }
-.back .cdl { font-size: 8.6pt; line-height: 5mm; color: var(--ink); }
-.back .cdl > div { display: flex; gap: 1.5mm; }
-.back .cdl dt { font-weight: 500; color: var(--navy-70); flex: none; }
-.back .cdl .site { color: var(--navy); font-weight: 500; margin-top: 1mm; }
-.back .legal { margin-top: auto; color: var(--navy-70); }
+.back .cdl { font-size: 8.8pt; line-height: 5.2mm; color: var(--ink); border-top: 0.35pt solid var(--navy-30); }
+.back .cdl > div { display: grid; grid-template-columns: 15mm 1fr; column-gap: 2mm; padding: 1.6mm 0; border-bottom: 0.35pt solid var(--navy-12); }
+.back .cdl dt { font-weight: 400; color: var(--navy-70); }
+.back .cdl .site { display: block; color: var(--navy); font-weight: 600; border-bottom: 0; padding-top: 2.5mm; }
+.back .legal { margin-top: auto; color: var(--navy-70); border-top: 0.35pt solid var(--navy-30); padding-top: 2.5mm; }
 
 /* ——— لت ——— */
-.flap .b-body + .b-body { margin-top: var(--bl); }
+.flap .b-lead + .b-body { margin-top: calc(1.5 * var(--bl)); }
+.flap .b-lead { font-size: 10.5pt; line-height: 6.6mm; }
+.flap .b-body { font-size: 9.5pt; line-height: 5.8mm; }
 
 /* ——— داخل ——— */
 .headline { position: absolute; top: var(--pad-top); right: var(--pad-side); left: var(--pad-side); text-align: center; }
-.headline .rule { margin-bottom: 0; }
+.headline .rule { margin: 2.5mm auto 0; }
 .panel.tool .pin { top: calc(var(--pad-top) + 4 * var(--bl)); bottom: 44mm; }
 .tool .icon { width: 14mm; height: 14mm; margin-bottom: calc(0.5 * var(--bl)); margin-inline-start: -1.5mm; }
-.tool .b-sub { margin-bottom: calc(0.5 * var(--bl)); min-height: calc(2 * var(--bl)); }
+.tool .b-sub { margin-bottom: calc(0.5 * var(--bl)); min-height: var(--bl); font-size: 12pt; line-height: 7mm; font-weight: 400; }
 .tool .b-body { color: var(--ink); }
-.tool .dots { list-style: none; padding: 0; margin-top: calc(0.75 * var(--bl)); border-top: 0.5pt solid var(--navy-12); padding-top: calc(0.5 * var(--bl)); }
+.tool .dots { list-style: none; padding: 0; margin-top: var(--bl); border-top: 0.35pt solid var(--navy-30); padding-top: calc(0.5 * var(--bl)); }
 .tool .dots li { position: relative; padding-right: 3.8mm; color: var(--navy); }
 .tool .dots li::before { content: ""; position: absolute; right: 0.3mm; top: 2.2mm; width: 1.2mm; height: 1.2mm; border-radius: 50%; background: var(--gold); }
-.tool .note { margin-top: auto; background: var(--grey-card); padding: 2.5mm 3.5mm 3mm; font-size: 8.4pt; line-height: 5mm; }
+.tool .note { margin-top: auto; background: #fff; border-top: 0.9pt solid var(--gold); padding: 2.5mm 3.5mm 3mm; font-size: 8.4pt; line-height: 5mm; }
 .tool .note b { color: var(--navy); }
 
 .band {
@@ -94,6 +101,6 @@
   background: var(--navy);
 }
 .band .step { position: absolute; top: 12.5mm; transform: translateX(-50%); display: flex; align-items: baseline; gap: 2mm; white-space: nowrap; margin-left: var(--bleed); }
-.band .n { font-size: 16pt; font-weight: 700; color: var(--gold-light); line-height: 1; }
-.band .t { font-size: 9pt; font-weight: 500; color: #fff; }
+.band .n { font-size: 19pt; font-weight: 200; color: var(--gold-light); line-height: 1; }
+.band .t { font-size: 9.3pt; font-weight: 400; color: #fff; }
 .band .arrows { position: absolute; top: 1mm; left: var(--bleed); width: 297mm; height: 30mm; }

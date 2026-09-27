@@ -6,7 +6,7 @@ import * as C from '../data/catalog.mjs';
 import { icons, marks } from './icons.mjs';
 
 const read = (p) => fs.readFileSync(new URL(p, import.meta.url), 'utf8');
-const chain6 = read('../brand/pattern/chain-6.svg');
+const chain6 = read('../brand/pattern/chain-6-engraved.svg');
 const qrSvg = read('../brand/qr-tafund.svg');
 
 const todoLabel = (text) => `<span class="todo-fa">[<span class="lat">TODO</span>: ${text}]</span>`;
@@ -29,7 +29,7 @@ function shell({ page, cls = '', body, extra = '', folio = true }) {
   <div class="trim">
     ${extra}
     <div class="frame">${body}</div>
-    ${folio ? `<div class="folio">${fa(page)}</div>` : ''}
+    ${folio ? `<div class="runfoot"><span class="rf-name">${master.nameFa}</span><span class="folio">${fa(page)}</span></div>` : ''}
     ${gridOverlay()}
   </div>
 </section>`;
@@ -45,8 +45,8 @@ function opener({ title, eyebrow, icon }) {
     <div class="sec-rule"></div>`;
 }
 
-const box = (b, cls = '') =>
-  `<div class="box ${cls}"><h3 class="t-sub">${b.title}</h3><ul class="t-body dots">${b.items.map((x) => `<li>${x}</li>`).join('')}</ul></div>`;
+const box = (b) =>
+  `<div class="card-w"><h3 class="t-sub">${b.title}</h3><ul class="t-body dots">${b.items.map((x) => `<li>${x}</li>`).join('')}</ul></div>`;
 
 // الگوی زنجیره روی جلد و پشت جلد: یک زنجیره پیوسته از جلد رو به پشت جلد، از روی عطف
 // صفحهٔ باز جلد (بیرون) = [جلد رو | پشت جلد] از چپ به راست؛ پشت جلد ادامهٔ راستِ جلد رو است.
@@ -62,9 +62,11 @@ export function coverPage(c = C.cover) {
     folio: false,
     extra: chainLayer(0),
     body: `
-      <div class="t-caption edition">${c.edition}</div>
-      <div class="lockup">
+      <div class="top">
         <img class="mark" src="../brand/logo/logo-mark-reverse.svg" alt="نشان صندوق">
+        <div class="edition">${c.edition}</div>
+      </div>
+      <div class="lockup">
         <div class="n1">${c.nameLine1}</div>
         <div class="n2">${c.nameLine2}</div>
         <div class="legal">${c.legal}</div>
@@ -82,9 +84,10 @@ export function ceoPage(p = C.ceoNote) {
     cls: 'ceo',
     body: `
       ${opener({ title: p.title })}
-      <div class="letter cols-8">
-        ${p.paragraphs.map((x, i) => `<p class="t-body${i === 0 ? ' first' : ''}">${x}</p>`).join('')}
+      <div class="letter">
+        ${p.paragraphs.map((x, i) => `<p class="${i === 0 ? 'first' : ''}">${x}</p>`).join('')}
         <div class="sign">
+          <div class="sign-rule"></div>
           <div class="sign-space"></div>
           <div class="sign-name">${name}</div>
           <div class="t-caption">${p.role}</div>
@@ -106,8 +109,8 @@ export function glancePage(p = C.atAGlance) {
     cls: 'glance',
     body: `
       ${opener({ title: p.title })}
-      <div class="panel"><div class="stats">${p.stats.map(stat).join('')}</div></div>
-      <p class="t-body cols-8 glance-text">${p.text}</p>`,
+      <p class="t-lead lead">${p.text}</p>
+      <div class="panel"><div class="stats">${p.stats.map(stat).join('')}</div></div>`,
   });
 }
 
@@ -119,11 +122,14 @@ export function vmvPage(p = C.vmv) {
     cls: 'vmv',
     body: `
       ${opener({ title: p.title })}
-      ${row(p.vision.title, `<p class="t-body">${p.vision.text}</p>`)}
-      ${row(p.mission.title, `<p class="t-body">${p.mission.text}</p>`)}
-      ${row(p.valuesTitle, `<div class="values">
-        ${p.values.map((v) => `<div class="value">${icons[v.icon]}<h3 class="t-sub">${v.name}</h3><p class="t-body">${v.text}</p></div>`).join('')}
-      </div>`)}`,
+      ${row(p.vision.title, `<p class="t-lead">${p.vision.text}</p>`)}
+      ${row(p.mission.title, `<p class="t-lead">${p.mission.text}</p>`)}
+      <section class="values-wrap">
+        <h2 class="t-sub">${p.valuesTitle}</h2>
+        <div class="values">
+          ${p.values.map((v) => `<div class="value">${icons[v.icon]}<h3 class="t-sub">${v.name}</h3><p class="t-body">${v.text}</p></div>`).join('')}
+        </div>
+      </section>`,
   });
 }
 
@@ -135,8 +141,8 @@ export function legalPage(p = C.legal) {
     body: `
       ${opener({ title: p.title })}
       <div class="intro-row">
-        <p class="t-body">${p.text}</p>
-        <aside class="box"><p class="t-body"><b>${p.boxLead}</b> ${p.boxText(val(master.licenseNo), val(master.licenseDate))}</p></aside>
+        <p class="t-lead">${p.text}</p>
+        <aside class="card-w"><p class="t-body"><b>${p.boxLead}</b> ${p.boxText(val(master.licenseNo), val(master.licenseDate))}</p></aside>
       </div>
       <table class="law">
         <thead><tr>${p.head.map((h) => `<th class="t-caption">${h}</th>`).join('')}</tr></thead>
@@ -153,7 +159,7 @@ export function overviewPage(p = C.overview) {
     cls: 'overview',
     body: `
       ${opener({ title: p.title })}
-      <p class="t-body cols-8 intro">${p.text}</p>
+      <p class="t-lead lead">${p.text}</p>
       <div class="flow">
         <div class="flow-rail" aria-hidden="true"></div>
         ${p.rows.map((r) => `
@@ -187,7 +193,7 @@ export function instrumentPage(p) {
     cls: 'instrument',
     body: `
       ${opener({ title: p.title, eyebrow: p.eyebrow, icon: p.icon })}
-      <p class="t-body cols-8 intro">${p.text}</p>
+      <p class="t-lead lead">${p.text}</p>
       <div class="two-col">
         <div class="main">
           <div class="list-head"><h2 class="t-sub">${p.listTitle}</h2>${p.listNote ? `<span class="t-caption">${p.listNote}</span>` : ''}</div>
@@ -206,8 +212,8 @@ export function servicesPage(p = C.services) {
     cls: 'services',
     body: `
       ${opener({ title: p.title })}
-      <div class="cards2">
-        ${p.items.map(([name, desc]) => `<div class="card"><span class="card-tick"></span><h3 class="t-sub">${name}</h3><p class="t-body">${desc}</p></div>`).join('')}
+      <div class="grid4">
+        ${p.items.map(([name, desc], i) => `<div class="cell"><span class="big-n">${fa(i + 1)}</span><h3 class="t-sub">${name}</h3><p class="t-body">${desc}</p></div>`).join('')}
       </div>`,
   });
 }
@@ -254,7 +260,7 @@ export function governancePage(p = C.governance) {
     cls: 'governance',
     body: `
       ${opener({ title: p.title })}
-      <h2 class="t-sub block-title first">${p.organsTitle}</h2>
+      <h2 class="t-sub block-title">${p.organsTitle}</h2>
       <div class="organs">
         ${p.organs.map(([n, d]) => `<div class="organ"><h3 class="t-sub">${n}</h3><p class="t-body">${d}</p></div>`).join('')}
       </div>
@@ -263,7 +269,7 @@ export function governancePage(p = C.governance) {
           <h2 class="t-sub">${p.committeesTitle}</h2>
           <ul class="t-body dots">${p.committees.map((x) => `<li>${x}</li>`).join('')}</ul>
         </section>
-        <aside class="box"><h3 class="t-sub">${p.commitment.title}</h3><p class="t-body">${p.commitment.text}</p></aside>
+        <aside class="card-w"><h3 class="t-sub">${p.commitment.title}</h3><p class="t-body">${p.commitment.text}</p></aside>
       </div>
       ${profiles}`,
   });
@@ -277,7 +283,7 @@ export function cooperationPage(p = C.cooperation) {
     body: `
       ${opener({ title: p.title })}
       <div class="coop">
-        ${p.columns.map(([t, d], i) => `<div class="coop-col"><span class="big-n">${fa(i + 1)}</span><h3 class="t-sub">${t}</h3><p class="t-body">${d}</p></div>`).join('')}
+        ${p.columns.map(([t, d], i) => `<div class="coop-row"><span class="big-n">${fa(i + 1)}</span><h3 class="t-sub">${t}</h3><p class="t-body">${d}</p></div>`).join('')}
       </div>`,
   });
 }
@@ -307,7 +313,8 @@ export function contactPage(p = C.contact) {
           <figcaption><span class="lat">${master.web}</span></figcaption>
           <div class="hours"><span class="t-caption">${L.hours}:</span> <span class="t-body">${val(master.hours)}</span></div>
         </figure>
-      </div>`,
+      </div>
+      <div class="sign-off"><img src="../brand/logo/logo-mark.svg" alt=""><span class="t-sub">${master.nameFa} <span class="t-caption">(${master.legalFa})</span></span></div>`,
   });
 }
 
@@ -323,6 +330,7 @@ export function backPage(p = C.backCover) {
       <div class="back-block">
         <img class="mark" src="../brand/logo/logo-mark-white.svg" alt="نشان صندوق">
         <div class="tagline">${p.tagline}</div>
+        <div class="gold-rule"></div>
         <div class="site">${web(master)}</div>
         <div class="social t-caption">${social}</div>
       </div>

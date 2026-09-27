@@ -8,7 +8,7 @@ import * as B from '../data/brochure.mjs';
 import { icons } from './icons.mjs';
 
 const read = (p) => fs.readFileSync(new URL(p, import.meta.url), 'utf8');
-const chain3 = read('../brand/pattern/chain-3.svg');
+const chain3 = read('../brand/pattern/chain-3-engraved.svg');
 const qrSvg = read('../brand/qr-tafund.svg');
 
 export const OUTSIDE = [100, 100, 97];   // جلد، پشت جلد، لت
@@ -29,11 +29,13 @@ export function outsideSheet() {
       <div class="chain" aria-hidden="true">${chain3.replace('<svg ', '<svg width="100%" ')}</div>
       <div class="pin">
         <img class="mark" src="../brand/logo/logo-mark-reverse.svg" alt="نشان صندوق">
-        <div class="n1">${c.nameLine1}</div>
-        <div class="n2">${c.nameLine2}</div>
-        <div class="gold-rule"></div>
-        <div class="tagline">${c.tagline}</div>
-        <div class="tools">${c.tools}</div>
+        <div class="lockup">
+          <div class="n1">${c.nameLine1}</div>
+          <div class="n2">${c.nameLine2}</div>
+          <div class="gold-rule"></div>
+          <div class="tagline">${c.tagline}</div>
+          <div class="tools">${c.tools}</div>
+        </div>
       </div>
     </div>
 
@@ -57,7 +59,7 @@ export function outsideSheet() {
       <div class="pin">
         <h2 class="b-section">${f.title}</h2>
         <div class="rule"></div>
-        ${f.paragraphs.map((p) => `<p class="b-body">${p}</p>`).join('')}
+        ${f.paragraphs.map((p, i) => `<p class="${i === 0 ? 'b-lead' : 'b-body'}">${p}</p>`).join('')}
       </div>
     </div>
     ${folds(OUTSIDE)}

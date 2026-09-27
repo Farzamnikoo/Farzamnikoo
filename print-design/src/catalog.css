@@ -1,9 +1,12 @@
 /*
- * کاتالوگ شرکتی — سیستم صفحه‌بندی
+ * کاتالوگ شرکتی — سیستم صفحه‌بندی (ویرایش ۲: زبان بصری نهاد مالی)
  *
  * قطع A4 (۲۱۰ × ۲۹۷)، صحافی منگنه وسط، راست‌به‌چپ: عطف در لبه راستِ صفحه‌های فرد.
  * ستون متن ۱۷۵ میلی‌متر = ۱۲ ستون ۱۰ میلی‌متری + ۱۱ ناودان ۵ میلی‌متری.
- * خط پایه ۶ میلی‌متر (۱۷ پوینت)؛ همه فاصله‌های عمودی مضربی از آن هستند.
+ * خط پایه ۶ میلی‌متر؛ فاصله‌های عمودی مضربی از آن هستند.
+ *
+ * اصول ویرایش ۲: متن‌ها تمام‌تراز (justify)، عنوان‌ها با وزن سبک و درشت، خط‌های مویی به‌جای
+ * کادرهای رنگی، طلایی فقط برای تأکیدهای کوچک، و ترکیب‌بندی که کل صفحه را پر می‌کند.
  */
 
 @page { size: 210mm 297mm; margin: 0; }
@@ -11,11 +14,13 @@
 .cp {
   --bleed: 0mm;
   --m-top: 18mm;
-  --m-bottom: 21mm;
+  --m-bottom: 24mm;
   --m-side: 17.5mm;
   --bl: 6mm;                 /* خط پایه */
   --col: 10mm;
   --gut: 5mm;
+  --hair: 0.35pt;            /* خط مویی */
+  --rule: var(--navy-30);
   --page-bg: var(--cream);
   width: calc(210mm + 2 * var(--bleed));
   height: calc(297mm + 2 * var(--bleed));
@@ -36,246 +41,278 @@
   flex-direction: column;
 }
 
-/* ——— پنج سطح تایپوگرافی ——— */
-.t-display { font-size: 34pt; line-height: calc(3 * var(--bl)); font-weight: 700; }
-.t-section { font-size: 21pt; line-height: calc(2 * var(--bl)); font-weight: 700; color: var(--navy); letter-spacing: -0.2pt; }
-.t-sub     { font-size: 11.5pt; line-height: var(--bl); font-weight: 700; color: var(--navy); }
-.t-body    { font-size: 9.5pt; line-height: var(--bl); font-weight: 400; }
-.t-caption { font-size: 7.8pt; line-height: calc(0.75 * var(--bl)); font-weight: 500; color: var(--navy-70); }
-.cp :where(p, h1, h2, h3, ul, ol) { margin: 0; }
+/* ——— تایپوگرافی ——— */
+.t-display { font-size: 34pt; line-height: calc(3 * var(--bl)); font-weight: 300; }
+.t-section { font-size: 27pt; line-height: calc(2 * var(--bl)); font-weight: 300; color: var(--navy); }
+.t-lead    { font-size: 11.5pt; line-height: 7.2mm; font-weight: 300; color: var(--navy); }
+.t-sub     { font-size: 10.5pt; line-height: var(--bl); font-weight: 600; color: var(--navy); }
+.t-body    { font-size: 10pt; line-height: var(--bl); font-weight: 400; }
+.t-caption { font-size: 7.5pt; line-height: calc(0.75 * var(--bl)); font-weight: 500; color: var(--navy-70); }
+.cp :where(p, h1, h2, h3, ul, ol, dl, dd, figure) { margin: 0; }
 @media screen { .cp { margin-bottom: 8mm; } }
 
-/* ——— شروع بخش: برچسب، عنوان، خط طلایی ——— */
-.opener { position: relative; height: calc(3 * var(--bl)); display: flex; flex-direction: column; justify-content: flex-end; }
-.opener .eyebrow { position: absolute; top: 0; right: 0; }
-.opener .icon { position: absolute; top: 0.5mm; left: 0; width: 17mm; height: 17mm; }
-.sec-rule { height: 0; border-top: 0.75pt solid var(--gold); margin-top: 1.5mm; margin-bottom: calc(var(--bl) * 1 - 1.5mm); }
+/* تمام‌تراز: فاصله بین کلمه‌ها باز می‌شود و سطر آخر هر بند راست‌چین می‌ماند */
+.cp :where(p, .desc) { text-align: justify; text-align-last: start; text-justify: inter-word; }
+/* فهرست‌ها و ستون‌های باریک (کمتر از ~۶۰ میلی‌متر) راست‌چین می‌مانند؛ تمام‌تراز در آن‌ها فاصله‌های نازیبا می‌سازد */
+.cp :where(li, dd, li p, .value p, .card-w p, .organ p, .step p, .need, .stat .label, .qr figcaption) { text-align: start; }
 
-/* ——— شماره صفحه: پایین، سمت بیرونی ——— */
-.folio {
+/* ——— شروع بخش: برچسب، عنوان، خط کوتاه طلایی ——— */
+.opener { position: relative; display: flex; flex-direction: column; padding-top: var(--bl); }
+.opener .eyebrow { color: var(--gold); font-weight: 600; margin-bottom: calc(0.5 * var(--bl)); height: calc(0.75 * var(--bl)); }
+.opener .icon { position: absolute; top: calc(var(--bl) + 1mm); left: 0; width: 15mm; height: 15mm; }
+.sec-rule { width: 14mm; height: 0; border-top: 0.9pt solid var(--gold); margin: calc(var(--bl) - 0.9pt) 0 calc(2 * var(--bl)); }
+.lead { width: calc(10 * var(--col) + 9 * var(--gut)); }
+
+/* ——— پانویس جاری: خط مویی، نام کامل صندوق (سمت عطف) و شماره صفحه (سمت بیرون) ——— */
+.runfoot {
   position: absolute;
-  bottom: 11.5mm;
-  font-size: 8pt;
-  font-weight: 500;
-  color: var(--navy);
+  left: var(--m-side);
+  right: var(--m-side);
+  bottom: 11mm;
   display: flex;
-  align-items: center;
-  gap: 2.5mm;
+  justify-content: space-between;
+  align-items: baseline;
+  padding-top: 2.5mm;
+  border-top: var(--hair) solid var(--rule);
+  font-size: 6.8pt;
+  line-height: 4mm;
+  color: var(--navy-55);
 }
-.folio::before { content: ""; width: 5mm; border-top: 0.75pt solid var(--gold); }
-.odd .folio { left: var(--m-side); flex-direction: row-reverse; }   /* صفحه فرد: بیرون = چپ */
-.even .folio { right: var(--m-side); }                              /* صفحه زوج: بیرون = راست */
+.runfoot .folio { font-size: 8pt; font-weight: 600; color: var(--navy); }
+.even .runfoot { flex-direction: row-reverse; }    /* صفحه زوج: بیرون = راست؛ شماره راست، نام سمت عطف */
+.odd .runfoot { flex-direction: row; }             /* صفحه فرد: بیرون = چپ؛ نام راست (عطف)، شماره چپ */
+.glance .runfoot { border-top-color: #3A527A; color: var(--navy-30); }
+.glance .runfoot .folio { color: #fff; }
 
-/* ——— شبکه ۱۲ ستونی (کمکی) ——— */
 .cols-8 { width: calc(8 * var(--col) + 7 * var(--gut)); }
+
+/* ——— کادرها: کاغذ سفید با خط طلایی بالا (به‌جای سطح خاکستری) ——— */
+.card-w { background: #fff; border-top: 0.9pt solid var(--gold); padding: calc(0.75 * var(--bl)) 5.5mm var(--bl); }
+.card-w + .card-w { margin-top: var(--gut); }
+.card-w h3 { margin-bottom: calc(0.5 * var(--bl)); }
+.dots { list-style: none; margin: 0; padding: 0; }
+.dots li { position: relative; padding-right: 4mm; }
+.dots li::before { content: ""; position: absolute; right: 0.3mm; top: 2.6mm; width: 1.1mm; height: 1.1mm; border-radius: 50%; background: var(--gold); }
+.dots li + li { margin-top: calc(0.25 * var(--bl)); }
 
 /* ============ جلد ============ */
 .cover { --page-bg: var(--navy); color: #fff; }
 .cover .chain {
   position: absolute;         /* top/left/width در قالب؛ یک زنجیره پیوسته از جلد رو تا پشت جلد */
-  color: #182F58;             /* هم‌خانوادهٔ سرمه‌ای؛ قابل اجرا با ورنی موضعی UV به‌جای رنگ */
+  color: #2C4878;             /* خط‌های حکاکی، هم‌خانوادهٔ سرمه‌ای */
 }
 .cover .chain svg { display: block; }
-.cover .edition { color: var(--gold-light); letter-spacing: 0.4pt; }
-.cover .lockup { margin-top: calc(9 * var(--bl)); display: flex; flex-direction: column; align-items: flex-start; }
-.cover .mark { width: 52mm; display: block; margin-bottom: calc(2 * var(--bl)); }
-.cover .n1 { font-size: 20pt; line-height: calc(2 * var(--bl)); font-weight: 500; }
-.cover .n2 { font-size: 34pt; line-height: calc(3 * var(--bl)); font-weight: 700; margin-top: -1mm; }
-.cover .legal { color: var(--navy-30); font-size: 10pt; line-height: var(--bl); }
-.cover .gold-rule { width: 30mm; border-top: 0.75pt solid var(--gold-light); margin: calc(1.5 * var(--bl)) 0 calc(var(--bl) - 0.75pt); }
-.cover .tagline { font-size: 15pt; line-height: calc(1.5 * var(--bl)); color: var(--gold-light); }
+.cover .frame { justify-content: space-between; }
+.cover .top { display: flex; justify-content: space-between; align-items: flex-start; }
+.cover .mark { width: 34mm; display: block; }
+.cover .edition { color: var(--gold-light); font-size: 8pt; line-height: 5mm; font-weight: 400; padding-top: 1mm; }
+.cover .lockup { margin-bottom: calc(15 * var(--bl)); display: flex; flex-direction: column; align-items: flex-start; }
+.cover .n1 { font-size: 19pt; line-height: calc(1.75 * var(--bl)); font-weight: 300; color: #fff; }
+.cover .n2 { font-size: 46pt; line-height: calc(3 * var(--bl)); font-weight: 300; margin-top: -0.5mm; }
+.cover .legal { color: var(--navy-30); font-size: 9pt; line-height: var(--bl); font-weight: 300; }
+.cover .gold-rule { width: 24mm; border-top: 0.9pt solid var(--gold-light); margin: calc(1.5 * var(--bl)) 0 calc(var(--bl) - 0.9pt); }
+.cover .tagline { font-size: 14pt; line-height: calc(1.5 * var(--bl)); color: var(--gold-light); font-weight: 300; }
 
-/* ============ صفحه آماری ============ */
+/* ============ ۲ سخن مدیرعامل ============ */
+.ceo .frame { }
+.letter { width: calc(10 * var(--col) + 9 * var(--gut)); display: flex; flex-direction: column; }
+.letter p { font-size: 11pt; line-height: 7.2mm; }
+.letter p + p { margin-top: 5mm; }
+.letter p.first { font-size: 13pt; line-height: 8.2mm; font-weight: 300; color: var(--navy); margin-bottom: 2mm; }
+.sign { padding-top: calc(3 * var(--bl)); }
+.sign-rule { width: 14mm; border-top: 0.9pt solid var(--gold); margin-bottom: calc(var(--bl) - 0.9pt); }
+.sign-space { height: calc(2 * var(--bl)); }
+.sign-name { font-size: 10.5pt; line-height: var(--bl); font-weight: 600; color: var(--navy); }
+
+/* ============ ۳ صندوق در یک نگاه ============ */
+.glance .frame { }
 .panel {
   position: relative;
   background: var(--navy);
   color: #fff;
-  margin-top: calc(2 * var(--bl));
-  /* نوار سرمه‌ای تا هر دو لبه صفحه؛ کارت‌ها روی همان ۱۲ ستون می‌مانند */
+  margin-top: auto;
+  /* سطح سرمه‌ای تا لبه‌های چپ، راست و پایین صفحه */
   margin-inline: calc(-1 * (var(--m-side) + var(--bleed)));
+  margin-bottom: calc(-1 * (var(--m-bottom) + var(--bleed)));
   padding-inline: calc(var(--m-side) + var(--bleed));
-  padding-block: calc(3 * var(--bl));
+  padding-top: calc(3 * var(--bl));
+  padding-bottom: calc(var(--m-bottom) + var(--bleed) + 2 * var(--bl));
 }
 .stats {
   position: relative;
   display: grid;
-  grid-template-columns: 1fr 1fr;              /* هر کارت ۶ ستون */
-  grid-auto-rows: calc(6 * var(--bl));
-  column-gap: var(--gut);
-  row-gap: calc(3 * var(--bl));
+  grid-template-columns: 1fr 1fr;
+  grid-auto-rows: calc(8 * var(--bl));
+  column-gap: calc(2 * var(--gut));
+  row-gap: calc(2 * var(--bl));
 }
-.stats::before { content: ""; position: absolute; left: 0; right: 0; top: calc(7.5 * var(--bl)); border-top: 0.5pt solid #2E4570; }
-.stats::after { content: ""; position: absolute; top: 0; bottom: 0; left: 50%; border-left: 0.5pt solid #2E4570; }
-.stat { display: flex; flex-direction: column; padding-inline-end: 6mm; }
-.stat .fig { height: calc(3 * var(--bl)); display: flex; align-items: baseline; gap: 2.5mm; color: var(--gold-light); white-space: nowrap; }
-.stat .num { font-size: 46pt; line-height: calc(3 * var(--bl)); font-weight: 700; }
-.stat .word { font-size: 24pt; line-height: calc(3 * var(--bl)); font-weight: 700; }
-.stat .unit { font-size: 13pt; font-weight: 500; color: #fff; }
+.stats::before { content: ""; position: absolute; left: 0; right: 0; top: calc(9 * var(--bl)); border-top: var(--hair) solid #3A527A; }
+.stats::after { content: ""; position: absolute; top: 0; bottom: 0; left: 50%; border-left: var(--hair) solid #3A527A; }
+.stat { display: flex; flex-direction: column; justify-content: flex-end; padding-bottom: var(--bl); padding-inline-end: 6mm; }
+.stat:nth-child(n+3) { justify-content: flex-start; padding-bottom: 0; padding-top: 0; }
+.stat .fig { height: calc(3.5 * var(--bl)); display: flex; align-items: baseline; gap: 3mm; color: var(--gold-light); white-space: nowrap; }
+.stat .num { font-size: 54pt; line-height: calc(3.5 * var(--bl)); font-weight: 200; }
+.stat .word { font-size: 28pt; line-height: calc(3.5 * var(--bl)); font-weight: 300; }
+.stat .unit { font-size: 12pt; font-weight: 300; color: #fff; }
 .stat .tick { width: 8mm; border-top: 0.75pt solid var(--gold-light); margin: calc(0.5 * var(--bl)) 0 calc(0.5 * var(--bl) - 0.75pt); }
-.stat .label { font-size: 10pt; line-height: var(--bl); color: var(--navy-12); }
-.glance .glance-text { margin-top: calc(2 * var(--bl)); }
-
-/* ============ صفحه ابزار ============ */
-.instrument .intro { margin-bottom: calc(2 * var(--bl)); }
-.two-col { display: grid; grid-template-columns: calc(8 * var(--col) + 7 * var(--gut)) calc(4 * var(--col) + 3 * var(--gut)); column-gap: var(--gut); align-items: start; }
-.list-head { margin-bottom: var(--bl); }
-.list-head .t-caption { display: block; margin-top: 0.75mm; }
-.items { list-style: none; margin: 0; padding: 0; border-top: 0.5pt solid var(--navy-12); }
-.items li {
-  display: grid;
-  grid-template-columns: 7mm 1fr;
-  padding: calc(0.5 * var(--bl)) 0 calc(0.5 * var(--bl) - 0.5pt);
-  border-bottom: 0.5pt solid var(--navy-12);
-}
-.items .no { font-size: 9.5pt; line-height: var(--bl); font-weight: 700; color: var(--gold); }
-.items .name { font-size: 9.5pt; line-height: var(--bl); font-weight: 700; color: var(--navy); }
-.items .desc { grid-column: 2; }
-.items .bullet { width: 1.6mm; height: 1.6mm; border-radius: 50%; background: var(--gold); margin-top: 2.2mm; }
-.items li.plain { align-items: start; }
-.box { background: var(--grey-card); padding: calc(0.75 * var(--bl)) 5mm var(--bl); }
-.box + .box { margin-top: var(--gut); }
-.box h3 { margin-bottom: calc(0.5 * var(--bl)); }
-.dots { list-style: none; margin: 0; padding: 0; }
-.dots li { position: relative; padding-right: 4mm; }
-.dots li::before { content: ""; position: absolute; right: 0.4mm; top: 2.55mm; width: 1.3mm; height: 1.3mm; border-radius: 50%; background: var(--gold); }
-.dots li + li { margin-top: calc(0.25 * var(--bl)); }
-
-/* ============ روکش شبکه (فقط نسخه بررسی) ============ */
-.grid-overlay { position: absolute; inset: 0; pointer-events: none; display: none; }
-.show-grid .grid-overlay { display: block; }
-
-/* ============ ۲ سخن مدیرعامل ============ */
-.letter p + p { margin-top: var(--bl); }
-.letter p.first { color: var(--navy); }
-.sign { margin-top: calc(2 * var(--bl)); }
-.sign-space { height: calc(2 * var(--bl)); }
-.sign-name { font-size: 9.5pt; line-height: var(--bl); font-weight: 700; color: var(--navy); }
+.stat .label { font-size: 9.5pt; line-height: var(--bl); color: var(--navy-12); font-weight: 300; text-align: start; }
 
 /* ============ ۴ چشم‌انداز، مأموریت، ارزش‌ها ============ */
-/* ردیف با ستون برچسب: برچسب ۴ ستون (راست)، متن ۸ ستون */
-.lrow { display: grid; grid-template-columns: calc(4 * var(--col) + 3 * var(--gut)) 1fr; column-gap: var(--gut); padding: var(--bl) 0 calc(2 * var(--bl) - 0.5pt); border-bottom: 0.5pt solid var(--navy-12); }
-.lrow:last-child { border-bottom: 0; }
-.lrow-label::before { content: ""; display: block; width: 8mm; border-top: 0.75pt solid var(--gold); margin-bottom: calc(0.5 * var(--bl) - 0.75pt); }
-.lrow-label { padding-top: 0; }
-.lrow-body { padding-top: calc(0.5 * var(--bl) + 0.75pt); }
-.values { display: grid; grid-template-columns: 1fr 1fr; column-gap: var(--gut); row-gap: calc(2 * var(--bl)); }
-.value { display: flex; flex-direction: column; padding-inline-end: 6mm; }
-.value .icon { width: 15mm; height: 15mm; margin-bottom: calc(0.5 * var(--bl)); margin-inline-start: -1.5mm; }
+.lrow { display: grid; grid-template-columns: calc(3 * var(--col) + 2 * var(--gut)) 1fr; column-gap: calc(2 * var(--gut)); padding: calc(1.5 * var(--bl)) 0 calc(2.5 * var(--bl)); border-top: var(--hair) solid var(--rule); }
+.lrow-label { padding-top: 2.2mm; }
+.lrow-body .t-lead { font-size: 14.5pt; line-height: 9.6mm; font-weight: 300; }
+.values-wrap { margin-top: auto; border-top: var(--hair) solid var(--rule); padding-top: var(--bl); }
+.values-wrap > h2 { margin-bottom: calc(1.5 * var(--bl)); }
+.values { display: grid; grid-template-columns: repeat(4, 1fr); column-gap: calc(2 * var(--gut)); }
+.value { display: flex; flex-direction: column; }
+.value .icon { width: 13mm; height: 13mm; margin-bottom: calc(0.75 * var(--bl)); margin-inline-start: -1mm; }
 .value h3 { margin-bottom: calc(0.25 * var(--bl)); }
-.block-title { margin-top: calc(3 * var(--bl)); margin-bottom: var(--bl); padding-bottom: calc(0.5 * var(--bl) - 0.5pt); border-bottom: 0.5pt solid var(--navy-12); }
-.block-title.first { margin-top: 0; }
+.value + .value { position: relative; }
+.value + .value::before { content: ""; position: absolute; top: 0; bottom: 0; right: calc(-1 * var(--gut)); border-right: var(--hair) solid var(--rule); }
 
 /* ============ ۵ مبانی قانونی ============ */
-.intro-row { display: grid; grid-template-columns: calc(7 * var(--col) + 6 * var(--gut)) 1fr; column-gap: var(--gut); align-items: start; margin-bottom: calc(2 * var(--bl)); }
-.intro-row .box b { font-weight: 700; color: var(--navy); }
+.intro-row { display: grid; grid-template-columns: calc(7 * var(--col) + 6 * var(--gut)) 1fr; column-gap: calc(2 * var(--gut)); align-items: start; margin-bottom: calc(2 * var(--bl)); }
+.intro-row .card-w b { font-weight: 600; color: var(--navy); }
 .law { width: 100%; border-collapse: collapse; }
 .law th { text-align: right; padding: 0 0 calc(0.5 * var(--bl)) 4mm; border-bottom: 0.75pt solid var(--navy); vertical-align: bottom; }
-.law td { font-size: 9.5pt; line-height: var(--bl); padding: calc(0.5 * var(--bl)) 0 calc(0.5 * var(--bl)) 4mm; border-bottom: 0.5pt solid var(--navy-12); vertical-align: top; }
+.law td { font-size: 10pt; line-height: var(--bl); padding: calc(0.75 * var(--bl)) 0 calc(0.75 * var(--bl)) 4mm; border-bottom: var(--hair) solid var(--rule); vertical-align: top; }
 .law th:nth-child(1), .law td:nth-child(1) { width: 74mm; }
 .law th:nth-child(2), .law td:nth-child(2) { width: 24mm; }
 .law td.doc { font-weight: 500; color: var(--navy); }
-.law td.year { color: var(--navy); font-weight: 700; white-space: nowrap; }
+.law td.year { color: var(--gold); font-weight: 600; white-space: nowrap; }
 
 /* ============ ۶ سه ابزار، یک مسیر ============ */
-.overview .intro { margin-bottom: calc(3 * var(--bl)); }
 .flow { position: relative; display: grid; grid-template-columns: repeat(4, 1fr); column-gap: var(--gut); padding-top: calc(2 * var(--bl)); margin-block: auto; }
 .flow-rail { position: absolute; top: calc(0.5 * var(--bl)); right: 0; left: 0; border-top: 0.75pt solid var(--gold); }
 .flow-rail::after { content: ""; position: absolute; left: 0; top: -1.1mm; width: 2.2mm; height: 2.2mm; border-left: 0.75pt solid var(--gold); border-bottom: 0.75pt solid var(--gold); transform: rotate(45deg); transform-origin: center; }
 .stage { position: relative; display: flex; flex-direction: column; padding-inline-end: 4mm; }
-.stage + .stage { border-right: 0.5pt solid var(--navy-12); padding-right: 4mm; margin-right: calc(-1 * var(--gut) / 2); }
+.stage + .stage { border-right: var(--hair) solid var(--rule); padding-right: 4mm; margin-right: calc(-1 * var(--gut) / 2); }
 .stage .node { position: absolute; top: calc(-1.5 * var(--bl) - 1.6mm); right: 0; width: 3.2mm; height: 3.2mm; border-radius: 50%; background: var(--gold); }
 .stage + .stage .node { right: 4mm; }
 .stage h3 { min-height: calc(2 * var(--bl)); margin-bottom: calc(1.5 * var(--bl)); }
 .stage .lbl { margin-bottom: 0.4mm; }
-.stage .need { min-height: calc(2 * var(--bl)); margin-bottom: calc(1.5 * var(--bl)); }
+.stage .need { min-height: calc(2 * var(--bl)); margin-bottom: calc(1.5 * var(--bl)); text-align: start; }
 .tool { display: flex; flex-direction: column; gap: 1.5mm; }
 .tool-icons { display: flex; gap: 1.5mm; }
-.tool .icon { width: 14mm; height: 14mm; }
-.tool b { font-size: 9.5pt; line-height: var(--bl); font-weight: 700; color: var(--navy); }
+.tool .icon { width: 13mm; height: 13mm; }
+.tool b { font-size: 10pt; line-height: var(--bl); font-weight: 600; color: var(--navy); }
 
-/* ============ ۹ کادر مزیت مالیاتی ============ */
-.note-navy { background: var(--navy); color: #fff; padding: calc(0.75 * var(--bl)) 6mm var(--bl); margin-top: calc(2 * var(--bl)); }
+/* ============ ۷، ۸، ۹ ابزارها ============ */
+.two-col { display: grid; grid-template-columns: calc(8 * var(--col) + 7 * var(--gut)) calc(4 * var(--col) + 3 * var(--gut)); column-gap: var(--gut); align-items: start; }
+.instrument .lead { margin-bottom: calc(2.5 * var(--bl)); }
+.list-head { margin-bottom: var(--bl); }
+.list-head .t-caption { display: block; margin-top: 0.75mm; }
+.items { list-style: none; margin: 0; padding: 0; border-top: 0.75pt solid var(--navy); }
+.items li {
+  display: grid;
+  grid-template-columns: 8mm 1fr;
+  padding: var(--bl) 0 calc(var(--bl) - var(--hair));
+  border-bottom: var(--hair) solid var(--rule);
+}
+.items .no { font-size: 10.5pt; line-height: var(--bl); font-weight: 300; color: var(--gold); }
+.items .name { font-size: 10.5pt; line-height: var(--bl); font-weight: 600; color: var(--navy); }
+.items .desc { grid-column: 2; }
+.items .bullet { width: 1.4mm; height: 1.4mm; border-radius: 50%; background: var(--gold); margin-top: 2.3mm; }
+.items li.plain { align-items: start; }
+.note-navy { background: var(--navy); color: #fff; padding: var(--bl) 6mm calc(1.25 * var(--bl)); margin-top: auto; }
 .note-navy h3 { color: var(--gold-light); margin-bottom: calc(0.25 * var(--bl)); }
 .note-navy p { color: var(--navy-12); }
+.instrument .two-col { flex: 1; }
+.instrument .main { display: flex; flex-direction: column; height: 100%; }
+.instrument .note-navy { margin-top: calc(2 * var(--bl)); }
 
 /* ============ ۱۰ خدمات تخصصی ============ */
-.cards2 { display: grid; grid-template-columns: 1fr 1fr; gap: var(--gut); margin-top: var(--bl); }
-.card { background: var(--grey-card); padding: var(--bl) 6mm calc(2 * var(--bl)); min-height: calc(9 * var(--bl)); box-sizing: border-box; }
-.card-tick { display: block; width: 10mm; border-top: 1pt solid var(--gold); margin-bottom: var(--bl); }
-.card h3 { margin-bottom: calc(0.5 * var(--bl)); }
+.grid4 { display: grid; grid-template-columns: 1fr 1fr; grid-template-rows: 1fr 1fr; flex: 1; border-top: 0.75pt solid var(--navy); margin-top: var(--bl); }
+.cell { position: relative; padding: calc(1.5 * var(--bl)) 0 var(--bl); display: flex; flex-direction: column; }
+.cell:nth-child(odd) { padding-left: calc(2 * var(--gut)); border-left: var(--hair) solid var(--rule); }
+.cell:nth-child(even) { padding-right: calc(2 * var(--gut)); }
+.cell:nth-child(-n+2) { border-bottom: var(--hair) solid var(--rule); }
+.cell .big-n { margin-bottom: auto; }
+.cell h3 { margin: calc(2 * var(--bl)) 0 calc(0.5 * var(--bl)); }
+.big-n { display: block; font-size: 40pt; line-height: calc(3 * var(--bl)); font-weight: 200; color: var(--gold); }
 
 /* ============ ۱۱ فرآیند ============ */
 .band {
   background: var(--navy);
   color: #fff;
-  margin-top: calc(2 * var(--bl));
+  margin-block: auto calc(2 * var(--bl));
   margin-inline: calc(-1 * (var(--m-side) + var(--bleed)));
   padding-inline: calc(var(--m-side) + var(--bleed));
-  padding-block: calc(3 * var(--bl));
+  padding-block: calc(4 * var(--bl));
 }
 .steps6 { list-style: none; margin: 0; padding: 0; display: grid; grid-template-columns: repeat(6, 1fr); column-gap: var(--gut); }
 .step { position: relative; display: flex; flex-direction: column; }
-.step .n { font-size: 34pt; line-height: calc(3 * var(--bl)); font-weight: 700; color: var(--gold-light); }
-.step:not(:last-child)::after { content: ""; position: absolute; top: 9mm; right: 11mm; left: -3.5mm; border-top: 0.75pt solid var(--gold-light); }
-.step:not(:last-child)::before { content: ""; position: absolute; top: calc(9mm - 1.05mm); left: -3.6mm; width: 2.1mm; height: 2.1mm; border-left: 0.75pt solid var(--gold-light); border-bottom: 0.75pt solid var(--gold-light); transform: rotate(45deg); }
-.step h3 { color: #fff; min-height: calc(2 * var(--bl)); margin: calc(0.5 * var(--bl)) 0 calc(0.5 * var(--bl)); }
-.step p { color: var(--navy-12); }
-.note-line { margin-top: calc(2 * var(--bl)); padding-right: 5mm; border-right: 1.5pt solid var(--gold); width: calc(8 * var(--col) + 7 * var(--gut)); }
+.step .n { font-size: 36pt; line-height: calc(3 * var(--bl)); font-weight: 200; color: var(--gold-light); }
+.step:not(:last-child)::after { content: ""; position: absolute; top: 9mm; right: 10mm; left: -3.5mm; border-top: 0.6pt solid var(--gold-light); }
+.step:not(:last-child)::before { content: ""; position: absolute; top: calc(9mm - 1.05mm); left: -3.6mm; width: 2.1mm; height: 2.1mm; border-left: 0.6pt solid var(--gold-light); border-bottom: 0.6pt solid var(--gold-light); transform: rotate(45deg); }
+.step h3 { color: #fff; min-height: calc(2 * var(--bl)); margin: calc(0.75 * var(--bl)) 0 calc(0.5 * var(--bl)); font-weight: 500; }
+.step p { color: var(--navy-12); text-align: start; font-weight: 300; }
+.note-line { margin-bottom: auto; padding-right: 5mm; border-right: 0.9pt solid var(--gold); width: calc(8 * var(--col) + 7 * var(--gut)); }
 
 /* ============ ۱۲ متقاضیان ============ */
-.plists { display: grid; grid-template-columns: 1fr 1fr; gap: var(--gut); margin-top: var(--bl); align-items: start; }
-.plist { padding: var(--bl) 6mm calc(1.5 * var(--bl)); }
-.plist.ok { background: #fff; border-top: 1pt solid var(--gold); }
-.plist.no { background: var(--grey-card); border-top: 1pt solid var(--navy-30); }
-.plist h2 { margin-bottom: calc(0.5 * var(--bl)); }
+.plists { display: grid; grid-template-columns: 1fr 1fr; column-gap: calc(2 * var(--gut)); margin-top: var(--bl); align-items: start; }
+.plist { padding: calc(1.5 * var(--bl)) 7mm calc(2 * var(--bl)); }
+.plist.ok { background: #fff; border-top: 0.9pt solid var(--gold); }
+.plist.no { border-top: 0.9pt solid var(--navy-30); border-bottom: var(--hair) solid var(--rule); }
+.plist h2 { margin-bottom: var(--bl); font-size: 13pt; line-height: 7.5mm; font-weight: 400; }
 .plist ul { list-style: none; margin: 0; padding: 0; }
-.plist li { display: grid; grid-template-columns: 6mm 1fr; align-items: start; padding: calc(0.5 * var(--bl)) 0; border-bottom: 0.5pt solid var(--navy-12); }
+.plist li { display: grid; grid-template-columns: 7mm 1fr; align-items: start; padding: var(--bl) 0; border-bottom: var(--hair) solid var(--navy-12); font-size: 10.5pt; line-height: 6.6mm; }
 .plist li:last-child { border-bottom: 0; }
-.plist .mk { width: 4.2mm; height: 4.2mm; margin-top: 0.9mm; }
+.plist .mk { width: 4.2mm; height: 4.2mm; margin-top: 1.2mm; }
 .plist.no li { color: var(--navy-70); }
 
 /* ============ ۱۳ حاکمیت ============ */
-.governance .opener + .sec-rule { margin-bottom: calc(2 * var(--bl) - 1.5mm); }
+.block-title { margin-bottom: var(--bl); }
 .organs { display: grid; grid-template-columns: repeat(4, 1fr); column-gap: var(--gut); }
-.organ { border-top: 1pt solid var(--gold); padding-top: calc(0.5 * var(--bl) - 1pt); padding-inline-end: 3mm; }
+.organ { border-top: 0.9pt solid var(--gold); padding-top: calc(0.75 * var(--bl)); padding-inline-end: 3mm; }
 .organ h3 { margin-bottom: calc(0.25 * var(--bl)); }
-.gov-row { display: grid; grid-template-columns: 1fr 1fr; column-gap: var(--gut); margin-top: calc(3 * var(--bl)); align-items: start; }
-.committees h2 { margin-bottom: var(--bl); padding-bottom: calc(0.5 * var(--bl) - 0.5pt); border-bottom: 0.5pt solid var(--navy-12); }
-.todo-area { margin-top: calc(3 * var(--bl)); border: 0.75pt dashed var(--navy-30); min-height: calc(7 * var(--bl)); display: grid; place-items: center; padding: var(--bl); box-sizing: border-box; font-size: 9pt; color: var(--navy-70); text-align: center; }
-.profiles { margin-top: calc(3 * var(--bl)); display: grid; grid-template-columns: repeat(4, 1fr); gap: var(--gut); }
+.organ p { text-align: start; }
+.gov-row { display: grid; grid-template-columns: 1fr 1fr; column-gap: calc(2 * var(--gut)); margin-top: calc(3 * var(--bl)); align-items: start; }
+.committees h2 { margin-bottom: var(--bl); padding-bottom: calc(0.5 * var(--bl)); border-bottom: var(--hair) solid var(--rule); }
+.todo-area { margin-top: auto; border: 0.6pt dashed var(--navy-30); min-height: calc(9 * var(--bl)); display: grid; place-items: center; padding: var(--bl); box-sizing: border-box; font-size: 9pt; color: var(--navy-70); text-align: center; }
+.profiles { margin-top: auto; display: grid; grid-template-columns: repeat(4, 1fr); gap: var(--gut); }
 
 /* ============ ۱۴ مسیرهای همکاری ============ */
-.coop { display: grid; grid-template-columns: repeat(3, 1fr); column-gap: var(--gut); margin-top: var(--bl); }
-.coop-col { position: relative; padding-inline-end: 6mm; }
-.coop-col + .coop-col::before { content: ""; position: absolute; top: 0; bottom: 0; right: calc(-1 * var(--gut) / 2); border-right: 0.5pt solid var(--navy-12); }
-.big-n { display: block; font-size: 34pt; line-height: calc(3 * var(--bl)); font-weight: 700; color: var(--gold); }
-.coop-col h3 { margin: calc(0.5 * var(--bl)) 0 calc(0.5 * var(--bl)); min-height: calc(2 * var(--bl)); }
+.coop { display: flex; flex-direction: column; flex: 1; border-top: 0.75pt solid var(--navy); margin-top: var(--bl); }
+.coop-row { flex: 1; display: grid; grid-template-columns: calc(2 * var(--col) + var(--gut)) calc(4 * var(--col) + 3 * var(--gut)) 1fr; column-gap: var(--gut); align-content: center; align-items: start; padding-block: var(--bl); border-bottom: var(--hair) solid var(--rule); }
+.coop-row:last-child { border-bottom: 0; }
+.coop-row .big-n { font-size: 48pt; line-height: calc(3 * var(--bl)); margin-top: -2mm; }
+.coop-row h3 { font-size: 13pt; line-height: 7.5mm; font-weight: 400; }
+.coop-row p { font-size: 10.5pt; line-height: 6.75mm; }
 
 /* ============ ۱۵ تماس ============ */
 .contact-grid { display: grid; grid-template-columns: calc(8 * var(--col) + 7 * var(--gut)) 1fr; column-gap: var(--gut); margin-top: var(--bl); align-items: start; }
-.cdl { margin: 0; border-top: 0.5pt solid var(--navy-12); }
-.crow { display: grid; grid-template-columns: 22mm 1fr; column-gap: 4mm; padding: calc(0.5 * var(--bl)) 0; border-bottom: 0.5pt solid var(--navy-12); align-items: baseline; }
+.cdl { margin: 0; border-top: 0.75pt solid var(--navy); }
+.crow { display: grid; grid-template-columns: 24mm 1fr; column-gap: 4mm; padding: var(--bl) 0 calc(var(--bl) - var(--hair)); border-bottom: var(--hair) solid var(--rule); align-items: baseline; }
 .crow dt { color: var(--navy-70); }
-.crow dd { margin: 0; color: var(--navy); font-weight: 500; }
+.crow dd { margin: 0; color: var(--navy); font-weight: 400; font-size: 11pt; line-height: 7mm; text-align: start; }
 .crow.pair { grid-template-columns: 1fr 1fr; }
-.crow.pair > div { display: grid; grid-template-columns: 22mm 1fr; column-gap: 4mm; align-items: baseline; }
+.crow.pair > div { display: grid; grid-template-columns: 24mm 1fr; column-gap: 4mm; align-items: baseline; }
 .qr { margin: 0; display: flex; flex-direction: column; align-items: flex-end; gap: 2mm; }
 .qr-code { width: 30mm; height: 30mm; background: #fff; padding: 3mm; box-sizing: content-box; }
 .qr-code svg { width: 100%; height: 100%; display: block; }
 .qr figcaption { font-size: 9pt; color: var(--navy); width: 36mm; text-align: center; }
-.hours { width: 36mm; text-align: center; }
+.hours { width: 36mm; text-align: center; margin-top: var(--bl); }
+.contact .sign-off { margin-top: auto; display: flex; align-items: center; gap: 6mm; border-top: var(--hair) solid var(--rule); padding-top: calc(1.5 * var(--bl)); }
+.contact .sign-off img { width: 22mm; display: block; }
 
 /* ============ ۱۶ پشت جلد ============ */
-.back .frame { align-items: center; text-align: center; }
-.back-block { margin-top: calc(9 * var(--bl)); display: flex; flex-direction: column; align-items: center; }
-.back .mark { width: 40mm; display: block; margin-bottom: calc(2 * var(--bl)); }
-.back .tagline { font-size: 15pt; line-height: calc(1.5 * var(--bl)); color: var(--gold-light); }
-.back .site { font-size: 11pt; line-height: calc(1.5 * var(--bl)); margin-top: calc(0.5 * var(--bl)); }
+.back .frame { align-items: center; text-align: center; justify-content: flex-start; }
+.back-block { margin-top: calc(8 * var(--bl)); display: flex; flex-direction: column; align-items: center; }
+.back .mark { width: 34mm; display: block; margin-bottom: calc(2 * var(--bl)); }
+.back .tagline { font-size: 14pt; line-height: calc(1.5 * var(--bl)); color: var(--gold-light); font-weight: 300; }
+.back .gold-rule { width: 14mm; border-top: 0.9pt solid var(--gold-light); margin: var(--bl) auto calc(var(--bl) - 0.9pt); }
+.back .site { font-size: 11pt; line-height: calc(1.5 * var(--bl)); }
 .back .site .lat { font-size: 11pt; }
 .back .social { color: var(--navy-30); margin-top: calc(0.5 * var(--bl)); }
-.back .small-print { margin-top: auto; color: var(--navy-30); width: calc(10 * var(--col) + 9 * var(--gut)); position: relative; top: 9mm; }
+.back .small-print { margin-top: auto; color: var(--navy-30); width: calc(10 * var(--col) + 9 * var(--gut)); position: relative; top: 12mm; }
+.back .small-print p { text-align: center; text-align-last: center; }
 .back .small-print p + p { margin-top: 1.5mm; }
 .back .todo { color: inherit; }
+
+/* ============ روکش شبکه (فقط نسخه بررسی) ============ */
+.grid-overlay { position: absolute; inset: 0; pointer-events: none; display: none; }
+.show-grid .grid-overlay { display: block; }
 
 .todo-fa { direction: rtl; unicode-bidi: isolate; }
 .todo-fa .lat { letter-spacing: 0.02em; }
