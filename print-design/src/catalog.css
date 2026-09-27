@@ -72,12 +72,10 @@
 /* ============ جلد ============ */
 .cover { --page-bg: var(--navy); color: #fff; }
 .cover .chain {
-  position: absolute;
-  color: #182F58;            /* هم‌خانوادهٔ سرمه‌ای؛ قابل اجرا با ورنی موضعی UV به‌جای رنگ */
-  width: 262mm;
-  left: -26mm;
-  top: 199mm;
+  position: absolute;         /* top/left/width در قالب؛ یک زنجیره پیوسته از جلد رو تا پشت جلد */
+  color: #182F58;             /* هم‌خانوادهٔ سرمه‌ای؛ قابل اجرا با ورنی موضعی UV به‌جای رنگ */
 }
+.cover .chain svg { display: block; }
 .cover .edition { color: var(--gold-light); letter-spacing: 0.4pt; }
 .cover .lockup { margin-top: calc(9 * var(--bl)); display: flex; flex-direction: column; align-items: flex-start; }
 .cover .mark { width: 52mm; display: block; margin-bottom: calc(2 * var(--bl)); }
@@ -132,14 +130,152 @@
 .items .no { font-size: 9.5pt; line-height: var(--bl); font-weight: 700; color: var(--gold); }
 .items .name { font-size: 9.5pt; line-height: var(--bl); font-weight: 700; color: var(--navy); }
 .items .desc { grid-column: 2; }
+.items .bullet { width: 1.6mm; height: 1.6mm; border-radius: 50%; background: var(--gold); margin-top: 2.2mm; }
+.items li.plain { align-items: start; }
 .box { background: var(--grey-card); padding: calc(0.75 * var(--bl)) 5mm var(--bl); }
 .box + .box { margin-top: var(--gut); }
 .box h3 { margin-bottom: calc(0.5 * var(--bl)); }
-.box ul { list-style: none; margin: 0; padding: 0; }
-.box li { position: relative; padding-right: 4mm; }
-.box li::before { content: ""; position: absolute; right: 0.4mm; top: 2.55mm; width: 1.3mm; height: 1.3mm; border-radius: 50%; background: var(--gold); }
-.box li + li { margin-top: calc(0.25 * var(--bl)); }
+.dots { list-style: none; margin: 0; padding: 0; }
+.dots li { position: relative; padding-right: 4mm; }
+.dots li::before { content: ""; position: absolute; right: 0.4mm; top: 2.55mm; width: 1.3mm; height: 1.3mm; border-radius: 50%; background: var(--gold); }
+.dots li + li { margin-top: calc(0.25 * var(--bl)); }
 
 /* ============ روکش شبکه (فقط نسخه بررسی) ============ */
 .grid-overlay { position: absolute; inset: 0; pointer-events: none; display: none; }
 .show-grid .grid-overlay { display: block; }
+
+/* ============ ۲ سخن مدیرعامل ============ */
+.letter p + p { margin-top: var(--bl); }
+.letter p.first { color: var(--navy); }
+.sign { margin-top: calc(2 * var(--bl)); }
+.sign-space { height: calc(2 * var(--bl)); }
+.sign-name { font-size: 9.5pt; line-height: var(--bl); font-weight: 700; color: var(--navy); }
+
+/* ============ ۴ چشم‌انداز، مأموریت، ارزش‌ها ============ */
+/* ردیف با ستون برچسب: برچسب ۴ ستون (راست)، متن ۸ ستون */
+.lrow { display: grid; grid-template-columns: calc(4 * var(--col) + 3 * var(--gut)) 1fr; column-gap: var(--gut); padding: var(--bl) 0 calc(2 * var(--bl) - 0.5pt); border-bottom: 0.5pt solid var(--navy-12); }
+.lrow:last-child { border-bottom: 0; }
+.lrow-label::before { content: ""; display: block; width: 8mm; border-top: 0.75pt solid var(--gold); margin-bottom: calc(0.5 * var(--bl) - 0.75pt); }
+.lrow-label { padding-top: 0; }
+.lrow-body { padding-top: calc(0.5 * var(--bl) + 0.75pt); }
+.values { display: grid; grid-template-columns: 1fr 1fr; column-gap: var(--gut); row-gap: calc(2 * var(--bl)); }
+.value { display: flex; flex-direction: column; padding-inline-end: 6mm; }
+.value .icon { width: 15mm; height: 15mm; margin-bottom: calc(0.5 * var(--bl)); margin-inline-start: -1.5mm; }
+.value h3 { margin-bottom: calc(0.25 * var(--bl)); }
+.block-title { margin-top: calc(3 * var(--bl)); margin-bottom: var(--bl); padding-bottom: calc(0.5 * var(--bl) - 0.5pt); border-bottom: 0.5pt solid var(--navy-12); }
+.block-title.first { margin-top: 0; }
+
+/* ============ ۵ مبانی قانونی ============ */
+.intro-row { display: grid; grid-template-columns: calc(7 * var(--col) + 6 * var(--gut)) 1fr; column-gap: var(--gut); align-items: start; margin-bottom: calc(2 * var(--bl)); }
+.intro-row .box b { font-weight: 700; color: var(--navy); }
+.law { width: 100%; border-collapse: collapse; }
+.law th { text-align: right; padding: 0 0 calc(0.5 * var(--bl)) 4mm; border-bottom: 0.75pt solid var(--navy); vertical-align: bottom; }
+.law td { font-size: 9.5pt; line-height: var(--bl); padding: calc(0.5 * var(--bl)) 0 calc(0.5 * var(--bl)) 4mm; border-bottom: 0.5pt solid var(--navy-12); vertical-align: top; }
+.law th:nth-child(1), .law td:nth-child(1) { width: 74mm; }
+.law th:nth-child(2), .law td:nth-child(2) { width: 24mm; }
+.law td.doc { font-weight: 500; color: var(--navy); }
+.law td.year { color: var(--navy); font-weight: 700; white-space: nowrap; }
+
+/* ============ ۶ سه ابزار، یک مسیر ============ */
+.overview .intro { margin-bottom: calc(3 * var(--bl)); }
+.flow { position: relative; display: grid; grid-template-columns: repeat(4, 1fr); column-gap: var(--gut); padding-top: calc(2 * var(--bl)); margin-block: auto; }
+.flow-rail { position: absolute; top: calc(0.5 * var(--bl)); right: 0; left: 0; border-top: 0.75pt solid var(--gold); }
+.flow-rail::after { content: ""; position: absolute; left: 0; top: -1.1mm; width: 2.2mm; height: 2.2mm; border-left: 0.75pt solid var(--gold); border-bottom: 0.75pt solid var(--gold); transform: rotate(45deg); transform-origin: center; }
+.stage { position: relative; display: flex; flex-direction: column; padding-inline-end: 4mm; }
+.stage + .stage { border-right: 0.5pt solid var(--navy-12); padding-right: 4mm; margin-right: calc(-1 * var(--gut) / 2); }
+.stage .node { position: absolute; top: calc(-1.5 * var(--bl) - 1.6mm); right: 0; width: 3.2mm; height: 3.2mm; border-radius: 50%; background: var(--gold); }
+.stage + .stage .node { right: 4mm; }
+.stage h3 { min-height: calc(2 * var(--bl)); margin-bottom: calc(1.5 * var(--bl)); }
+.stage .lbl { margin-bottom: 0.4mm; }
+.stage .need { min-height: calc(2 * var(--bl)); margin-bottom: calc(1.5 * var(--bl)); }
+.tool { display: flex; flex-direction: column; gap: 1.5mm; }
+.tool-icons { display: flex; gap: 1.5mm; }
+.tool .icon { width: 14mm; height: 14mm; }
+.tool b { font-size: 9.5pt; line-height: var(--bl); font-weight: 700; color: var(--navy); }
+
+/* ============ ۹ کادر مزیت مالیاتی ============ */
+.note-navy { background: var(--navy); color: #fff; padding: calc(0.75 * var(--bl)) 6mm var(--bl); margin-top: calc(2 * var(--bl)); }
+.note-navy h3 { color: var(--gold-light); margin-bottom: calc(0.25 * var(--bl)); }
+.note-navy p { color: var(--navy-12); }
+
+/* ============ ۱۰ خدمات تخصصی ============ */
+.cards2 { display: grid; grid-template-columns: 1fr 1fr; gap: var(--gut); margin-top: var(--bl); }
+.card { background: var(--grey-card); padding: var(--bl) 6mm calc(2 * var(--bl)); min-height: calc(9 * var(--bl)); box-sizing: border-box; }
+.card-tick { display: block; width: 10mm; border-top: 1pt solid var(--gold); margin-bottom: var(--bl); }
+.card h3 { margin-bottom: calc(0.5 * var(--bl)); }
+
+/* ============ ۱۱ فرآیند ============ */
+.band {
+  background: var(--navy);
+  color: #fff;
+  margin-top: calc(2 * var(--bl));
+  margin-inline: calc(-1 * (var(--m-side) + var(--bleed)));
+  padding-inline: calc(var(--m-side) + var(--bleed));
+  padding-block: calc(3 * var(--bl));
+}
+.steps6 { list-style: none; margin: 0; padding: 0; display: grid; grid-template-columns: repeat(6, 1fr); column-gap: var(--gut); }
+.step { position: relative; display: flex; flex-direction: column; }
+.step .n { font-size: 34pt; line-height: calc(3 * var(--bl)); font-weight: 700; color: var(--gold-light); }
+.step:not(:last-child)::after { content: ""; position: absolute; top: 9mm; right: 11mm; left: -3.5mm; border-top: 0.75pt solid var(--gold-light); }
+.step:not(:last-child)::before { content: ""; position: absolute; top: calc(9mm - 1.05mm); left: -3.6mm; width: 2.1mm; height: 2.1mm; border-left: 0.75pt solid var(--gold-light); border-bottom: 0.75pt solid var(--gold-light); transform: rotate(45deg); }
+.step h3 { color: #fff; min-height: calc(2 * var(--bl)); margin: calc(0.5 * var(--bl)) 0 calc(0.5 * var(--bl)); }
+.step p { color: var(--navy-12); }
+.note-line { margin-top: calc(2 * var(--bl)); padding-right: 5mm; border-right: 1.5pt solid var(--gold); width: calc(8 * var(--col) + 7 * var(--gut)); }
+
+/* ============ ۱۲ متقاضیان ============ */
+.plists { display: grid; grid-template-columns: 1fr 1fr; gap: var(--gut); margin-top: var(--bl); align-items: start; }
+.plist { padding: var(--bl) 6mm calc(1.5 * var(--bl)); }
+.plist.ok { background: #fff; border-top: 1pt solid var(--gold); }
+.plist.no { background: var(--grey-card); border-top: 1pt solid var(--navy-30); }
+.plist h2 { margin-bottom: calc(0.5 * var(--bl)); }
+.plist ul { list-style: none; margin: 0; padding: 0; }
+.plist li { display: grid; grid-template-columns: 6mm 1fr; align-items: start; padding: calc(0.5 * var(--bl)) 0; border-bottom: 0.5pt solid var(--navy-12); }
+.plist li:last-child { border-bottom: 0; }
+.plist .mk { width: 4.2mm; height: 4.2mm; margin-top: 0.9mm; }
+.plist.no li { color: var(--navy-70); }
+
+/* ============ ۱۳ حاکمیت ============ */
+.governance .opener + .sec-rule { margin-bottom: calc(2 * var(--bl) - 1.5mm); }
+.organs { display: grid; grid-template-columns: repeat(4, 1fr); column-gap: var(--gut); }
+.organ { border-top: 1pt solid var(--gold); padding-top: calc(0.5 * var(--bl) - 1pt); padding-inline-end: 3mm; }
+.organ h3 { margin-bottom: calc(0.25 * var(--bl)); }
+.gov-row { display: grid; grid-template-columns: 1fr 1fr; column-gap: var(--gut); margin-top: calc(3 * var(--bl)); align-items: start; }
+.committees h2 { margin-bottom: var(--bl); padding-bottom: calc(0.5 * var(--bl) - 0.5pt); border-bottom: 0.5pt solid var(--navy-12); }
+.todo-area { margin-top: calc(3 * var(--bl)); border: 0.75pt dashed var(--navy-30); min-height: calc(7 * var(--bl)); display: grid; place-items: center; padding: var(--bl); box-sizing: border-box; font-size: 9pt; color: var(--navy-70); text-align: center; }
+.profiles { margin-top: calc(3 * var(--bl)); display: grid; grid-template-columns: repeat(4, 1fr); gap: var(--gut); }
+
+/* ============ ۱۴ مسیرهای همکاری ============ */
+.coop { display: grid; grid-template-columns: repeat(3, 1fr); column-gap: var(--gut); margin-top: var(--bl); }
+.coop-col { position: relative; padding-inline-end: 6mm; }
+.coop-col + .coop-col::before { content: ""; position: absolute; top: 0; bottom: 0; right: calc(-1 * var(--gut) / 2); border-right: 0.5pt solid var(--navy-12); }
+.big-n { display: block; font-size: 34pt; line-height: calc(3 * var(--bl)); font-weight: 700; color: var(--gold); }
+.coop-col h3 { margin: calc(0.5 * var(--bl)) 0 calc(0.5 * var(--bl)); min-height: calc(2 * var(--bl)); }
+
+/* ============ ۱۵ تماس ============ */
+.contact-grid { display: grid; grid-template-columns: calc(8 * var(--col) + 7 * var(--gut)) 1fr; column-gap: var(--gut); margin-top: var(--bl); align-items: start; }
+.cdl { margin: 0; border-top: 0.5pt solid var(--navy-12); }
+.crow { display: grid; grid-template-columns: 22mm 1fr; column-gap: 4mm; padding: calc(0.5 * var(--bl)) 0; border-bottom: 0.5pt solid var(--navy-12); align-items: baseline; }
+.crow dt { color: var(--navy-70); }
+.crow dd { margin: 0; color: var(--navy); font-weight: 500; }
+.crow.pair { grid-template-columns: 1fr 1fr; }
+.crow.pair > div { display: grid; grid-template-columns: 22mm 1fr; column-gap: 4mm; align-items: baseline; }
+.qr { margin: 0; display: flex; flex-direction: column; align-items: flex-end; gap: 2mm; }
+.qr-code { width: 30mm; height: 30mm; background: #fff; padding: 3mm; box-sizing: content-box; }
+.qr-code svg { width: 100%; height: 100%; display: block; }
+.qr figcaption { font-size: 9pt; color: var(--navy); width: 36mm; text-align: center; }
+.hours { width: 36mm; text-align: center; }
+
+/* ============ ۱۶ پشت جلد ============ */
+.back .frame { align-items: center; text-align: center; }
+.back-block { margin-top: calc(9 * var(--bl)); display: flex; flex-direction: column; align-items: center; }
+.back .mark { width: 40mm; display: block; margin-bottom: calc(2 * var(--bl)); }
+.back .tagline { font-size: 15pt; line-height: calc(1.5 * var(--bl)); color: var(--gold-light); }
+.back .site { font-size: 11pt; line-height: calc(1.5 * var(--bl)); margin-top: calc(0.5 * var(--bl)); }
+.back .site .lat { font-size: 11pt; }
+.back .social { color: var(--navy-30); margin-top: calc(0.5 * var(--bl)); }
+.back .small-print { margin-top: auto; color: var(--navy-30); width: calc(10 * var(--col) + 9 * var(--gut)); position: relative; top: 9mm; }
+.back .small-print p + p { margin-top: 1.5mm; }
+.back .todo { color: inherit; }
+
+.todo-fa { direction: rtl; unicode-bidi: isolate; }
+.todo-fa .lat { letter-spacing: 0.02em; }

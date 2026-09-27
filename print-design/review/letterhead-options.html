@@ -168,10 +168,21 @@ legend { font-weight: 700; font-size: 16px; padding: 0 6px; }
 #status.ok { color: var(--ok); }
 #status.err { color: var(--warn); }
 
+.spreads { display: grid; gap: 30px; }
+.spread { display: grid; gap: 8px; }
+.pair { display: grid; grid-template-columns: 1fr 1fr; gap: 2px; background: #9AA3B2; box-shadow: var(--paper-shadow); }
+.pair img { display: block; width: 100%; height: auto; }
+details.done { background: var(--surface); border: 1px solid var(--line); border-radius: 12px; padding: 14px 18px; }
+details.done > summary { cursor: pointer; font-weight: 700; font-size: 16px; }
+details.done > summary .st { font-weight: 500; font-size: 13px; color: var(--muted); margin-inline-start: 8px; }
+details.done[open] > summary { margin-bottom: 18px; }
+.todo-list { margin: 0; padding-inline-start: 20px; font-size: 14px; color: var(--muted); columns: 2; column-gap: 28px; }
+.todo-list li { break-inside: avoid; margin-bottom: 4px; }
 .foot { color: var(--muted); font-size: 13px; border-top: 1px solid var(--line); padding-top: 16px; display: grid; gap: 4px; }
 
 @media (max-width: 900px) {
   .options, .pages3 { grid-template-columns: 1fr; max-width: 520px; }
+  .todo-list { columns: 1; }
   .grid2 { grid-template-columns: 1fr; }
 }
 @media (prefers-reduced-motion: reduce) { * { transition: none !important; } }
@@ -184,20 +195,56 @@ legend { font-weight: 700; font-size: 16px; padding: 0 6px; }
     <h1>اقلام چاپی: مرور و تصمیم</h1>
     <p class="lede">سربرگ، کاتالوگ و بروشور صندوق، مرحله به مرحله. هر مرحله اینجا برای بررسی قرار می‌گیرد و تصمیم‌ها در فرم پایین صفحه ثبت می‌شوند. نشان همه اقلام گزینهٔ ۳ «زنجیرهٔ پیوند» است.</p>
     <ol class="steps" aria-label="مراحل گردش کار">
-      <li class="wait">سربرگ <span class="st">(در انتظار انتخاب)</span></li>
-      <li class="now" aria-current="step">شبکه و صفحه‌بندی کاتالوگ</li>
-      <li>کاتالوگ ۱۶ صفحه</li>
+      <li>سربرگ <span class="st">(گزینه الف)</span></li>
+      <li>شبکه و صفحه‌بندی کاتالوگ <span class="st">(تأیید شد)</span></li>
+      <li class="now" aria-current="step">کاتالوگ ۱۶ صفحه</li>
       <li>بروشور سه‌لت</li>
       <li>بازبینی نهایی</li>
     </ol>
   </header>
 
+  <!-- ═══ مرحله ۳ ═══ -->
+  <section class="stage" aria-labelledby="s3h">
+    <div class="stage-head">
+      <div class="kicker">مرحله ۳ <span class="status">در انتظار بازبینی شما</span></div>
+      <h2 id="s3h">کاتالوگ کامل ۱۶ صفحه</h2>
+      <p>همه ۱۶ صفحه با سیستم تأییدشده، به همان ترتیبی که کاتالوگ باز می‌شود: صفحه زوج سمت راست و فرد سمت چپ. متن‌ها عیناً از سند محتوا هستند. نشانی و کدپستی از فرم اعمال شده و بقیه موارد به‌صورت [TODO] مانده‌اند.</p>
+    </div>
+    <div class="spreads">
+      <figure class="spread"><div class="pair"><img src="img/cat16-p16.png" alt="صفحه ۱۶" loading="lazy"><img src="img/cat16-p01.png" alt="صفحه ۱" loading="lazy"></div><figcaption class="cap">جلد باز از بیرون: جلد رو (چپ) و پشت جلد (راست)</figcaption></figure>
+      <figure class="spread"><div class="pair"><img src="img/cat16-p02.png" alt="صفحه ۲" loading="lazy"><img src="img/cat16-p03.png" alt="صفحه ۳" loading="lazy"></div><figcaption class="cap">صفحه‌های ۲ و ۳</figcaption></figure>
+      <figure class="spread"><div class="pair"><img src="img/cat16-p04.png" alt="صفحه ۴" loading="lazy"><img src="img/cat16-p05.png" alt="صفحه ۵" loading="lazy"></div><figcaption class="cap">صفحه‌های ۴ و ۵</figcaption></figure>
+      <figure class="spread"><div class="pair"><img src="img/cat16-p06.png" alt="صفحه ۶" loading="lazy"><img src="img/cat16-p07.png" alt="صفحه ۷" loading="lazy"></div><figcaption class="cap">صفحه‌های ۶ و ۷</figcaption></figure>
+      <figure class="spread"><div class="pair"><img src="img/cat16-p08.png" alt="صفحه ۸" loading="lazy"><img src="img/cat16-p09.png" alt="صفحه ۹" loading="lazy"></div><figcaption class="cap">صفحه‌های ۸ و ۹</figcaption></figure>
+      <figure class="spread"><div class="pair"><img src="img/cat16-p10.png" alt="صفحه ۱۰" loading="lazy"><img src="img/cat16-p11.png" alt="صفحه ۱۱" loading="lazy"></div><figcaption class="cap">صفحه‌های ۱۰ و ۱۱</figcaption></figure>
+      <figure class="spread"><div class="pair"><img src="img/cat16-p12.png" alt="صفحه ۱۲" loading="lazy"><img src="img/cat16-p13.png" alt="صفحه ۱۳" loading="lazy"></div><figcaption class="cap">صفحه‌های ۱۲ و ۱۳</figcaption></figure>
+      <figure class="spread"><div class="pair"><img src="img/cat16-p14.png" alt="صفحه ۱۴" loading="lazy"><img src="img/cat16-p15.png" alt="صفحه ۱۵" loading="lazy"></div><figcaption class="cap">صفحه‌های ۱۴ و ۱۵</figcaption></figure>
+    </div>
+    <div class="facts">
+      <div class="fact"><b>جلد پیوسته</b><span>الگوی زنجیره از جلد رو، از روی عطف، روی پشت جلد ادامه پیدا می‌کند و وقتی کاتالوگ باز است یک زنجیره دیده می‌شود.</span></div>
+      <div class="fact"><b>دو نقطه اوج</b><span>نوار اعداد در صفحه ۳ و نوار فرآیند شش‌گامی در صفحه ۱۱، با پیکان‌های راست‌به‌چپ.</span></div>
+      <div class="fact"><b>آیکون‌ها</b><span>سه آیکون ابزار و چهار آیکون ارزش‌ها در یک خانواده؛ علامت‌های تیک و ضربدر در صفحه ۱۲.</span></div>
+      <div class="fact"><b>تصمیم‌های اعمال‌شده</b><span>شعار «تأمین مالی مسیر ایده تا بازار»، نشان ۳-الف، نشانی و کدپستی. نام لاتین در کاتالوگ به کار نمی‌رود.</span></div>
+    </div>
+    <div class="fact">
+      <b>هنوز [TODO] (در فرم پایین صفحه قابل تکمیل)</b>
+      <ul class="todo-list">
+        <li>نام و امضای مدیرعامل (صفحه ۲)</li>
+        <li>شماره و تاریخ مجوز تأسیس (صفحه ۵)</li>
+        <li>معرفی اعضای هیئت‌مدیره و مدیرعامل (صفحه ۱۳)</li>
+        <li>تلفن، نمابر، رایانامه و ساعات کاری (صفحه ۱۵)</li>
+        <li>شبکه‌های اجتماعی، شماره ثبت و شناسه ملی (پشت جلد)</li>
+      </ul>
+    </div>
+  </section>
+
   <!-- ═══ مرحله ۲ ═══ -->
+  <details class="done">
+  <summary>مرحله ۲: شبکه و سیستم صفحه‌بندی کاتالوگ <span class="st">تأیید شد</span></summary>
   <section class="stage" aria-labelledby="s2h">
     <div class="stage-head">
-      <div class="kicker">مرحله ۲ <span class="status">در انتظار تأیید</span></div>
       <h2 id="s2h">کاتالوگ: شبکه و سیستم صفحه‌بندی</h2>
-      <p>سه صفحه نمونه‌ای که پرامپت خواسته بود: جلد، صفحه آماری و صفحه یک ابزار مالی. متن‌ها عیناً از سند محتوا هستند. اگر این سیستم تأیید شود، هر ۱۶ صفحه با همین قواعد تکمیل می‌شود.</p>
+      <p>سه صفحه نمونه (جلد، صفحه آماری و صفحه ضمانت‌نامه) که سیستم کاتالوگ روی آن‌ها تأیید شد.</p>
     </div>
     <div class="toolbar">
       <label class="chk" for="catgrid"><input type="checkbox" id="catgrid"> نمایش شبکه ۱۲ ستونی و خط پایه</label>
@@ -215,13 +262,14 @@ legend { font-weight: 700; font-size: 16px; padding: 0 6px; }
     </div>
     <figure class="sheet-fig"><div class="frame"><img src="img/cat-system.png" alt="برگه سیستم صفحه‌بندی کاتالوگ"></div><figcaption class="cap">برگه سیستم (A3): شبکه، تایپوگرافی، رنگ، آیکون‌ها، نشان و الگو</figcaption></figure>
   </section>
+  </details>
 
   <!-- ═══ مرحله ۱ ═══ -->
   <section class="stage" aria-labelledby="s1h">
     <div class="stage-head">
-      <div class="kicker">مرحله ۱ <span class="status">در انتظار انتخاب</span></div>
+      <div class="kicker">مرحله ۱ <span class="status">انتخاب شد: گزینه الف</span></div>
       <h2 id="s1h">سربرگ رسمی: انتخاب چیدمان</h2>
-      <p>سه چیدمان برای هدر و فوتر سربرگ عمومی (LH-01)، حالا با نشان زنجیره (نسخه بدون قاب، که سند نشان برای سربرگ توصیه کرده). بعد از انتخاب، سربرگ مدیرعامل، صفحه دوم، دوزبانه و قالب Word ساخته می‌شوند.</p>
+      <p>گزینه الف انتخاب شده است. سربرگ مدیرعامل، صفحه دوم، دوزبانه و قالب Word در مرحله نهایی بر پایه همین گزینه ساخته می‌شوند. با نشانی واقعی، سطر اول فوتر تقریباً پر شده؛ وقتی تلفن و نمابر اضافه شوند، اقلام فوتر بین دو سطر متعادل می‌شوند.</p>
     </div>
     <div class="toolbar">
       <div class="seg" role="group" aria-label="حالت نمایش رنگ">
@@ -295,12 +343,12 @@ legend { font-weight: 700; font-size: 16px; padding: 0 6px; }
 
     <form id="brief" novalidate>
       <fieldset>
-        <legend>کاتالوگ (مرحله ۲)</legend>
+        <legend>کاتالوگ (مرحله ۳)</legend>
         <div class="q">
-          <span class="ql" id="q-cat">سیستم صفحه‌بندی و سه صفحه نمونه</span>
+          <span class="ql" id="q-cat">کاتالوگ کامل ۱۶ صفحه</span>
           <div class="choices" role="radiogroup" aria-labelledby="q-cat">
-            <label><input type="radio" name="catalogSystem" id="cat-ok" value="approve"> تأیید؛ کل ۱۶ صفحه با همین سیستم ساخته شود</label>
-            <label><input type="radio" name="catalogSystem" id="cat-change" value="changes"> نیاز به تغییر (در یادداشت بنویسید)</label>
+            <label><input type="radio" name="catalogFull" id="cat-ok" value="approve"> تأیید؛ برو سراغ بروشور</label>
+            <label><input type="radio" name="catalogFull" id="cat-change" value="changes"> نیاز به تغییر (در یادداشت بنویسید، با شماره صفحه)</label>
           </div>
         </div>
         <div class="f"><label for="catalogNotes">یادداشت درباره کاتالوگ</label><textarea id="catalogNotes" name="catalogNotes" rows="3"></textarea></div>
@@ -428,7 +476,7 @@ legend { font-weight: 700; font-size: 16px; padding: 0 6px; }
   const statusEl = $('#status');
   const TEXT_FIELDS = ['catalogNotes', 'latinName', 'latinAbbr', 'regNo', 'nationalId', 'address', 'postcode', 'emailUser', 'tel', 'fax',
     'licenseNo', 'licenseDate', 'economicCode', 'ceoTel', 'ceoName', 'hours', 'addressEn', 'social', 'board'];
-  const RADIOS = ['catalogSystem', 'paperTone', 'letterhead', 'bismillah', 'watermark', 'logoVariation', 'tagline', 'latin'];
+  const RADIOS = ['catalogFull', 'paperTone', 'letterhead', 'bismillah', 'watermark', 'logoVariation', 'tagline', 'latin'];
 
   /* ——— نمایش ——— */
   $('#catgrid').addEventListener('change', (e) => {

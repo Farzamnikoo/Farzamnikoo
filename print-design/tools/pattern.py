@@ -3,7 +3,7 @@
 (حلقه ۲۲ × ۱۳، گام ۱۶، ضخامت ۳٫۴). بر خلاف ۳-پ که هر حلقه فقط روی حلقهٔ قبلی می‌افتد، اینجا
 حلقه‌ها واقعاً بافته شده‌اند: در تقاطع بالا حلقهٔ راست روی حلقهٔ بعدی و در تقاطع پایین زیر آن.
 
-خروجی: brand/pattern/chain-3.svg با fill="currentColor" (برای درج درون‌خطی در HTML).
+خروجی: brand/pattern/chain-3.svg و chain-6.svg با fill="currentColor" (برای درج درون‌خطی در HTML).
 اجرا: python3 tools/pattern.py
 """
 
@@ -39,16 +39,21 @@ def woven_chain(n=3, w=22, h=13, pitch=16, sw=3.4, gap=8):
     return out
 
 
-def main():
-    OUT.mkdir(parents=True, exist_ok=True)
-    rings = woven_chain()
+def write(n):
+    rings = woven_chain(n=n)
     pad = 3.4 / 2
-    w_total = 22 + 16 * 2
+    w_total = 22 + 16 * (n - 1)
     box = f'{-pad} {-pad} {w_total + 2 * pad} {13 + 2 * pad}'
     paths = ''.join(f'<path d="{d(r)}"/>' for r in rings)
     svg = f'<svg xmlns="http://www.w3.org/2000/svg" viewBox="{box}" fill="currentColor">{paths}</svg>\n'
-    (OUT / 'chain-3.svg').write_text(svg, encoding='utf-8')
-    print('✓ chain-3.svg')
+    (OUT / f'chain-{n}.svg').write_text(svg, encoding='utf-8')
+    print(f'✓ chain-{n}.svg')
+
+
+def main():
+    OUT.mkdir(parents=True, exist_ok=True)
+    write(3)   # برگه سیستم
+    write(6)   # جلد رو و پشت جلد، پیوسته از روی عطف
 
 
 if __name__ == '__main__':

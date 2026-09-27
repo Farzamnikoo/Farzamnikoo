@@ -1,6 +1,7 @@
 // ساخت خروجی‌ها: HTML → PDF (برداری، فونت جاسازی‌شده) و PNG با Chromium (Playwright).
-// اجرا: npm run build                 همه اقلام
-//       node tools/build.mjs catalog  فقط کاتالوگ
+// اجرا: npm run build                   همه اقلام
+//       node tools/build.mjs catalog    مرحله ۲: صفحه‌های نمونه و برگه سیستم
+//       node tools/build.mjs catalog16  مرحله ۳: کاتالوگ کامل ۱۶ صفحه
 
 import fs from 'node:fs';
 import path from 'node:path';
@@ -8,7 +9,7 @@ import { fileURLToPath, pathToFileURL } from 'node:url';
 import { createRequire } from 'node:module';
 import { letterhead, page, OPTIONS } from '../src/letterhead.mjs';
 import { compareSheet } from '../src/compare.mjs';
-import { samplePages } from '../src/catalog.mjs';
+import { samplePages, allPages } from '../src/catalog.mjs';
 import { systemSheet } from '../src/catalog-system.mjs';
 
 const require = createRequire(import.meta.url);
@@ -106,6 +107,40 @@ if (want('catalog')) {
   await s.p.locator('.sys').first().screenshot({ path: path.join(OUT, 'png', 'system-sheet.png') });
   await s.ctx.close();
   console.log('✓ کاتالوگ →', path.relative(ROOT, OUT));
+}
+
+// ═══ مرحله ۳: کاتالوگ کامل ۱۶ صفحه ═══
+if (want('catalog16')) {
+  const OUT = outDir('03-catalog');
+  const pages = allPages();
+  const url = write('catalog_16p.html', page(pages.join('\n'), {
+    title: 'کاتالوگ صندوق پژوهش و فناوری توسعه و آینده',
+    css: ['../src/catalog.css'],
+  }));
+  const { p, ctx } = await open(url, { scale: 2 });
+  await p.pdf({ path: path.join(OUT, 'catalog_16p.pdf'), preferCSSPageSize: true, printBackground: true });
+  const els = p.locator('.cp');
+  for (let i = 0; i < pages.length; i++) {
+    await els.nth(i).screenshot({ path: path.join(OUT, 'png', `p${String(i + 1).padStart(2, '0')}.png`) });
+  }
+  await ctx.close();
+
+  // دوصفحه‌ای‌ها به ترتیب راست‌به‌چپ: صفحه زوج راست، فرد چپ؛ جلد بیرونی باز = [جلد رو | پشت جلد]
+  const pairs = [[16, 1], ...Array.from({ length: 7 }, (_, k) => [2 * k + 2, 2 * k + 3])];
+  const spreadCss = `<style>
+    @page { size: 420mm 297mm; margin: 0; }
+    .spread-sheet { width: 420mm; height: 297mm; display: flex; break-after: page; overflow: hidden; }
+    .spread-sheet .cp { break-after: auto; margin: 0 !important; flex: none; }
+  </style>`;
+  const sp = write('catalog_spreads.html', page(spreadCss + pairs.map(([r, l]) =>
+    `<div class="spread-sheet">${pages[r - 1]}${pages[l - 1]}</div>`).join('\n'), {
+    title: 'کاتالوگ — دوصفحه‌ای‌ها',
+    css: ['../src/catalog.css'],
+  }));
+  const s2 = await open(sp, { width: 420, height: 297 });
+  await s2.p.pdf({ path: path.join(OUT, 'catalog_spreads_A3.pdf'), width: '420mm', height: '297mm', printBackground: true });
+  await s2.ctx.close();
+  console.log('✓ کاتالوگ ۱۶ صفحه →', path.relative(ROOT, OUT));
 }
 
 await browser.close();

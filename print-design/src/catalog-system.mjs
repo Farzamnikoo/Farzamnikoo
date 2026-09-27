@@ -33,7 +33,7 @@ export function systemSheet() {
     <div class="sys-col">
       <h2>شبکه</h2>
       <div class="grid-demo">
-        <div class="mini show-grid">${instrumentPage()}</div>
+        <div class="mini show-grid">${instrumentPage(guarantee)}</div>
         <span class="dim d-top">۱۸</span>
         <span class="dim d-bottom">۲۱</span>
         <span class="dim d-right">۱۷٫۵</span>
