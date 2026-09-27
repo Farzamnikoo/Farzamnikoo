@@ -1,0 +1,45 @@
+/*
+ * توکن‌های هویت بصری — صندوق پژوهش و فناوری توسعه و آینده
+ * مرجع واحد رنگ و تایپوگرافی برای همه اقلام چاپی.
+ *
+ * چاپ دو رنگ: همه خاکستری‌ها در اقلام دورنگ (سربرگ، پاکت) «تِنت» سرمه‌ای هستند،
+ * نه رنگ سوم؛ یعنی روی زینک فقط دو رنگ سرمه‌ای و طلایی لازم است.
+ */
+
+@font-face { font-family: "Vazirmatn"; font-weight: 400; src: url("fonts/Vazirmatn-Regular.woff2") format("woff2"); }
+@font-face { font-family: "Vazirmatn"; font-weight: 500; src: url("fonts/Vazirmatn-Medium.woff2") format("woff2"); }
+@font-face { font-family: "Vazirmatn"; font-weight: 700; src: url("fonts/Vazirmatn-Bold.woff2") format("woff2"); }
+@font-face { font-family: "Inter"; font-weight: 400; src: url("fonts/inter-latin-400-normal.woff2") format("woff2"); }
+@font-face { font-family: "Inter"; font-weight: 500; src: url("fonts/inter-latin-500-normal.woff2") format("woff2"); }
+@font-face { font-family: "Inter"; font-weight: 700; src: url("fonts/inter-latin-600-normal.woff2") format("woff2"); }
+
+:root {
+  /* سرمه‌ای — Pantone 2767 C ≈ #13294B */
+  --navy: #13294B;
+  --navy-deep: #0F2547;
+  /* تنت‌های سرمه‌ای (برای متن ثانویه در چاپ دورنگ) */
+  --navy-85: #364966;
+  --navy-70: #5A6981;
+  --navy-55: #7D899C;
+  --navy-30: #B8BFC9;
+  --navy-12: #E3E5E9;
+  --navy-06: #F1F2F4;
+
+  /* طلایی — فقط تأکید و تزئین، هرگز متن بدنه */
+  --gold: #C9A227;
+  --gold-bright: #D4AF37;   /* روی زمینه سرمه‌ای */
+
+  /* خنثی */
+  --paper: #FFFFFF;
+  --cream: #FBF9F4;          /* زمینه صفحات کاتالوگ (ترجیحاً با کاغذ کرم، نه چاپ تنت) */
+  --ink: #2B303A;            /* متن بدنه */
+  --grey-card: #EEF0F3;
+
+  --fa: "Vazirmatn", Tahoma, sans-serif;
+  --en: "Inter", "Vazirmatn", Arial, sans-serif;
+}
+
+html { -webkit-print-color-adjust: exact; print-color-adjust: exact; }
+body { font-family: var(--fa); color: var(--ink); margin: 0; font-feature-settings: "kern"; }
+.lat { font-family: var(--en); direction: ltr; unicode-bidi: isolate; }
+.todo { font-family: var(--en); direction: ltr; unicode-bidi: isolate; letter-spacing: 0.02em; }

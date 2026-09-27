@@ -1,0 +1,136 @@
+/* سربرگ A4 — ابعاد نسبت به لبه برش. --bleed برای نسخه چاپی ۳mm و برای پیش‌نمایش ۰ است. */
+
+@page { size: 210mm 297mm; margin: 0; }
+
+.lh {
+  --bleed: 0mm;
+  --side: 22mm;          /* حاشیه راست و چپ ستون متن (۲۰ تا ۲۵) */
+  --safe-top: 45mm;      /* شروع ناحیه متن */
+  --safe-bottom: 25mm;   /* پایان ناحیه متن از لبه پایین */
+  --rule-y: 37mm;
+  width: calc(210mm + 2 * var(--bleed));
+  height: calc(297mm + 2 * var(--bleed));
+  position: relative;
+  overflow: hidden;
+  background: var(--paper);
+  color: var(--navy);
+}
+.lh .trim {
+  position: absolute;
+  inset: var(--bleed);
+  width: 210mm;
+  height: 297mm;
+}
+
+/* ——— هدر ——— */
+.lh .head {
+  position: absolute;
+  top: 13mm;
+  right: var(--side);
+  left: var(--side);
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+}
+.lh .lockup { display: flex; align-items: center; gap: 4mm; }
+.lh .mark { width: 16mm; height: 16mm; display: block; }
+.lh .names { display: flex; flex-direction: column; gap: 0.6mm; }
+.lh .n1 { font-weight: 700; font-size: 12.5pt; line-height: 1.35; color: var(--navy); letter-spacing: -0.1pt; }
+.lh .n2 { font-weight: 400; font-size: 8.5pt; line-height: 1.4; color: var(--navy-70); }
+.lh .n3 { font-weight: 500; font-size: 8.5pt; line-height: 1.4; color: var(--navy); }
+
+.lh .fields { width: 52mm; display: flex; flex-direction: column; gap: 1.2mm; padding-top: 0.5mm; }
+.lh .field { display: flex; align-items: baseline; gap: 2mm; font-size: 9pt; line-height: 1.9; }
+.lh .fl { font-weight: 500; color: var(--navy); min-width: 10.5mm; }
+.lh .dots { flex: 1; border-bottom: 0.7pt dotted var(--navy-55); transform: translateY(0.4mm); }
+
+/* ——— خط طلایی زیر هدر ——— */
+.lh .rule {
+  position: absolute;
+  top: var(--rule-y);
+  right: var(--side);
+  left: var(--side);
+  border-top: 0.85pt solid var(--gold);
+}
+
+/* راهنمای ناحیه امن متن — فقط در پیش‌نمایش با کلاس show-guides */
+.lh .safe { display: none; }
+.show-guides .lh .safe {
+  display: block;
+  position: absolute;
+  top: var(--safe-top);
+  bottom: var(--safe-bottom);
+  right: var(--side);
+  left: var(--side);
+  outline: 0.5pt dashed #E0457B;
+}
+
+/* ——— فوتر ——— */
+.lh .foot {
+  position: absolute;
+  right: var(--side);
+  left: var(--side);
+  bottom: 11mm;
+  font-size: 7.3pt;
+  line-height: 1.75;
+  color: var(--navy-85);
+  text-align: center;
+}
+.lh .fline { white-space: nowrap; }
+.lh .fi { display: inline-block; }
+.lh .fi b { font-weight: 500; color: var(--navy); }
+.lh .sep {
+  display: inline-block;
+  width: 0.6pt;
+  height: 2.4mm;
+  margin: 0 2.4mm;
+  background: var(--gold);
+  vertical-align: -0.35mm;
+}
+.lh .lat, .lh .todo { font-size: 0.95em; }
+
+/* ============ گزینه الف — خطی ============ */
+.opt-a .foot { bottom: 9.5mm; padding-top: 3mm; border-top: 0.5pt solid var(--gold); }
+
+/* ============ گزینه ب — ستون سرمه‌ای ============ */
+.opt-b .spine {
+  position: absolute;
+  top: calc(-1 * var(--bleed));
+  bottom: calc(-1 * var(--bleed));
+  right: calc(-1 * var(--bleed));
+  width: calc(7mm + var(--bleed));
+  background: var(--navy);
+}
+.opt-b .mark { width: 18mm; height: 18mm; }
+.opt-b .rule { right: 7mm; }                 /* خط طلایی به نوار متصل می‌شود */
+.opt-b .foot { text-align: right; bottom: 10mm; }
+.opt-b .foot::before {
+  content: "";
+  display: block;
+  width: 24mm;
+  border-top: 0.85pt solid var(--gold);
+  margin-bottom: 2.6mm;
+}
+.opt-b .sep { margin: 0 2mm; }
+
+/* ============ گزینه ج — نوار پایه ============ */
+.opt-c .topband {
+  position: absolute;
+  top: calc(-1 * var(--bleed));
+  right: calc(-1 * var(--bleed));
+  left: calc(-1 * var(--bleed));
+  height: calc(4mm + var(--bleed));
+  background: var(--navy);
+}
+.opt-c .head { top: 12.5mm; }
+.opt-c .footband {
+  position: absolute;
+  right: calc(-1 * var(--bleed));
+  left: calc(-1 * var(--bleed));
+  bottom: calc(-1 * var(--bleed));
+  height: calc(18mm + var(--bleed));
+  background: var(--navy);
+  border-top: 1pt solid var(--gold-bright);
+}
+.opt-c .foot { bottom: 5.2mm; color: #FFFFFF; }
+.opt-c .sep { background: var(--gold-bright); }
