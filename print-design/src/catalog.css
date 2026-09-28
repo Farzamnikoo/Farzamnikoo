@@ -54,7 +54,7 @@
 /* تمام‌تراز: فاصله بین کلمه‌ها باز می‌شود و سطر آخر هر بند راست‌چین می‌ماند */
 .cp :where(p, .desc) { text-align: justify; text-align-last: start; text-justify: inter-word; }
 /* فهرست‌ها و ستون‌های باریک (کمتر از ~۶۰ میلی‌متر) راست‌چین می‌مانند؛ تمام‌تراز در آن‌ها فاصله‌های نازیبا می‌سازد */
-.cp :where(li, dd, li p, .value p, .card-w p, .organ p, .step p, .need, .stat .label, .qr figcaption) { text-align: start; }
+.cp :where(li, dd, li p, .value p, .card-w p, .adv p, .step p, .need, .stat .label, .qr figcaption) { text-align: start; }
 
 /* ——— شروع بخش: برچسب، عنوان، خط کوتاه طلایی ——— */
 .opener { position: relative; display: flex; flex-direction: column; padding-top: var(--bl); }
@@ -113,7 +113,7 @@
 .cover .gold-rule { width: 24mm; border-top: 0.9pt solid var(--gold-light); margin: calc(1.5 * var(--bl)) 0 calc(var(--bl) - 0.9pt); }
 .cover .tagline { font-size: 14pt; line-height: calc(1.5 * var(--bl)); color: var(--gold-light); font-weight: 300; }
 
-/* ============ ۲ سخن مدیرعامل ============ */
+/* ============ ۲ پیام مدیرعامل ============ */
 .ceo .frame { }
 .letter { width: calc(10 * var(--col) + 9 * var(--gut)); display: flex; flex-direction: column; }
 .letter p { font-size: 11pt; line-height: 7.2mm; }
@@ -170,7 +170,7 @@
 .value + .value { position: relative; }
 .value + .value::before { content: ""; position: absolute; top: 0; bottom: 0; right: calc(-1 * var(--gut)); border-right: var(--hair) solid var(--rule); }
 
-/* ============ ۵ مبانی قانونی ============ */
+/* ============ ۵ چارچوب قانونی و نظارتی ============ */
 .intro-row { display: grid; grid-template-columns: calc(7 * var(--col) + 6 * var(--gut)) 1fr; column-gap: calc(2 * var(--gut)); align-items: start; margin-bottom: calc(2 * var(--bl)); }
 .intro-row .card-w b { font-weight: 600; color: var(--navy); }
 .law { width: 100%; border-collapse: collapse; }
@@ -181,7 +181,7 @@
 .law td.doc { font-weight: 500; color: var(--navy); }
 .law td.year { color: var(--gold); font-weight: 600; white-space: nowrap; }
 
-/* ============ ۶ سه ابزار، یک مسیر ============ */
+/* ============ ۷ سه ابزار، یک مسیر ============ */
 .flow { position: relative; display: grid; grid-template-columns: repeat(4, 1fr); column-gap: var(--gut); padding-top: calc(2 * var(--bl)); margin-block: auto; }
 .flow-rail { position: absolute; top: calc(0.5 * var(--bl)); right: 0; left: 0; border-top: 0.75pt solid var(--gold); }
 .flow-rail::after { content: ""; position: absolute; left: 0; top: -1.1mm; width: 2.2mm; height: 2.2mm; border-left: 0.75pt solid var(--gold); border-bottom: 0.75pt solid var(--gold); transform: rotate(45deg); transform-origin: center; }
@@ -197,7 +197,7 @@
 .tool .icon { width: 13mm; height: 13mm; }
 .tool b { font-size: 10pt; line-height: var(--bl); font-weight: 600; color: var(--navy); }
 
-/* ============ ۷، ۸، ۹ ابزارها ============ */
+/* ============ ۸، ۹، ۱۰ ابزارها ============ */
 .two-col { display: grid; grid-template-columns: calc(8 * var(--col) + 7 * var(--gut)) calc(4 * var(--col) + 3 * var(--gut)); column-gap: var(--gut); align-items: start; }
 .instrument .lead { margin-bottom: calc(2.5 * var(--bl)); }
 .list-head { margin-bottom: var(--bl); }
@@ -221,17 +221,54 @@
 .instrument .main { display: flex; flex-direction: column; height: 100%; }
 .instrument .note-navy { margin-top: calc(2 * var(--bl)); }
 
-/* ============ ۱۰ خدمات تخصصی ============ */
-.grid4 { display: grid; grid-template-columns: 1fr 1fr; grid-template-rows: 1fr 1fr; flex: 1; border-top: 0.75pt solid var(--navy); margin-top: var(--bl); }
-.cell { position: relative; padding: calc(1.5 * var(--bl)) 0 var(--bl); display: flex; flex-direction: column; }
-.cell:nth-child(odd) { padding-left: calc(2 * var(--gut)); border-left: var(--hair) solid var(--rule); }
-.cell:nth-child(even) { padding-right: calc(2 * var(--gut)); }
-.cell:nth-child(-n+2) { border-bottom: var(--hair) solid var(--rule); }
-.cell .big-n { margin-bottom: auto; }
-.cell h3 { margin: calc(2 * var(--bl)) 0 calc(0.5 * var(--bl)); }
+/* ============ ۶ مزیت‌های همکاری ============ */
+.grid6 { display: grid; grid-template-columns: repeat(3, 1fr); grid-template-rows: 1fr 1fr; flex: 1; border-top: 0.75pt solid var(--navy); margin-top: var(--bl); }
+.adv { padding: calc(1.5 * var(--bl)) 0 var(--bl); display: flex; flex-direction: column; }
+.adv:not(:nth-child(3n+1)) { border-right: var(--hair) solid var(--rule); padding-right: 6mm; }
+.adv:not(:nth-child(3n)) { padding-left: 6mm; }
+.adv:nth-child(-n+3) { border-bottom: var(--hair) solid var(--rule); }
+.adv .icon { width: 17mm; height: 17mm; margin-bottom: calc(1.5 * var(--bl)); margin-inline-start: -1.5mm; }
+.adv h3 { font-size: 13pt; line-height: 7.5mm; font-weight: 400; margin-bottom: calc(0.5 * var(--bl)); }
+.adv p { text-align: start; font-size: 10.5pt; line-height: 6.6mm; }
+
+/* ============ ۱۱ خدمات تخصصی ============ */
+.svc-grid { display: grid; grid-template-columns: 1fr 1fr; grid-template-rows: 1fr 1fr; flex: 1; border-top: 0.75pt solid var(--navy); margin-top: var(--bl); }
+.svc { padding: calc(1.5 * var(--bl)) 0 var(--bl); display: flex; flex-direction: column; }
+.svc:nth-child(even) { border-right: var(--hair) solid var(--rule); padding-right: calc(2 * var(--gut)); }
+.svc:nth-child(odd) { padding-left: calc(2 * var(--gut)); }
+.svc:nth-child(-n+2) { border-bottom: var(--hair) solid var(--rule); }
+.svc .illo { width: 30mm; height: 22.5mm; display: block; margin-bottom: var(--bl); margin-inline-start: -1mm; }
+.svc h3 { font-size: 12pt; line-height: 7mm; font-weight: 400; margin-bottom: calc(0.5 * var(--bl)); }
+.svc .dots { margin-top: var(--bl); padding-top: calc(0.5 * var(--bl)); border-top: var(--hair) solid var(--rule); }
 .big-n { display: block; font-size: 40pt; line-height: calc(3 * var(--bl)); font-weight: 200; color: var(--gold); }
 
-/* ============ ۱۱ فرآیند ============ */
+/* ============ ۱۲ رویکرد ارزیابی ============ */
+.quote-panel {
+  position: relative;
+  background: var(--navy);
+  color: #fff;
+  margin-inline: calc(-1 * (var(--m-side) + var(--bleed)));
+  margin-top: calc(-1 * (var(--m-top) + var(--bleed)));
+  padding: calc(var(--m-top) + var(--bleed)) calc(var(--m-side) + var(--bleed)) calc(2.5 * var(--bl));
+  margin-bottom: calc(2 * var(--bl));
+}
+.quote-panel .t-section { color: #fff; }
+.quote-panel .sec-rule { border-top-color: var(--gold-light); margin-bottom: calc(1.5 * var(--bl)); }
+.quote { margin: 0; width: calc(10 * var(--col) + 9 * var(--gut)); }
+.quote p { font-size: 19pt; line-height: 11.5mm; font-weight: 300; color: #fff; text-align: start; }
+.quote footer { margin-top: var(--bl); font-size: 8pt; line-height: 5mm; color: var(--gold-light); display: flex; align-items: center; gap: 2.5mm; }
+.quote footer::before { content: ""; width: 6mm; border-top: 0.6pt solid var(--gold-light); }
+.approach .lead { margin-bottom: calc(2 * var(--bl)); }
+.axes { display: grid; grid-template-columns: 1fr 1fr; column-gap: calc(2 * var(--gut)); }
+.axis { border-top: 0.9pt solid var(--gold); padding-top: calc(0.75 * var(--bl)); }
+.axis h3 { font-size: 12pt; line-height: 7mm; font-weight: 400; margin-bottom: calc(0.5 * var(--bl)); }
+.axis ul { list-style: none; margin: 0; padding: 0; }
+.axis li { padding: calc(0.5 * var(--bl)) 0 calc(0.5 * var(--bl) - var(--hair)); border-bottom: var(--hair) solid var(--rule); }
+.merge { display: block; width: 175mm; height: 13mm; margin: 2mm 0 1.5mm; }
+.decision { background: #fff; border-top: 0.9pt solid var(--navy); padding: var(--bl) 6mm calc(1.25 * var(--bl)); display: grid; grid-template-columns: 24mm 1fr; column-gap: var(--gut); align-items: start; }
+.decision h3 { font-size: 12pt; line-height: var(--bl); font-weight: 400; }
+
+/* ============ ۱۳ فرآیند ============ */
 .band {
   background: var(--navy);
   color: #fff;
@@ -248,29 +285,6 @@
 .step h3 { color: #fff; min-height: calc(2 * var(--bl)); margin: calc(0.75 * var(--bl)) 0 calc(0.5 * var(--bl)); font-weight: 500; }
 .step p { color: var(--navy-12); text-align: start; font-weight: 300; }
 .note-line { margin-bottom: auto; padding-right: 5mm; border-right: 0.9pt solid var(--gold); width: calc(8 * var(--col) + 7 * var(--gut)); }
-
-/* ============ ۱۲ متقاضیان ============ */
-.plists { display: grid; grid-template-columns: 1fr 1fr; column-gap: calc(2 * var(--gut)); margin-top: var(--bl); align-items: start; }
-.plist { padding: calc(1.5 * var(--bl)) 7mm calc(2 * var(--bl)); }
-.plist.ok { background: #fff; border-top: 0.9pt solid var(--gold); }
-.plist.no { border-top: 0.9pt solid var(--navy-30); border-bottom: var(--hair) solid var(--rule); }
-.plist h2 { margin-bottom: var(--bl); font-size: 13pt; line-height: 7.5mm; font-weight: 400; }
-.plist ul { list-style: none; margin: 0; padding: 0; }
-.plist li { display: grid; grid-template-columns: 7mm 1fr; align-items: start; padding: var(--bl) 0; border-bottom: var(--hair) solid var(--navy-12); font-size: 10.5pt; line-height: 6.6mm; }
-.plist li:last-child { border-bottom: 0; }
-.plist .mk { width: 4.2mm; height: 4.2mm; margin-top: 1.2mm; }
-.plist.no li { color: var(--navy-70); }
-
-/* ============ ۱۳ حاکمیت ============ */
-.block-title { margin-bottom: var(--bl); }
-.organs { display: grid; grid-template-columns: repeat(4, 1fr); column-gap: var(--gut); }
-.organ { border-top: 0.9pt solid var(--gold); padding-top: calc(0.75 * var(--bl)); padding-inline-end: 3mm; }
-.organ h3 { margin-bottom: calc(0.25 * var(--bl)); }
-.organ p { text-align: start; }
-.gov-row { display: grid; grid-template-columns: 1fr 1fr; column-gap: calc(2 * var(--gut)); margin-top: calc(3 * var(--bl)); align-items: start; }
-.committees h2 { margin-bottom: var(--bl); padding-bottom: calc(0.5 * var(--bl)); border-bottom: var(--hair) solid var(--rule); }
-.todo-area { margin-top: auto; border: 0.6pt dashed var(--navy-30); min-height: calc(9 * var(--bl)); display: grid; place-items: center; padding: var(--bl); box-sizing: border-box; font-size: 9pt; color: var(--navy-70); text-align: center; }
-.profiles { margin-top: auto; display: grid; grid-template-columns: repeat(4, 1fr); gap: var(--gut); }
 
 /* ============ ۱۴ مسیرهای همکاری ============ */
 .coop { display: flex; flex-direction: column; flex: 1; border-top: 0.75pt solid var(--navy); margin-top: var(--bl); }

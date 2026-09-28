@@ -3,7 +3,7 @@
 import fs from 'node:fs';
 import { master, fa, val, TODO, email, web } from '../data/master.mjs';
 import * as C from '../data/catalog.mjs';
-import { icons, marks } from './icons.mjs';
+import { icons, illos } from './icons.mjs';
 
 const read = (p) => fs.readFileSync(new URL(p, import.meta.url), 'utf8');
 const chain6 = read('../brand/pattern/chain-6-engraved.svg');
@@ -76,7 +76,7 @@ export function coverPage(c = C.cover) {
   });
 }
 
-// ═══ ۲ سخن مدیرعامل ═══
+// ═══ ۲ پیام مدیرعامل ═══
 export function ceoPage(p = C.ceoNote) {
   const name = master.ceoName ? master.ceoName : todoLabel(p.signatureTodo);
   return shell({
@@ -133,7 +133,7 @@ export function vmvPage(p = C.vmv) {
   });
 }
 
-// ═══ ۵ مبانی قانونی ═══
+// ═══ ۵ چارچوب قانونی و نظارتی ═══
 export function legalPage(p = C.legal) {
   return shell({
     page: p.page,
@@ -151,7 +151,21 @@ export function legalPage(p = C.legal) {
   });
 }
 
-// ═══ ۶ سه ابزار، یک مسیر ═══
+// ═══ ۶ مزیت‌های همکاری ═══
+export function advantagesPage(p = C.advantages) {
+  return shell({
+    page: p.page,
+    cls: 'advantages',
+    body: `
+      ${opener({ title: p.title })}
+      <p class="t-lead lead">${p.lead}</p>
+      <div class="grid6">
+        ${p.items.map((it) => `<div class="adv">${icons[it.icon]}<h3 class="t-sub">${it.title}</h3><p class="t-body">${it.text}</p></div>`).join('')}
+      </div>`,
+  });
+}
+
+// ═══ ۷ سه ابزار، یک مسیر ═══
 export function overviewPage(p = C.overview) {
   const [hStage, hNeed, hTool] = p.head;
   return shell({
@@ -176,7 +190,7 @@ export function overviewPage(p = C.overview) {
   });
 }
 
-// ═══ ۷، ۸، ۹ ابزارهای مالی ═══
+// ═══ ۸، ۹، ۱۰ ابزارهای مالی ═══
 export function instrumentPage(p) {
   const item = (it, i) => {
     const [name, desc] = it;
@@ -205,20 +219,49 @@ export function instrumentPage(p) {
   });
 }
 
-// ═══ ۱۰ خدمات تخصصی ═══
+// ═══ ۱۱ خدمات تخصصی ═══
 export function servicesPage(p = C.services) {
   return shell({
     page: p.page,
     cls: 'services',
     body: `
       ${opener({ title: p.title })}
-      <div class="grid4">
-        ${p.items.map(([name, desc], i) => `<div class="cell"><span class="big-n">${fa(i + 1)}</span><h3 class="t-sub">${name}</h3><p class="t-body">${desc}</p></div>`).join('')}
+      <p class="t-lead lead">${p.lead}</p>
+      <div class="svc-grid">
+        ${p.items.map((it) => `
+          <div class="svc">
+            ${illos[it.illo]}
+            <h3 class="t-sub">${it.title}</h3>
+            <p class="t-body">${it.text}</p>
+            <ul class="t-body dots">${it.points.map((x) => `<li>${x}</li>`).join('')}</ul>
+          </div>`).join('')}
       </div>`,
   });
 }
 
-// ═══ ۱۱ فرآیند ═══
+// ═══ ۱۲ رویکرد ارزیابی ═══
+export function approachPage(p = C.approach) {
+  // دو محور به یک تصمیم می‌رسند: خط‌های هم‌گرا روی عرض کامل ستون متن (۱۷۵ میلی‌متر)
+  const merge = `<svg class="merge" viewBox="0 0 175 13" aria-hidden="true" fill="none" stroke="var(--gold)" stroke-width="0.35" stroke-linecap="round" stroke-linejoin="round">
+    <path d="M131.25 0V5H43.75V0M87.5 5V12"/><path d="M85.3 9.8L87.5 12l2.2-2.2"/></svg>`;
+  return shell({
+    page: p.page,
+    cls: 'approach',
+    body: `
+      <div class="quote-panel">
+        ${opener({ title: p.title })}
+        <blockquote class="quote"><p>«${p.quote}»</p><footer>${p.quoteSource}</footer></blockquote>
+      </div>
+      <p class="t-lead lead">${p.lead}</p>
+      <div class="axes">
+        ${p.axes.map((ax) => `<section class="axis"><h3 class="t-sub">${ax.title}</h3><ul class="t-body">${ax.items.map((x) => `<li>${x}</li>`).join('')}</ul></section>`).join('')}
+      </div>
+      ${merge}
+      <div class="decision"><h3 class="t-sub">${p.decision.title}</h3><p class="t-body">${p.decision.text}</p></div>`,
+  });
+}
+
+// ═══ ۱۳ فرآیند ═══
 export function processPage(p = C.process) {
   return shell({
     page: p.page,
@@ -231,47 +274,6 @@ export function processPage(p = C.process) {
         </ol>
       </div>
       <aside class="note-line"><p class="t-body">${p.note}</p></aside>`,
-  });
-}
-
-// ═══ ۱۲ متقاضیان ═══
-export function applicantsPage(p = C.applicants) {
-  const list = (l, kind) => `
-    <section class="plist ${kind}">
-      <h2 class="t-sub">${l.title}</h2>
-      <ul class="t-body">${l.items.map((x) => `<li>${marks[kind === 'ok' ? 'check' : 'cross']}<span>${x}</span></li>`).join('')}</ul>
-    </section>`;
-  return shell({
-    page: p.page,
-    cls: 'applicants',
-    body: `
-      ${opener({ title: p.title })}
-      <div class="plists">${list(p.eligible, 'ok')}${list(p.excluded, 'no')}</div>`,
-  });
-}
-
-// ═══ ۱۳ حاکمیت ═══
-export function governancePage(p = C.governance) {
-  const profiles = master.board
-    ? `<div class="profiles">${master.board.split('\n').filter(Boolean).map((l) => `<div class="profile t-body">${l}</div>`).join('')}</div>`
-    : `<div class="todo-area">${todoLabel(p.profilesTodo)}</div>`;
-  return shell({
-    page: p.page,
-    cls: 'governance',
-    body: `
-      ${opener({ title: p.title })}
-      <h2 class="t-sub block-title">${p.organsTitle}</h2>
-      <div class="organs">
-        ${p.organs.map(([n, d]) => `<div class="organ"><h3 class="t-sub">${n}</h3><p class="t-body">${d}</p></div>`).join('')}
-      </div>
-      <div class="gov-row">
-        <section class="committees">
-          <h2 class="t-sub">${p.committeesTitle}</h2>
-          <ul class="t-body dots">${p.committees.map((x) => `<li>${x}</li>`).join('')}</ul>
-        </section>
-        <aside class="card-w"><h3 class="t-sub">${p.commitment.title}</h3><p class="t-body">${p.commitment.text}</p></aside>
-      </div>
-      ${profiles}`,
   });
 }
 
@@ -342,9 +344,9 @@ export function backPage(p = C.backCover) {
 }
 
 export const allPages = () => [
-  coverPage(), ceoPage(), glancePage(), vmvPage(), legalPage(), overviewPage(),
+  coverPage(), ceoPage(), glancePage(), vmvPage(), legalPage(), advantagesPage(), overviewPage(),
   instrumentPage(C.guarantee), instrumentPage(C.facility), instrumentPage(C.equity),
-  servicesPage(), processPage(), applicantsPage(), governancePage(), cooperationPage(), contactPage(), backPage(),
+  servicesPage(), approachPage(), processPage(), cooperationPage(), contactPage(), backPage(),
 ];
 
 export const samplePages = () => [coverPage(), glancePage(), instrumentPage(C.guarantee)];
