@@ -60,6 +60,7 @@ export function outsideSheet() {
         <h2 class="b-section">${f.title}</h2>
         <div class="rule"></div>
         ${f.paragraphs.map((p, i) => `<p class="${i === 0 ? 'b-lead' : 'b-body'}">${p}</p>`).join('')}
+        ${f.agency ? `<aside class="agency"><h3 class="b-sub">${f.agency.title}</h3><p class="b-body">${f.agency.text}</p></aside>` : ''}
       </div>
     </div>
     ${folds(OUTSIDE)}

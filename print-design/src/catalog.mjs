@@ -200,7 +200,7 @@ export function instrumentPage(p) {
       : `<li class="plain">${marker}<span class="t-body">${name}</span></li>`;
   };
   const note = p.note
-    ? `<aside class="note-navy"><h3 class="t-sub">${p.note.title}</h3><p class="t-body">${p.note.text}</p></aside>`
+    ? `<aside class="note-navy"><h3 class="t-sub">${p.note.title}</h3><p class="t-body">${p.note.text}</p>${p.note.more ? `<span class="more">${p.note.more}</span>` : ''}</aside>`
     : '';
   return shell({
     page: p.page,
@@ -219,7 +219,34 @@ export function instrumentPage(p) {
   });
 }
 
-// ═══ ۱۱ خدمات تخصصی ═══
+// گام‌های افقی راست‌به‌چپ با پیکان (مزایای مالیاتی و عاملیت)
+const flowSteps = (steps, cls) =>
+  `<ol class="flow-steps ${cls}">${steps.map(([t, d], i) => `<li><span class="n">${fa(i + 1)}</span><h3 class="t-sub">${t}</h3><p class="t-body">${d}</p></li>`).join('')}</ol>`;
+const whoCols = (items) =>
+  `<div class="who3">${items.map((w) => `<div class="who">${icons[w.icon]}<h3 class="t-sub">${w.title}</h3><p class="t-body">${w.text}</p></div>`).join('')}</div>`;
+
+// ═══ ۱۱ مزایای مالیاتی ═══
+export function taxPage(p = C.tax) {
+  return shell({
+    page: p.page,
+    cls: 'tax',
+    body: `
+      ${opener({ title: p.title })}
+      <p class="t-lead lead">${p.lead}</p>
+      <div class="basis">
+        <span class="t-caption eb">${p.basis.label}</span>
+        <h3 class="t-sub">${p.basis.law}</h3>
+        <p class="t-lead">${p.basis.text}</p>
+      </div>
+      <h2 class="t-sub blk">${p.whoTitle}</h2>
+      ${whoCols(p.who)}
+      <h2 class="t-sub blk">${p.roleTitle}</h2>
+      ${flowSteps(p.role, 'light')}
+      <p class="caveat t-caption">${p.caveat}</p>`,
+  });
+}
+
+// ═══ ۱۲ خدمات تخصصی ═══
 export function servicesPage(p = C.services) {
   return shell({
     page: p.page,
@@ -239,36 +266,18 @@ export function servicesPage(p = C.services) {
   });
 }
 
-// ═══ ۱۲ رویکرد ارزیابی ═══
-export function approachPage(p = C.approach) {
-  // دو محور به یک تصمیم می‌رسند: خط‌های هم‌گرا روی عرض کامل ستون متن (۱۷۵ میلی‌متر)
-  const merge = `<svg class="merge" viewBox="0 0 175 13" aria-hidden="true" fill="none" stroke="var(--gold)" stroke-width="0.35" stroke-linecap="round" stroke-linejoin="round">
-    <path d="M131.25 0V5H43.75V0M87.5 5V12"/><path d="M85.3 9.8L87.5 12l2.2-2.2"/></svg>`;
+// ═══ ۱۳ فرآیند (با نقل‌قول و دو محور ارزیابی) ═══
+export function processPage(p = C.process) {
   return shell({
     page: p.page,
-    cls: 'approach',
+    cls: 'process',
     body: `
       <div class="quote-panel">
         ${opener({ title: p.title })}
         <blockquote class="quote"><p>«${p.quote}»</p><footer>${p.quoteSource}</footer></blockquote>
       </div>
       <p class="t-lead lead">${p.lead}</p>
-      <div class="axes">
-        ${p.axes.map((ax) => `<section class="axis"><h3 class="t-sub">${ax.title}</h3><ul class="t-body">${ax.items.map((x) => `<li>${x}</li>`).join('')}</ul></section>`).join('')}
-      </div>
-      ${merge}
-      <div class="decision"><h3 class="t-sub">${p.decision.title}</h3><p class="t-body">${p.decision.text}</p></div>`,
-  });
-}
-
-// ═══ ۱۳ فرآیند ═══
-export function processPage(p = C.process) {
-  return shell({
-    page: p.page,
-    cls: 'process',
-    body: `
-      ${opener({ title: p.title })}
-      <div class="band">
+      <div class="band light">
         <ol class="steps6">
           ${p.steps.map(([t, d], i) => `<li class="step"><span class="n">${fa(i + 1)}</span><h3 class="t-sub">${t}</h3><p class="t-body">${d}</p></li>`).join('')}
         </ol>
@@ -277,28 +286,41 @@ export function processPage(p = C.process) {
   });
 }
 
-// ═══ ۱۴ مسیرهای همکاری ═══
-export function cooperationPage(p = C.cooperation) {
+// ═══ ۱۴ عاملیت و اداره وجوه ═══
+export function agencyPage(p = C.agency) {
   return shell({
     page: p.page,
-    cls: 'cooperation',
+    cls: 'agency',
     body: `
       ${opener({ title: p.title })}
-      <div class="coop">
-        ${p.columns.map(([t, d], i) => `<div class="coop-row"><span class="big-n">${fa(i + 1)}</span><h3 class="t-sub">${t}</h3><p class="t-body">${d}</p></div>`).join('')}
+      <p class="t-lead lead">${p.lead}</p>
+      <h2 class="t-sub blk">${p.whoTitle}</h2>
+      ${whoCols(p.who)}
+      <div class="band cycle">
+        <h2 class="t-sub">${p.cycleTitle}</h2>
+        ${flowSteps(p.cycle, 'dark')}
+      </div>
+      <div class="ag-bottom">
+        <section><h2 class="t-sub blk">${p.toolsTitle}</h2><ul class="t-body dots">${p.tools.map((x) => `<li>${x}</li>`).join('')}</ul></section>
+        <section><h2 class="t-sub blk">${p.valueTitle}</h2><dl class="vals">${p.value.map(([t, d]) => `<div><dt>${t}</dt><dd class="t-body">${d}</dd></div>`).join('')}</dl></section>
       </div>`,
   });
 }
 
-// ═══ ۱۵ تماس ═══
-export function contactPage(p = C.contact) {
-  const L = p.labels;
+// ═══ ۱۵ مسیرهای همکاری و تماس ═══
+export function closingPage(p = C.cooperation, c = C.contact) {
+  const L = c.labels;
   const row = (label, value) => `<div class="crow"><dt class="t-caption">${label}</dt><dd class="t-body">${value}</dd></div>`;
   return shell({
     page: p.page,
-    cls: 'contact',
+    cls: 'closing contact',
     body: `
       ${opener({ title: p.title })}
+      <div class="coop3">
+        ${p.columns.map(([t, d], i) => `<div class="coop-col"><span class="big-n">${fa(i + 1)}</span><h3 class="t-sub">${t}</h3><p class="t-body">${d}</p></div>`).join('')}
+      </div>
+      <h2 class="t-section sec2">${c.title}</h2>
+      <div class="sec-rule"></div>
       <div class="contact-grid">
         <dl class="cdl">
           ${row(L.address, val(master.address))}
@@ -346,7 +368,7 @@ export function backPage(p = C.backCover) {
 export const allPages = () => [
   coverPage(), ceoPage(), glancePage(), vmvPage(), legalPage(), advantagesPage(), overviewPage(),
   instrumentPage(C.guarantee), instrumentPage(C.facility), instrumentPage(C.equity),
-  servicesPage(), approachPage(), processPage(), cooperationPage(), contactPage(), backPage(),
+  taxPage(), servicesPage(), processPage(), agencyPage(), closingPage(), backPage(),
 ];
 
 export const samplePages = () => [coverPage(), glancePage(), instrumentPage(C.guarantee)];

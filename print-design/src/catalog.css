@@ -242,7 +242,7 @@
 .svc .dots { margin-top: var(--bl); padding-top: calc(0.5 * var(--bl)); border-top: var(--hair) solid var(--rule); }
 .big-n { display: block; font-size: 40pt; line-height: calc(3 * var(--bl)); font-weight: 200; color: var(--gold); }
 
-/* ============ ۱۲ رویکرد ارزیابی ============ */
+/* ============ نقل‌قول (بالای صفحه فرآیند) ============ */
 .quote-panel {
   position: relative;
   background: var(--navy);
@@ -258,15 +258,47 @@
 .quote p { font-size: 19pt; line-height: 11.5mm; font-weight: 300; color: #fff; text-align: start; }
 .quote footer { margin-top: var(--bl); font-size: 8pt; line-height: 5mm; color: var(--gold-light); display: flex; align-items: center; gap: 2.5mm; }
 .quote footer::before { content: ""; width: 6mm; border-top: 0.6pt solid var(--gold-light); }
-.approach .lead { margin-bottom: calc(2 * var(--bl)); }
-.axes { display: grid; grid-template-columns: 1fr 1fr; column-gap: calc(2 * var(--gut)); }
-.axis { border-top: 0.9pt solid var(--gold); padding-top: calc(0.75 * var(--bl)); }
-.axis h3 { font-size: 12pt; line-height: 7mm; font-weight: 400; margin-bottom: calc(0.5 * var(--bl)); }
-.axis ul { list-style: none; margin: 0; padding: 0; }
-.axis li { padding: calc(0.5 * var(--bl)) 0 calc(0.5 * var(--bl) - var(--hair)); border-bottom: var(--hair) solid var(--rule); }
-.merge { display: block; width: 175mm; height: 13mm; margin: 2mm 0 1.5mm; }
-.decision { background: #fff; border-top: 0.9pt solid var(--navy); padding: var(--bl) 6mm calc(1.25 * var(--bl)); display: grid; grid-template-columns: 24mm 1fr; column-gap: var(--gut); align-items: start; }
-.decision h3 { font-size: 12pt; line-height: var(--bl); font-weight: 400; }
+
+/* ——— سرتیتر بخش درون صفحه و ستون‌های «چه کسانی» (مالیاتی، عاملیت) ——— */
+.blk { margin: calc(2 * var(--bl)) 0 var(--bl); padding-bottom: calc(0.5 * var(--bl) - 0.75pt); border-bottom: 0.75pt solid var(--navy); }
+.who3 { display: grid; grid-template-columns: repeat(3, 1fr); column-gap: calc(2 * var(--gut)); }
+.who .icon { width: 13mm; height: 13mm; display: block; margin-bottom: calc(0.75 * var(--bl)); margin-inline-start: -1mm; }
+.who h3 { font-size: 11.5pt; line-height: 6.6mm; font-weight: 500; margin-bottom: calc(0.25 * var(--bl)); }
+.who p { text-align: start; }
+
+/* ——— گام‌های افقی راست‌به‌چپ ——— */
+.flow-steps { list-style: none; margin: 0; padding: 0; display: grid; grid-auto-flow: column; grid-auto-columns: 1fr; column-gap: var(--gut); }
+.flow-steps li { position: relative; display: flex; flex-direction: column; }
+.flow-steps .n { font-size: 28pt; line-height: calc(2.25 * var(--bl)); font-weight: 200; color: var(--gold); }
+.flow-steps li:not(:last-child)::after { content: ""; position: absolute; top: 7mm; right: 9mm; left: -3mm; border-top: 0.6pt solid var(--gold); }
+.flow-steps li:not(:last-child)::before { content: ""; position: absolute; top: calc(7mm - 1.05mm); left: -3.1mm; width: 2.1mm; height: 2.1mm; border-left: 0.6pt solid var(--gold); border-bottom: 0.6pt solid var(--gold); transform: rotate(45deg); }
+.flow-steps h3 { margin: calc(0.5 * var(--bl)) 0 calc(0.25 * var(--bl)); font-size: 11pt; line-height: 6.6mm; font-weight: 500; }
+.flow-steps p { text-align: start; }
+.flow-steps.dark .n { color: var(--gold-light); }
+.flow-steps.dark li::after, .flow-steps.dark li::before { border-color: var(--gold-light); }
+.flow-steps.dark h3 { color: #fff; }
+.flow-steps.dark p { color: var(--navy-12); font-weight: 300; }
+
+/* ============ ۱۱ مزایای مالیاتی ============ */
+.basis { background: #fff; border-top: 0.9pt solid var(--gold); padding: var(--bl) 6mm var(--bl); margin-top: calc(1.5 * var(--bl)); display: grid; grid-template-columns: calc(4 * var(--col) + 3 * var(--gut)) 1fr; column-gap: calc(2 * var(--gut)); align-items: start; }
+.basis .eb { grid-column: 1; color: var(--gold); font-weight: 600; }
+.basis h3 { grid-column: 1; font-size: 11.5pt; line-height: 6.6mm; }
+.basis p { grid-column: 2; grid-row: 1 / span 2; }
+.caveat { margin-top: auto; padding-right: 4mm; border-right: 0.9pt solid var(--gold); color: var(--navy-70); font-size: 8pt; line-height: 5mm; }
+
+/* ============ ۱۴ عاملیت ============ */
+.band.cycle { margin-block: calc(1.5 * var(--bl)) calc(1.25 * var(--bl)); padding-block: var(--bl) calc(1.5 * var(--bl)); }
+.agency .blk, .tax .blk { margin: calc(1.5 * var(--bl)) 0 calc(0.75 * var(--bl)); }
+.agency .who .icon { width: 11mm; height: 11mm; margin-bottom: calc(0.5 * var(--bl)); }
+.agency .ag-bottom .blk { margin-top: 0; margin-bottom: calc(0.5 * var(--bl)); }
+.band.cycle > h2 { color: var(--gold-light); font-weight: 500; margin-bottom: calc(0.5 * var(--bl)); }
+.ag-bottom { display: grid; grid-template-columns: calc(5 * var(--col) + 4 * var(--gut)) 1fr; column-gap: calc(2 * var(--gut)); }
+.ag-bottom .blk { margin-top: 0; }
+.vals { margin: 0; }
+.vals > div { display: grid; grid-template-columns: 24mm 1fr; column-gap: var(--gut); padding: calc(0.4 * var(--bl)) 0; border-bottom: var(--hair) solid var(--rule); }
+.vals > div:first-child { padding-top: 0; }
+.vals dt { font-size: 10pt; line-height: var(--bl); font-weight: 600; color: var(--navy); }
+.vals dd { margin: 0; }
 
 /* ============ ۱۳ فرآیند ============ */
 .band {
@@ -284,15 +316,25 @@
 .step:not(:last-child)::before { content: ""; position: absolute; top: calc(9mm - 1.05mm); left: -3.6mm; width: 2.1mm; height: 2.1mm; border-left: 0.6pt solid var(--gold-light); border-bottom: 0.6pt solid var(--gold-light); transform: rotate(45deg); }
 .step h3 { color: #fff; min-height: calc(2 * var(--bl)); margin: calc(0.75 * var(--bl)) 0 calc(0.5 * var(--bl)); font-weight: 500; }
 .step p { color: var(--navy-12); text-align: start; font-weight: 300; }
+.band.light { background: #fff; color: var(--ink); margin-block: 0 calc(1.5 * var(--bl)); padding-block: calc(2 * var(--bl)) calc(2.5 * var(--bl)); }
+.band.light .step .n { color: var(--gold); }
+.band.light .step::after, .band.light .step::before { border-color: var(--gold) !important; }
+.band.light .step h3 { color: var(--navy); }
+.band.light .step p { color: var(--ink); font-weight: 400; }
+.process .lead { margin-bottom: calc(2 * var(--bl)); }
 .note-line { margin-bottom: auto; padding-right: 5mm; border-right: 0.9pt solid var(--gold); width: calc(8 * var(--col) + 7 * var(--gut)); }
 
-/* ============ ۱۴ مسیرهای همکاری ============ */
-.coop { display: flex; flex-direction: column; flex: 1; border-top: 0.75pt solid var(--navy); margin-top: var(--bl); }
-.coop-row { flex: 1; display: grid; grid-template-columns: calc(2 * var(--col) + var(--gut)) calc(4 * var(--col) + 3 * var(--gut)) 1fr; column-gap: var(--gut); align-content: center; align-items: start; padding-block: var(--bl); border-bottom: var(--hair) solid var(--rule); }
-.coop-row:last-child { border-bottom: 0; }
-.coop-row .big-n { font-size: 48pt; line-height: calc(3 * var(--bl)); margin-top: -2mm; }
-.coop-row h3 { font-size: 13pt; line-height: 7.5mm; font-weight: 400; }
-.coop-row p { font-size: 10.5pt; line-height: 6.75mm; }
+/* ============ ۱۵ مسیرهای همکاری و تماس ============ */
+.coop3 { display: grid; grid-template-columns: repeat(3, 1fr); column-gap: var(--gut); border-top: 0.75pt solid var(--navy); padding-top: var(--bl); margin-top: var(--bl); }
+.coop-col { display: flex; flex-direction: column; }
+.coop-col:not(:first-child) { border-right: var(--hair) solid var(--rule); padding-right: var(--gut); }
+.coop-col:not(:last-child) { padding-left: var(--gut); }
+.coop-col h3 { font-size: 12pt; line-height: 7mm; font-weight: 400; margin: calc(0.25 * var(--bl)) 0 calc(0.25 * var(--bl)); min-height: 14mm; }
+.coop-col p { text-align: start; }
+.closing .sec2 { font-size: 22pt; line-height: calc(2 * var(--bl)); margin-top: calc(3 * var(--bl)); }
+.closing .sec2 + .sec-rule { margin-bottom: var(--bl); }
+.closing .contact-grid { margin-top: 0; }
+.closing .crow { padding: calc(0.5 * var(--bl)) 0 calc(0.5 * var(--bl) - var(--hair)); }
 
 /* ============ ۱۵ تماس ============ */
 .contact-grid { display: grid; grid-template-columns: calc(8 * var(--col) + 7 * var(--gut)) 1fr; column-gap: var(--gut); margin-top: var(--bl); align-items: start; }

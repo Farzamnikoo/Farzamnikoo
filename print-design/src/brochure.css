@@ -78,6 +78,9 @@
 .flap .b-lead + .b-body { margin-top: calc(1.5 * var(--bl)); }
 .flap .b-lead { font-size: 10.5pt; line-height: 6.6mm; }
 .flap .b-body { font-size: 9.5pt; line-height: 5.8mm; }
+.flap .agency { margin-top: auto; background: #fff; border-top: 0.9pt solid var(--gold); padding: 3mm 4mm 3.5mm; }
+.flap .agency .b-sub { margin-bottom: 1.5mm; }
+.flap .agency .b-body { font-size: 8.8pt; line-height: 5.2mm; }
 
 /* ——— داخل ——— */
 .headline { position: absolute; top: var(--pad-top); right: var(--pad-side); left: var(--pad-side); text-align: center; }
@@ -89,7 +92,7 @@
 .tool .dots { list-style: none; padding: 0; margin-top: var(--bl); border-top: 0.35pt solid var(--navy-30); padding-top: calc(0.5 * var(--bl)); }
 .tool .dots li { position: relative; padding-right: 3.8mm; color: var(--navy); }
 .tool .dots li::before { content: ""; position: absolute; right: 0.3mm; top: 2.2mm; width: 1.2mm; height: 1.2mm; border-radius: 50%; background: var(--gold); }
-.tool .note { margin-top: auto; background: #fff; border-top: 0.9pt solid var(--gold); padding: 2.5mm 3.5mm 3mm; font-size: 8.4pt; line-height: 5mm; }
+.tool .note { margin-top: auto; background: #fff; border-top: 0.9pt solid var(--gold); padding: 2.5mm 3.5mm 3mm; font-size: 8.4pt; line-height: 5mm; text-align: start; }
 .tool .note b { color: var(--navy); }
 
 .band {

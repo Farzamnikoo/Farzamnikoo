@@ -87,6 +87,32 @@ export const icons = {
       '<circle cx="24" cy="22.5" r="4.2" fill="var(--icon-accent, var(--gold))" stroke="none"/>',
     'مجوز رسمی و نظارت'
   ),
+
+  // ——— مزایای مالیاتی و عاملیت (صفحه‌های ۱۱ و ۱۴) ———
+  // دستگاه اجرایی: ساختمان ستون‌دار
+  govBody: wrap(
+    '<path d="M8 18.5L24 9l16 9.5z"/><path d="M12.5 22v12M19.5 22v12M28.5 22v12M35.5 22v12"/><path d="M9 34.5h30M7 39h34"/>' +
+      '<circle cx="24" cy="15" r="2.6" fill="var(--icon-accent, var(--gold))" stroke="none"/>',
+    'دستگاه‌های اجرایی'
+  ),
+  // صندوق و نهاد حمایتی: سکه‌های روی هم با سکه طلایی بالا
+  supportFund: wrap(
+    '<path d="M13 16v6a11 4 0 0 0 22 0v-6"/><path d="M13 22v6a11 4 0 0 0 22 0v-6"/><path d="M13 28v6a11 4 0 0 0 22 0v-6"/>' +
+      '<ellipse cx="24" cy="16" rx="11" ry="4" fill="var(--icon-accent, var(--gold))" stroke="var(--icon-accent, var(--gold))"/>',
+    'صندوق‌ها و نهادهای حمایتی'
+  ),
+  // صنعت: کارخانه با دودکش
+  industry: wrap(
+    '<path d="M6 39h36"/><path d="M8 39V25l8 5v-5l8 5v-5l8 5V13h6v26"/><path d="M13 34h3M21 34h3M29 34h3"/>' +
+      '<circle cx="35" cy="8" r="2.6" fill="var(--icon-accent, var(--gold))" stroke="none"/>',
+    'صنایع و بنگاه‌های بزرگ'
+  ),
+  // سرمایه‌گذار: ستون‌های رو به رشد و سکه
+  investor: wrap(
+    '<path d="M7 39h34"/><path d="M12 35v-7M19.5 35V22M27 35V16"/>' +
+      '<circle cx="35.5" cy="13" r="5" fill="var(--icon-accent, var(--gold))" stroke="none"/>',
+    'شرکت‌ها و سرمایه‌گذاران'
+  ),
 };
 
 // ——— تصویرسازی خطی خدمات تخصصی (صفحه ۱۱) ———
