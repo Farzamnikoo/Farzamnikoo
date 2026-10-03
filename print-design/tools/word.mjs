@@ -8,7 +8,7 @@ import path from 'node:path';
 import { fileURLToPath } from 'node:url';
 import { createRequire } from 'node:module';
 import { execFileSync } from 'node:child_process';
-import { master } from '../data/master.mjs';
+import { master, TODO_TXT } from '../data/master.mjs';
 
 const require = createRequire(import.meta.url);
 const {
@@ -25,7 +25,7 @@ const px = (v) => (v / 25.4) * 96;                   // mm → px (ImageRun)
 const C = { navy: '0F2547', navy70: '57667E', navy85: '334663', navy55: '7B879A', gold: 'C9A227' };
 const FA_DIGITS = '۰۱۲۳۴۵۶۷۸۹';
 const fa = (s) => String(s).replace(/[0-9]/g, (d) => FA_DIGITS[d]);
-const v = (x) => (x == null ? '[TODO]' : fa(x));
+const v = (x) => (x == null ? TODO_TXT : fa(x));
 const FONT = { ascii: 'Inter', hAnsi: 'Inter', cs: 'Vazirmatn', eastAsia: 'Vazirmatn' };
 
 const markPng = fs.readFileSync(path.join(ROOT, 'dist', 'logo', 'logo-mark.png'));
@@ -120,9 +120,9 @@ function firstFooter(code) {
     ];
     const en = (t) => P([lr(t, { size: 13, color: C.navy85 })], { ltr: true, align: AlignmentType.LEFT });
     const en3 = [
-      en(`Address: ${master.addressEn ?? '[TODO]'}`),
-      en(`Tel: ${master.tel ?? '[TODO]'}  |  ${master.web}`),
-      en(`Reg. No: ${master.regNo ?? '[TODO]'}  |  National ID: ${master.nationalId ?? '[TODO]'}`),
+      en(`Address: ${master.addressEn ?? TODO_TXT}`),
+      en(`Tel: ${master.tel ?? TODO_TXT}  |  ${master.web}`),
+      en(`Reg. No: ${master.regNo ?? TODO_TXT}  |  National ID: ${master.nationalId ?? TODO_TXT}`),
     ];
     return new Footer({ children: [P([], { border: top }), table([cell(fa3, mm(104)), cell(en3, mm(62))], [mm(104), mm(62)])] });
   }
@@ -133,7 +133,7 @@ function firstFooter(code) {
     fr(`تلفن: ${v(tel)}`, s), sepRun(), fr(`نمابر: ${v(master.fax)}`, s),
   ], { align: AlignmentType.CENTER, border: top });
   const line2 = P([
-    lr(master.web, s), sepRun(), lr(`${master.emailUser ?? '[TODO]'}@${master.web}`, s), sepRun(),
+    lr(master.web, s), sepRun(), lr(`${master.emailUser ?? TODO_TXT}@${master.web}`, s), sepRun(),
     fr(`شماره ثبت: ${v(master.regNo)}`, s), sepRun(), fr(`شناسه ملی: ${v(master.nationalId)}`, s),
   ], { align: AlignmentType.CENTER });
   return new Footer({ children: [line1, line2] });
@@ -188,22 +188,62 @@ function build(code, title) {
   return doc;
 }
 
+// جهت راست‌به‌چپ در سطح سند قفل می‌شود (ویرایش ۵، بازبینی کارفرما): docx نسخه ۹ برای bidi در sectPr،
+// پیش‌فرض پاراگراف و سبک Normal چیزی نمی‌نویسد؛ بدون آن، درج جدول، اعمال سبک یا Clear Formatting
+// پاراگراف را چپ‌به‌راست می‌کند. ترتیب عنصرها طبق طرح‌واره OOXML است.
+function lockRtl(dir) {
+  const doc = path.join(dir, 'word', 'document.xml');
+  let d = fs.readFileSync(doc, 'utf8');
+  d = d.replace(/<w:titlePg\/>(?!<w:bidi\/>)/g, '<w:titlePg/><w:bidi/>');
+  if (!/<w:sectPr>[\s\S]*<w:bidi\/>[\s\S]*<\/w:sectPr>/.test(d)) throw new Error('sectPr bidi');
+  fs.writeFileSync(doc, d);
+
+  const sty = path.join(dir, 'word', 'styles.xml');
+  let s = fs.readFileSync(sty, 'utf8');
+  s = s.replace('<w:pPrDefault><w:pPr><w:spacing', '<w:pPrDefault><w:pPr><w:bidi/><w:spacing');
+  if (!s.includes('<w:pPrDefault><w:pPr><w:bidi/>')) throw new Error('pPrDefault bidi');
+  const normal = '<w:style w:type="paragraph" w:default="1" w:styleId="Normal"><w:name w:val="Normal"/><w:qFormat/>' +
+    '<w:pPr><w:bidi/><w:jc w:val="both"/></w:pPr><w:rPr><w:rtl/></w:rPr></w:style>';
+  const tableNormal = '<w:style w:type="table" w:default="1" w:styleId="TableNormal"><w:name w:val="Normal Table"/>' +
+    '<w:uiPriority w:val="99"/><w:semiHidden/><w:unhideWhenUsed/><w:pPr><w:bidi/></w:pPr>' +
+    '<w:tblPr><w:bidiVisual/><w:tblInd w:w="0" w:type="dxa"/><w:tblCellMar><w:top w:w="0" w:type="dxa"/>' +
+    '<w:left w:w="108" w:type="dxa"/><w:bottom w:w="0" w:type="dxa"/><w:right w:w="108" w:type="dxa"/></w:tblCellMar></w:tblPr></w:style>';
+  const tableGrid = '<w:style w:type="table" w:styleId="TableGrid"><w:name w:val="Table Grid"/><w:basedOn w:val="TableNormal"/>' +
+    '<w:uiPriority w:val="39"/><w:pPr><w:bidi/></w:pPr><w:tblPr><w:bidiVisual/><w:tblBorders>' +
+    ['top', 'left', 'bottom', 'right', 'insideH', 'insideV'].map((e) => `<w:${e} w:val="single" w:sz="4" w:space="0" w:color="auto"/>`).join('') +
+    '</w:tblBorders></w:tblPr></w:style>';
+  if (s.includes('w:styleId="Normal"')) throw new Error('Normal already defined');
+  s = s.replace(/(<\/w:latentStyles>|<\/w:docDefaults>)(?![\s\S]*<\/w:latentStyles>)/, `$1${normal}${tableNormal}${tableGrid}`);
+  if (!s.includes('w:styleId="TableGrid"')) throw new Error('styles not inserted');
+  fs.writeFileSync(sty, s);
+}
+
+const zipDir = (dir, out) => {
+  fs.rmSync(out, { force: true });
+  // [Content_Types].xml نخستین بخش بسته
+  execFileSync('zip', ['-q', '-X', out, '[Content_Types].xml'], { cwd: dir });
+  execFileSync('zip', ['-q', '-X', '-r', out, '.', '-x', '[Content_Types].xml'], { cwd: dir });
+};
+
 const TEMPLATES = { 'LH-01': 'سربرگ عمومی', 'LH-02': 'سربرگ مدیرعامل', 'LH-04': 'سربرگ دوزبانه' };
 for (const [code, title] of Object.entries(TEMPLATES)) {
   const buf = await Packer.toBuffer(build(code, title));
-  const docx = path.join(OUT, `${code}.docx`);
-  fs.writeFileSync(docx, buf);
-  // .docx → .dotx: فقط نوع محتوای بخش اصلی عوض می‌شود
   const work = path.join(ROOT, 'build', `dotx-${code}`);
   fs.rmSync(work, { recursive: true, force: true });
   fs.mkdirSync(work, { recursive: true });
-  execFileSync('unzip', ['-q', docx, '-d', work]);
+  const raw = path.join(work, '..', `${code}-raw.docx`);
+  fs.writeFileSync(raw, buf);
+  execFileSync('unzip', ['-q', raw, '-d', work]);
+  fs.rmSync(raw);
+  lockRtl(work);
+  const docx = path.join(OUT, `${code}.docx`);
+  zipDir(work, docx);
+  // .docx → .dotx: فقط نوع محتوای بخش اصلی عوض می‌شود
   const ct = path.join(work, '[Content_Types].xml');
   fs.writeFileSync(ct, fs.readFileSync(ct, 'utf8').replace(
     'application/vnd.openxmlformats-officedocument.wordprocessingml.document.main+xml',
     'application/vnd.openxmlformats-officedocument.wordprocessingml.template.main+xml'));
   const dotx = path.join(OUT, `${code}_template.dotx`);
-  fs.rmSync(dotx, { force: true });
-  execFileSync('zip', ['-q', '-X', '-r', dotx, '.'], { cwd: work });
-  console.log('✓', code, '→', path.relative(ROOT, dotx));
+  zipDir(work, dotx);
+  console.log('✓', code, '→', path.relative(ROOT, docx), '+', path.basename(dotx));
 }

@@ -1,7 +1,7 @@
 // تولید سربرگ — سه گزینه چیدمان (الف، ب، ج) بر پایه یک ساختار مشترک.
 // همه ابعاد به میلی‌متر و نسبت به لبه برش (Trim) است؛ عناصر تا لبه با --bleed بیرون می‌زنند.
 
-import { master, fa, val, email, web } from '../data/master.mjs';
+import { master, fa, val, email, web, TODO_TXT } from '../data/master.mjs';
 
 export const OPTIONS = {
   a: {
@@ -97,7 +97,7 @@ function footerBilingual(d) {
   const fa1 = `<span class="fi">نشانی: ${val(d.address)}</span>`;
   const fa2 = [`<span class="fi">تلفن: ${val(d.tel)}</span>`, `<span class="fi">${web(d)}</span>`].join(sep);
   const fa3 = [`<span class="fi">شماره ثبت: ${val(d.regNo)}</span>`, `<span class="fi">شناسه ملی: ${val(d.nationalId)}</span>`].join(sep);
-  const en = (label, v) => `<span class="fi">${label}: ${v == null ? '[TODO]' : v}</span>`;
+  const en = (label, v) => `<span class="fi">${label}: ${v == null ? TODO_TXT : v}</span>`;
   const en1 = en('Address', d.addressEn);
   const en2 = [en('Tel', d.tel), `<span class="fi">${d.web}</span>`].join(sep);
   const en3 = [en('Reg. No', d.regNo), en('National ID', d.nationalId)].join(sep);

@@ -38,6 +38,8 @@
   --cream: #FBF9F4;          /* زمینه صفحات کاتالوگ (ترجیحاً با کاغذ کرم، نه چاپ تنت) */
   --ink: #2B303A;            /* متن بدنه */
   --grey-card: #EEF0F3;
+  /* کادرها روی زمینه کرم (ویرایش ۵): ۶٪ سرمه‌ای روی کرم. سفید روی کرم فقط ~۲٪ اختلاف داشت و دیده نمی‌شد. */
+  --panel: #EDECEA;
 
   --fa: "Vazirmatn", Tahoma, sans-serif;
   --en: "Inter", "Vazirmatn", Arial, sans-serif;

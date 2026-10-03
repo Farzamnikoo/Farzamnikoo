@@ -9,7 +9,7 @@ const read = (p) => fs.readFileSync(new URL(p, import.meta.url), 'utf8');
 const chain6 = read('../brand/pattern/chain-6-engraved.svg');
 const qrSvg = read('../brand/qr-tafund.svg');
 
-const todoLabel = (text) => `<span class="todo-fa">[<span class="lat">TODO</span>: ${text}]</span>`;
+const todoLabel = (text) => `<span class="todo-fa">«<span class="lat">TODO</span>: ${text}»</span>`;
 
 // روکش شبکه: ۱۲ ستون، خط پایه ۶ میلی‌متری، کادر حاشیه — روی ناحیه متن (۱۷۵ × ۲۵۸)
 function gridOverlay() {

@@ -2,7 +2,7 @@
  * بروشور سه‌لت — A4 افقی (۲۹۷ × ۲۱۰)، تای غلتان راست‌به‌چپ.
  * پنل‌ها ۱۰۰ / ۱۰۰ / ۹۷ میلی‌متر؛ لت تاشونده ۳ میلی‌متر باریک‌تر.
  * همان خانواده تایپوگرافی کاتالوگ، یک پله کوچک‌تر؛ خط پایه ۵٫۵ میلی‌متر.
- * ویرایش ۲: متن تمام‌تراز، عنوان‌های سبک، خط‌های مویی و کادر سفید به‌جای سطح خاکستری.
+ * ویرایش ۲: عنوان‌های سبک و خط‌های مویی. ویرایش ۵: متن راست‌چین (نه تمام‌تراز) و کادرهای ته‌رنگ‌دار.
  */
 
 @page { size: 297mm 210mm; margin: 0; }
@@ -24,7 +24,7 @@
 @media screen { .bs { margin-bottom: 8mm; } }
 .bs .trim { position: absolute; inset: var(--bleed); width: 297mm; height: 210mm; }
 .bs :where(p, h2, h3, ul, dl, dd) { margin: 0; }
-.bs :where(p) { text-align: justify; text-align-last: start; text-justify: inter-word; }
+.bs :where(p) { text-align: start; }
 .bs :where(li, dd) { text-align: start; }
 
 /* پنج سطح */
@@ -76,23 +76,32 @@
 
 /* ——— لت ——— */
 .flap .b-lead + .b-body { margin-top: calc(1.5 * var(--bl)); }
-.flap .b-lead { font-size: 10.5pt; line-height: 6.6mm; }
-.flap .b-body { font-size: 9.5pt; line-height: 5.8mm; }
-.flap .agency { margin-top: auto; background: #fff; border-top: 0.9pt solid var(--gold); padding: 3mm 4mm 3.5mm; }
-.flap .agency .b-sub { margin-bottom: 1.5mm; }
-.flap .agency .b-body { font-size: 8.8pt; line-height: 5.2mm; }
+.flap .b-lead { font-size: 11.5pt; line-height: 7.4mm; }
+.flap .b-body { font-size: 10.2pt; line-height: 6.4mm; }
+/* ویرایش ۵: عاملیت بلافاصله پس از متن، با ته‌رنگ؛ پایین لت «در یک نگاه» */
+.flap .agency { margin-top: calc(1.5 * var(--bl)); background: var(--panel); border-top: 0.9pt solid var(--gold); padding: 4mm 5mm 4.5mm; }
+.flap .agency .b-sub { margin-bottom: 2mm; font-size: 12pt; line-height: 7mm; font-weight: 400; }
+.flap .agency .b-body { font-size: 9.6pt; line-height: 6mm; }
+.flap .glance { margin-top: auto; display: grid; grid-template-columns: repeat(3, 1fr); column-gap: 3mm; border-top: 0.75pt solid var(--navy); padding-top: 3mm; }
+.flap .glance div { display: flex; flex-direction: column; }
+.flap .glance div + div { border-right: 0.35pt solid var(--navy-30); padding-right: 3mm; }
+.flap .glance .fig { font-size: 25pt; line-height: 11mm; font-weight: 200; color: var(--gold); white-space: nowrap; }
+.flap .glance .fig small { font-size: 8pt; font-weight: 400; color: var(--navy); margin-inline-start: 1mm; }
+.flap .glance .lbl { font-size: 8pt; line-height: 4.6mm; color: var(--navy-70); }
 
 /* ——— داخل ——— */
 .headline { position: absolute; top: var(--pad-top); right: var(--pad-side); left: var(--pad-side); text-align: center; }
 .headline .rule { margin: 2.5mm auto 0; }
-.panel.tool .pin { top: calc(var(--pad-top) + 4 * var(--bl)); bottom: 44mm; }
-.tool .icon { width: 14mm; height: 14mm; margin-bottom: calc(0.5 * var(--bl)); margin-inline-start: -1.5mm; }
-.tool .b-sub { margin-bottom: calc(0.5 * var(--bl)); min-height: var(--bl); font-size: 12pt; line-height: 7mm; font-weight: 400; }
-.tool .b-body { color: var(--ink); }
+.panel.tool .pin { top: calc(var(--pad-top) + 4 * var(--bl)); bottom: 52mm; }
+.tool .icon { width: 17mm; height: 17mm; margin-bottom: calc(0.75 * var(--bl)); margin-inline-start: -1.5mm; }
+.tool .b-sub { margin-bottom: calc(0.5 * var(--bl)); min-height: var(--bl); font-size: 13.5pt; line-height: 8mm; font-weight: 400; }
+.tool .b-body { color: var(--ink); font-size: 10pt; line-height: 6.2mm; }
 .tool .dots { list-style: none; padding: 0; margin-top: var(--bl); border-top: 0.35pt solid var(--navy-30); padding-top: calc(0.5 * var(--bl)); }
-.tool .dots li { position: relative; padding-right: 3.8mm; color: var(--navy); }
-.tool .dots li::before { content: ""; position: absolute; right: 0.3mm; top: 2.2mm; width: 1.2mm; height: 1.2mm; border-radius: 50%; background: var(--gold); }
-.tool .note { margin-top: auto; background: #fff; border-top: 0.9pt solid var(--gold); padding: 2.5mm 3.5mm 3mm; font-size: 8.4pt; line-height: 5mm; text-align: start; }
+.tool .dots li { position: relative; padding: 1.3mm 3.8mm 1.3mm 0; color: var(--navy); border-bottom: 0.35pt solid var(--navy-12); }
+.tool .dots li:last-child { border-bottom: 0; }
+.tool .dots li::before { content: ""; position: absolute; right: 0.3mm; top: 3.8mm; width: 1.2mm; height: 1.2mm; border-radius: 50%; background: var(--gold); }
+/* ویرایش ۵: کادر مزیت مالیاتی زیر همان فهرست مشارکت (نه معلق در پایین پنل) و با ته‌رنگ */
+.tool .note { margin-top: calc(0.75 * var(--bl)); background: var(--panel); border-top: 0.9pt solid var(--gold); padding: 2.5mm 3.5mm 3mm; font-size: 8.4pt; line-height: 5mm; text-align: start; }
 .tool .note b { color: var(--navy); }
 
 .band {
@@ -100,10 +109,10 @@
   left: calc(-1 * var(--bleed));
   right: calc(-1 * var(--bleed));
   bottom: calc(-1 * var(--bleed));
-  height: calc(32mm + var(--bleed));
+  height: calc(42mm + var(--bleed));
   background: var(--navy);
 }
-.band .step { position: absolute; top: 12.5mm; transform: translateX(-50%); display: flex; align-items: baseline; gap: 2mm; white-space: nowrap; margin-left: var(--bleed); }
-.band .n { font-size: 19pt; font-weight: 200; color: var(--gold-light); line-height: 1; }
-.band .t { font-size: 9.3pt; font-weight: 400; color: #fff; }
-.band .arrows { position: absolute; top: 1mm; left: var(--bleed); width: 297mm; height: 30mm; }
+.band .step { position: absolute; top: 16.5mm; transform: translateX(-50%); display: flex; align-items: baseline; gap: 2mm; white-space: nowrap; margin-left: var(--bleed); }
+.band .n { font-size: 24pt; font-weight: 200; color: var(--gold-light); line-height: 1; }
+.band .t { font-size: 10.5pt; font-weight: 400; color: #fff; }
+.band .arrows { position: absolute; top: 6mm; left: var(--bleed); width: 297mm; height: 30mm; }

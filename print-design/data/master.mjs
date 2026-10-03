@@ -1,19 +1,21 @@
 // داده‌های پایه مشترک (Master Data) — بخش صفر سند محتوا.
 // این فایل تنها منبع داده‌های ثبتی و تماس برای همه اقلام است.
-// هر مقدار null در خروجی به‌صورت «[TODO]» قابل رؤیت چاپ می‌شود تا پیش از چاپ تکمیل شود.
+// هر مقدار null در خروجی به‌صورت «TODO» قابل رؤیت چاپ می‌شود تا پیش از چاپ تکمیل شود.
+// (از ویرایش ۵ با گیومه به‌جای براکت؛ براکت در متن راست‌به‌چپ در بعضی نمایشگرها وارونه دیده می‌شد.)
 
 export const master = {
   nameFa: 'صندوق پژوهش و فناوری توسعه و آینده',
   legalFa: 'سهامی خاص',
   shortFa: 'صندوق توسعه و آینده',
-  // نام لاتین: انتخاب فرم مرور (پیشنهاد سند تصمیم نشان). اختصار هنوز تعیین نشده.
-  nameEn: 'Tosee & Ayandeh Research and Technology Fund',
+  // نام و اختصار لاتین: تصمیم کارفرما پس از بازبینی (۱۱ مهر ۱۴۰۵). آپاستروف تایپوگرافیک (’) است.
+  nameEn: 'Tose\u2019e & Ayandeh Research and Technology Fund',
   legalEn: 'Private Joint-Stock Company',
-  abbrEn: null,
+  abbrEn: 'TA Fund',
   web: 'tafund.ir',
 
   // از فرم مرور (۵ مهر ۱۴۰۵). جداکننده‌ها از «-» به «،» یکدست شده‌اند.
-  address: 'تهران، خیابان استاد نجات الهی، خیابان استاد جعفر شهری (سپند سابق)، شماره 16',
+  // نام اشخاص و «سپند سابق» با فاصله غیرشکن (\u00A0) به هم بسته‌اند تا در شکست سطر نصف نشوند.
+  address: 'تهران، خیابان استاد\u00A0نجات\u00A0الهی، خیابان استاد\u00A0جعفر\u00A0شهری (سپند\u00A0سابق)، شماره\u00A016',
   postcode: '1598994911',
 
   // [TODO] — اولویت یک
@@ -42,15 +44,17 @@ export const decisions = {
   watermark: 'none',
   logoVariation: '3-alef',  // نشان: ۳-الف، پایه با گره واقعی
   tagline: 1,               // «تأمین مالی مسیر ایده تا بازار»
-  latin: 'tosee',
+  latin: 'tose\u2019e',      // Tose’e & Ayandeh Research and Technology Fund، اختصار TA Fund
+  coverNameSplit: 'approved', // «توسعه و آینده» درشت روی جلدها؛ تأیید آگاهانه کارفرما
 };
 
 const FA_DIGITS = '۰۱۲۳۴۵۶۷۸۹';
 export const fa = (s) => String(s).replace(/[0-9]/g, (d) => FA_DIGITS[d]);
 
-export const TODO = '<span class="todo">[TODO]</span>';
+export const TODO_TXT = '«TODO»';
+export const TODO = `<span class="todo">${TODO_TXT}</span>`;
 export const val = (x, { latin = false } = {}) =>
   x == null ? TODO : latin ? `<span class="lat">${x}</span>` : fa(x);
 export const email = (d) =>
-  `<span class="lat">${d.emailUser == null ? '[TODO]' : d.emailUser}@${d.web}</span>`;
+  `<span class="lat">${d.emailUser == null ? TODO_TXT : d.emailUser}@${d.web}</span>`;
 export const web = (d) => `<span class="lat">${d.web}</span>`;

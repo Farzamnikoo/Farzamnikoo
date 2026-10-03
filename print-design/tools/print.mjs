@@ -8,6 +8,7 @@ import { fileURLToPath, pathToFileURL } from 'node:url';
 import { createRequire } from 'node:module';
 import { execFileSync } from 'node:child_process';
 import { letterheadFinal, FINAL, page } from '../src/letterhead.mjs';
+import { master } from '../data/master.mjs';
 import { allPages } from '../src/catalog.mjs';
 import { brochureSheets, OUTSIDE, INSIDE } from '../src/brochure.mjs';
 
@@ -40,7 +41,7 @@ function marks(W, H, { folds = [], label = '' } = {}) {
     <text x="${x0}" y="${PH - 3}" font-size="2.2" font-family="Inter, sans-serif" fill="#000">${label}</text></svg>`;
 }
 
-function printDoc({ items, W, H, css, folds = () => [], labels }) {
+function printDoc({ name, items, W, H, css, folds = () => [], labels }) {
   const PW = W + 2 * SLUG, PH = H + 2 * SLUG;
   const style = `<style>
     @page { size: ${PW}mm ${PH}mm; margin: 0; }
@@ -52,7 +53,9 @@ function printDoc({ items, W, H, css, folds = () => [], labels }) {
     .print .cp, .print .bs { break-after: auto; }
   </style>`;
   const body = items.map((html, i) => `<section class="pm"><div class="art">${html}</div>${marks(W, H, { folds: folds(i), label: labels[i] })}</section>`).join('\n');
-  return { html: page(style + body, { title: 'print', css, bodyClass: 'print' }), PW, PH };
+  // عنوان PDF (فیلد Title که PDF/X-1a اجباری می‌داند): نام لاتین صندوق و نام فایل
+  const title = `${master.nameEn} — ${name.replace(/_/g, ' ')}`;
+  return { html: page(style + body, { title, css, bodyClass: 'print' }), PW, PH };
 }
 
 function toPdfX(src, dst, { W, H }) {

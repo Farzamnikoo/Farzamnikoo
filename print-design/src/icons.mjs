@@ -5,16 +5,16 @@ const wrap = (body, label) =>
   `<svg class="icon" viewBox="0 0 48 48" role="img" aria-label="${label}" fill="none" stroke="var(--icon-line, var(--navy))" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">${body}</svg>`;
 
 export const icons = {
-  // ضمانت‌نامه: طاقِ پوشش بر روی یک هسته — تعهدی که از چیزی محافظت می‌کند
+  // ضمانت‌نامه (ویرایش ۵): مُهر تأیید با دو نوار — تعهدی که صندوق امضا می‌کند
   guarantee: wrap(
-    '<path d="M11 38V24a13 13 0 0 1 26 0v14"/><path d="M6 38h36"/>' +
-      '<circle cx="24" cy="29" r="4.2" fill="var(--icon-accent, var(--gold))" stroke="none"/>',
+    '<circle cx="24" cy="19" r="12"/><path d="M17.6 29.2L14.5 41l4.7-2.2 2.9 3.9 1.6-10.4"/><path d="M30.4 29.2L33.5 41l-4.7-2.2-2.9 3.9-1.6-10.4"/>' +
+      '<circle cx="24" cy="19" r="7" fill="var(--icon-accent, var(--gold))" stroke="none"/><path d="M20.8 19.2l2.3 2.3 4.2-4.7" stroke-width="1.9"/>',
     'صدور ضمانت‌نامه'
   ),
-  // تسهیلات: چرخه — بازپرداخت هم‌گام با چرخه نقدی طرح
+  // تسهیلات (ویرایش ۵): سکه‌های پیاپی که به ظرف می‌رسند — جریان سرمایه به شرکت
   facility: wrap(
-    '<path d="M24 11a13 13 0 1 1-11.26 6.5"/><path d="M24 17v7l5 3"/>' +
-      '<circle cx="12.74" cy="17.5" r="3.4" fill="var(--icon-accent, var(--gold))" stroke="none"/>',
+    '<circle cx="24" cy="8.5" r="3.6"/><circle cx="24" cy="18.5" r="3.6"/><path d="M8 28v8.5a2.5 2.5 0 0 0 2.5 2.5h27a2.5 2.5 0 0 0 2.5-2.5V28"/>' +
+      '<circle cx="24" cy="31" r="5" fill="var(--icon-accent, var(--gold))" stroke="none"/>',
     'اعطای تسهیلات'
   ),
   // مشارکت: دو دایرهٔ هم‌پوشان با سهم مشترک طلایی

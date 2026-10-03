@@ -61,6 +61,7 @@ export function outsideSheet() {
         <div class="rule"></div>
         ${f.paragraphs.map((p, i) => `<p class="${i === 0 ? 'b-lead' : 'b-body'}">${p}</p>`).join('')}
         ${f.agency ? `<aside class="agency"><h3 class="b-sub">${f.agency.title}</h3><p class="b-body">${f.agency.text}</p></aside>` : ''}
+        ${f.glance ? `<div class="glance">${f.glance.map((g) => `<div><span class="fig">${g.fig}${g.unit ? `<small>${g.unit}</small>` : ''}</span><span class="lbl">${g.label}</span></div>`).join('')}</div>` : ''}
       </div>
     </div>
     ${folds(OUTSIDE)}

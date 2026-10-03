@@ -5,7 +5,7 @@
  * ستون متن ۱۷۵ میلی‌متر = ۱۲ ستون ۱۰ میلی‌متری + ۱۱ ناودان ۵ میلی‌متری.
  * خط پایه ۶ میلی‌متر؛ فاصله‌های عمودی مضربی از آن هستند.
  *
- * اصول ویرایش ۲: متن‌ها تمام‌تراز (justify)، عنوان‌ها با وزن سبک و درشت، خط‌های مویی به‌جای
+ * اصول ویرایش ۲: عنوان‌ها با وزن سبک و درشت، خط‌های مویی به‌جای
  * کادرهای رنگی، طلایی فقط برای تأکیدهای کوچک، و ترکیب‌بندی که کل صفحه را پر می‌کند.
  */
 
@@ -51,10 +51,9 @@
 .cp :where(p, h1, h2, h3, ul, ol, dl, dd, figure) { margin: 0; }
 @media screen { .cp { margin-bottom: 8mm; } }
 
-/* تمام‌تراز: فاصله بین کلمه‌ها باز می‌شود و سطر آخر هر بند راست‌چین می‌ماند */
-.cp :where(p, .desc) { text-align: justify; text-align-last: start; text-justify: inter-word; }
-/* فهرست‌ها و ستون‌های باریک (کمتر از ~۶۰ میلی‌متر) راست‌چین می‌مانند؛ تمام‌تراز در آن‌ها فاصله‌های نازیبا می‌سازد */
-.cp :where(li, dd, li p, .value p, .card-w p, .adv p, .step p, .need, .stat .label, .qr figcaption) { text-align: start; }
+/* ویرایش ۵ (بازبینی کارفرما): متن راست‌چین با لبه چپ آزاد. تمام‌تراز در ستون‌های فارسی فاصله‌های باز
+   و «رودخانه سفید» می‌ساخت. فقط قالب Word تمام‌تراز می‌ماند (عرف نامه اداری). */
+.cp :where(p, .desc) { text-align: start; }
 
 /* ——— شروع بخش: برچسب، عنوان، خط کوتاه طلایی ——— */
 .opener { position: relative; display: flex; flex-direction: column; padding-top: var(--bl); }
@@ -87,7 +86,7 @@
 .cols-8 { width: calc(8 * var(--col) + 7 * var(--gut)); }
 
 /* ——— کادرها: کاغذ سفید با خط طلایی بالا (به‌جای سطح خاکستری) ——— */
-.card-w { background: #fff; border-top: 0.9pt solid var(--gold); padding: calc(0.75 * var(--bl)) 5.5mm var(--bl); }
+.card-w { background: var(--panel); border-top: 0.9pt solid var(--gold); padding: calc(0.75 * var(--bl)) 5.5mm var(--bl); }
 .card-w + .card-w { margin-top: var(--gut); }
 .card-w h3 { margin-bottom: calc(0.5 * var(--bl)); }
 .dots { list-style: none; margin: 0; padding: 0; }
@@ -280,7 +279,7 @@
 .flow-steps.dark p { color: var(--navy-12); font-weight: 300; }
 
 /* ============ ۱۱ مزایای مالیاتی ============ */
-.basis { background: #fff; border-top: 0.9pt solid var(--gold); padding: var(--bl) 6mm var(--bl); margin-top: calc(1.5 * var(--bl)); display: grid; grid-template-columns: calc(4 * var(--col) + 3 * var(--gut)) 1fr; column-gap: calc(2 * var(--gut)); align-items: start; }
+.basis { background: var(--panel); border-top: 0.9pt solid var(--gold); padding: var(--bl) 6mm var(--bl); margin-top: calc(1.5 * var(--bl)); display: grid; grid-template-columns: calc(4 * var(--col) + 3 * var(--gut)) 1fr; column-gap: calc(2 * var(--gut)); align-items: start; }
 .basis .eb { grid-column: 1; color: var(--gold); font-weight: 600; }
 .basis h3 { grid-column: 1; font-size: 11.5pt; line-height: 6.6mm; }
 .basis p { grid-column: 2; grid-row: 1 / span 2; }
@@ -316,12 +315,22 @@
 .step:not(:last-child)::before { content: ""; position: absolute; top: calc(9mm - 1.05mm); left: -3.6mm; width: 2.1mm; height: 2.1mm; border-left: 0.6pt solid var(--gold-light); border-bottom: 0.6pt solid var(--gold-light); transform: rotate(45deg); }
 .step h3 { color: #fff; min-height: calc(2 * var(--bl)); margin: calc(0.75 * var(--bl)) 0 calc(0.5 * var(--bl)); font-weight: 500; }
 .step p { color: var(--navy-12); text-align: start; font-weight: 300; }
-.band.light { background: #fff; color: var(--ink); margin-block: 0 calc(1.5 * var(--bl)); padding-block: calc(2 * var(--bl)) calc(2.5 * var(--bl)); }
+.band.light { background: var(--panel); color: var(--ink); margin-block: 0 calc(1.5 * var(--bl)); padding-block: calc(2 * var(--bl)) calc(2.5 * var(--bl)); }
 .band.light .step .n { color: var(--gold); }
 .band.light .step::after, .band.light .step::before { border-color: var(--gold) !important; }
 .band.light .step h3 { color: var(--navy); }
 .band.light .step p { color: var(--ink); font-weight: 400; }
 .process .lead { margin-bottom: calc(2 * var(--bl)); }
+/* ویرایش ۵: شش گام در دو ردیف سه‌تایی (ستون‌های شش‌تایی برای متن فارسی خیلی باریک بود).
+   شماره در کنار عنوان می‌نشیند تا ارتفاع نوار تقریباً همان بماند. */
+.band.light .steps6 { grid-template-columns: repeat(3, 1fr); column-gap: 14mm; row-gap: calc(2 * var(--bl)); }
+.band.light .step { display: grid; grid-template-columns: 11mm 1fr; column-gap: 2mm; align-items: start; }
+.band.light .step .n { grid-row: 1 / span 2; font-size: 30pt; line-height: calc(2 * var(--bl)); margin-top: -2mm; }
+.band.light .step h3 { margin: 0 0 calc(0.25 * var(--bl)); min-height: 0; font-size: 11pt; line-height: 6.6mm; }
+.band.light .step p { grid-column: 2; }
+.band.light .step:nth-child(3n)::after, .band.light .step:nth-child(3n)::before { display: none; }
+.band.light .step:not(:last-child)::after { top: 5.5mm; right: auto; left: -12mm; width: 9mm; }
+.band.light .step:not(:last-child)::before { top: calc(5.5mm - 1.05mm); left: -12.1mm; }
 .note-line { margin-bottom: auto; padding-right: 5mm; border-right: 0.9pt solid var(--gold); width: calc(8 * var(--col) + 7 * var(--gut)); }
 
 /* ============ ۱۵ مسیرهای همکاری و تماس ============ */

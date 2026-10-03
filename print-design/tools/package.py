@@ -42,7 +42,8 @@ put(D / '04-brochure/brochure_trifold.pdf', '03_Brochure/brochure_trifold_RGB.pd
 for n in ['outside.png', 'inside.png']:
     put(D / '04-brochure/png' / n, f'03_Brochure/png/brochure_{n}')
 # ۴ نشان
-put_glob('logo/*', '04_Logo')
+put_glob('logo/*.*', '04_Logo')
+put_glob('logo/lockups/*', '04_Logo/lockups')   # نشان با نام: افقی، عمودی، دوزبانه + برگه راهنما
 # ۵ قلم
 for f in sorted((ROOT / 'brand/fonts').glob('Vazirmatn-*.ttf')):
     put(f, f'05_Fonts/{f.name}')
@@ -83,3 +84,13 @@ with zipfile.ZipFile(wpath, 'w', zipfile.ZIP_DEFLATED, compresslevel=9) as z:
             z.write(f, Path(wname) / Path(sub).name / f.name)
     z.write(PKG / 'README_fa.txt', Path(wname) / 'README_fa.txt')
 print(f'✓ {wpath.relative_to(ROOT)} — {wpath.stat().st_size / 1e6:.1f} MB')
+
+# بسته نشان: نشان تنها و نشان با نام در همه رنگ‌بندی‌ها و قالب‌ها
+lname = 'TaFund_Logo'
+lpath = D / f'{lname}.zip'
+lpath.unlink(missing_ok=True)
+with zipfile.ZipFile(lpath, 'w', zipfile.ZIP_DEFLATED, compresslevel=9) as z:
+    for f in sorted((PKG / '04_Logo').rglob('*')):
+        if f.is_file():
+            z.write(f, Path(lname) / f.relative_to(PKG / '04_Logo'))
+print(f'✓ {lpath.relative_to(ROOT)} — {lpath.stat().st_size / 1e6:.1f} MB')
